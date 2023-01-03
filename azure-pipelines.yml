@@ -1,0 +1,117 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool: 'contabo'
+
+variables:
+  solutionName: 'Sdk.Core.sln'
+
+stages:
+  - stage: Variables
+    jobs:
+      - job:
+        steps:
+          - script: |
+              echo $PATH
+              env | sort
+
+  - stage: Feature_branch
+    condition: ne(variables['System.PullRequest.SourceBranch'], '')
+    jobs:
+      - job: restore_solution
+        displayName: Restore Solution
+        steps:
+          - script: |
+              dotnet restore $solutionName
+
+      - job: build_solution
+        displayName: Build Solution
+        dependsOn: restore_solution
+        steps:
+          - script: |
+              dotnet build $solutionName
+
+      - job: test_solution
+        displayName: Test Solution
+        dependsOn: build_solution
+        steps:
+          - script: |
+              dotnet test $solutionName
+
+  - stage: Main_branch
+    condition: and(eq(variables['System.PullRequest.SourceBranch'], ''), eq(variables['Build.SourceBranch'],'refs/heads/main'))
+    jobs:
+      - job: restore_solution
+        displayName: Restore Solution
+        steps:
+          - script: |
+              dotnet restore $solutionName
+
+      - job: build_solution
+        displayName: Build Solution
+        dependsOn: restore_solution
+        steps:
+          - script: |
+              dotnet build $solutionName
+
+      - job: test_solution
+        displayName: Test Solution
+        dependsOn: build_solution
+        steps:
+          - script: |
+              dotnet test $solutionName
+
+      - job: install_semantic
+        displayName: Install Semantic-Release
+        dependsOn: test_solution
+        steps:
+          - script: |
+              echo '##vso[task.prependpath]$(HOME)/.local/bin'
+            displayName: PATH
+          - script: |
+              npm install npm
+            displayName: install npm
+          - script: |
+              npm install semantic-release
+            displayName: install semantic-release
+          - script: |
+              npm install @semantic-release/changelog
+            displayName: install changelog
+          - script: |
+              npm install @semantic-release/exec
+            displayName: install exec
+          - script: |
+              npm install @semantic-release/git
+            displayName: install semantic-git
+          - script: |
+              npm install @semantic-release/github
+            displayName: install semantic-github
+          - script: |
+              pip3 install --user bump2version
+            displayName: install bump2version
+
+      - job: semantic_release
+        displayName: Semantic Release
+        dependsOn: install_semantic
+        steps:
+          - script: |
+              echo '##vso[task.prependpath]$(HOME)/.local/bin'
+            displayName: PATH
+          - script: |
+              npx semantic-release
+            displayName: Semantic Release
+            env:
+              GH_TOKEN: $(githubToken)
+          - script: |
+              dotnet clean
+              dotnet build --configuration Release
+            displayName: rebuild
+          - script: |
+              dotnet nuget push Core/bin/Release/EncyclopediaGalactica.Sdk.Core.`cat version.txt`.nupkg --api-key $GH_TOKEN --source "https://nuget.pkg.github.com/EncyclopediaGalactica/index.json" --skip-duplicate
+              dotnet nuget push Interfaces/bin/Release/EncyclopediaGalactica.Sdk.Core.Interfaces.`cat version.txt`.nupkg --api-key $GH_TOKEN --source "https://nuget.pkg.github.com/EncyclopediaGalactica/index.json" --skip-duplicate
+              dotnet nuget push Model.Interfaces/bin/Release/EncyclopediaGalactica.Sdk.Core.Model.Interfaces.`cat version.txt`.nupkg --api-key $GH_TOKEN --source "https://nuget.pkg.github.com/EncyclopediaGalactica/index.json" --skip-duplicate
+            displayName: publish nuget
+            env:
+              GH_TOKEN: $(githubToken)

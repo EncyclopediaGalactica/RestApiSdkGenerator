@@ -13,7 +13,8 @@ public class PropertyNullableTypeCollection_Should : TestBase
     public void Collect_Nullable_Types()
     {
         // Arrange && Act
-        string configFilePath = $"{_basePath}/property_name_collection_should.json";
+        string currentPath = $"{_basePath}/DtoInfoCollection";
+        string configFilePath = $"{currentPath}/property_nullable_type_collection_should.json";
         CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
 
         // Assert

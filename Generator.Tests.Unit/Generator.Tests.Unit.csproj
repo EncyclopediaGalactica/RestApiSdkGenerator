@@ -56,9 +56,6 @@
       <None Update="DtoGeneration\MultipleDtos\multiple_dtos_generating_should.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="DtoGeneration\SingleDtoTests\single_dto_tests_generating_should.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="DtoInfoCollection\dto_filename_collection_should.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
@@ -69,9 +66,6 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="DtoInfoCollection\property_type_collection_should.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="DtoGeneration\SingleDtoTests\single_dto_tests_generating_should.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="DtoGeneration\SingleDto\single_dto_generating_should.json">

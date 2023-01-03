@@ -1,5 +1,5 @@
 {
-    "openapi_specification_path": "single_dto_generating_should.yaml",
+    "openapi_specification_path": "DtoGeneration/SingleDto/single_dto_generating_should.yaml",
     "solution_directory": "./",
     "solution_base_namespace": "EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoGeneration.SingleDto",
     "skip_dto_generating": false,

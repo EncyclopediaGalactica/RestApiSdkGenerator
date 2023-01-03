@@ -112,8 +112,7 @@ public class CodeGenerator
         StringBuilder builder = new StringBuilder(_generatorConfiguration.SolutionBaseNamespace);
         if (string.IsNullOrEmpty(_generatorConfiguration.DtoProjectNameSpace))
         {
-            builder.Append(".")
-                .Append(_generatorConfiguration.DtoProjectNameSpace);
+            builder.Append(".").Append(_generatorConfiguration.DtoProjectNameSpace);
         }
 
         return builder.ToString();

@@ -1,5 +1,5 @@
 {
-    "openapi_specification_path": "multiple_dtos_generating_should.yaml",
+    "openapi_specification_path": "DtoGeneration/MultipleDtos/multiple_dtos_generating_should.yaml",
     "solution_directory": "./",
     "solution_base_namespace": "EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoGeneration.MultipleDtos",
     "skip_dto_generating": false,

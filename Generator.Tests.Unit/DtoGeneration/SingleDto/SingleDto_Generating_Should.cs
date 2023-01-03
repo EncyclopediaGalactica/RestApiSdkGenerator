@@ -15,12 +15,13 @@ public class SingleDto_Generating_Should : TestBase
         // Arrange && Act
         string referenceFileName = "PetDtoReference.cs";
         string generatedFileName = "PetDto.cs";
-        string configFilePath = $"{_basePath}/dto_filename_collection_should.json";
+        string currentPath = $"{_basePath}/DtoGeneration/SingleDto";
+        string configFilePath = $"{currentPath}/dto_filename_collection_should.json";
         CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
 
         // Assert
-        List<string> referenceResult = File.ReadLines($"{_basePath}{referenceFileName}").ToList();
-        List<string> generatedResult = File.ReadLines($"{_basePath}{generatedFileName}").ToList();
+        List<string> referenceResult = File.ReadLines($"{currentPath}/{referenceFileName}").ToList();
+        List<string> generatedResult = File.ReadLines($"{currentPath}/{generatedFileName}").ToList();
         for (int i = 0; i < referenceResult.Count(); i++)
         {
             generatedResult[i].Should().Be(referenceResult[i],

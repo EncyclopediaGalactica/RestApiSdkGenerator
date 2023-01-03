@@ -18,7 +18,8 @@ public class MultipleDtos_Generating_Should : TestBase
             { 1, new List<string> { "DogDtoReference.cs", "DogDto.cs" } },
             { 2, new List<string> { "CatDtoReference.cs", "CatDto.cs" } },
         };
-        string configFilePath = $"{_basePath}/dto_filename_collection_should.json";
+        string currentPath = $"{_basePath}/DtoGeneration/MultipleDtos";
+        string configFilePath = $"{currentPath}/dto_filename_collection_should.json";
         CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
 
         // Assert
@@ -27,8 +28,8 @@ public class MultipleDtos_Generating_Should : TestBase
             string referenceFilename = filename.Value.First(p => p.Contains("Reference"));
             string generatedFilename = filename.Value.First(p => !p.Contains("Reference"));
 
-            List<string> referenceResult = File.ReadLines($"{_basePath}{referenceFilename}").ToList();
-            List<string> generatedResult = File.ReadLines($"{_basePath}{generatedFilename}").ToList();
+            List<string> referenceResult = File.ReadLines($"{currentPath}/{referenceFilename}").ToList();
+            List<string> generatedResult = File.ReadLines($"{currentPath}/{generatedFilename}").ToList();
             for (int i = 0; i < referenceResult.Count(); i++)
             {
                 generatedResult[i].Should().Be(referenceResult[i],
