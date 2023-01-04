@@ -4,6 +4,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Gene
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Tests.Unit", "Generator.Tests.Unit\Generator.Tests.Unit.csproj", "{AD6DA486-8C80-440E-804B-4FBC8B01524B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{B39A97EA-C855-49B2-800D-A402017E6985}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		CHANGELOG.md = CHANGELOG.md
+		.gitignore = .gitignore
+		.globalconfig = .globalconfig
+		README.md = README.md
+		LICENSE = LICENSE
+		.releaserc = .releaserc
+		version.txt = version.txt
+		.bumpversion.cfg = .bumpversion.cfg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

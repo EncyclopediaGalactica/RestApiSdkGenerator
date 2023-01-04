@@ -7,6 +7,17 @@
         <Nullable>enable</Nullable>
         <AssemblyName>EncyclopediaGalactica.RestApiSdkGenerator.Generator</AssemblyName>
         <RootNamespace>EncyclopediaGalactica.RestApiSdkGenerator.Generator</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Encyclopedia Galactica Rest Api Sdk Generator</Title>
+        <Authors>Andras Csanyi</Authors>
+        <Description>The cli tool can generate Dto objects, their tests, Controller classes, Sdk client, Sdk model classes for communication with the endpoint. The generator uses a generator config file where all the properties can be defined.</Description>
+        <Copyright>AndrasCsanyi</Copyright>
+        <PackageProjectUrl>https://github.com/EncyclopediaGalactica/RestApiSdkGenerator</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/EncyclopediaGalactica/RestApiSdkGenerator</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>c-sharp; generator</PackageTags>
+        <Version>0.0.0</Version>
     </PropertyGroup>
     
     <ItemGroup>
