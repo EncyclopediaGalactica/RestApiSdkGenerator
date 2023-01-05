@@ -14,7 +14,7 @@ public class NameSpacePreprocessing_Should : TestBase
     {
         // Arrange && Act
         string currentPath = $"{_basePath}/Dto/PreProcessing/Namespace";
-        string configFilePath = $"{currentPath}/namespace_preprocessing_should.json";
+        string configFilePath = $"{currentPath}/dto_namespace_is_not_provided.json";
         CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
 
         // Assert

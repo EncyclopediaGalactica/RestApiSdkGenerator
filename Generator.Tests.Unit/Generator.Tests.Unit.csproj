@@ -62,7 +62,7 @@
       <None Update="Dto\PreProcessing\FileName\filename_preprocessing_should.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\PreProcessing\Namespace\namespace_preprocessing_should.json">
+      <None Update="Dto\PreProcessing\Namespace\dto_namespace_is_not_provided.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Dto\PreProcessing\Namespace\namespace_preprocessing_should.yaml">
@@ -107,6 +107,24 @@
       <None Update="Dto\Generation\SingleDto\single_dto_generating_should.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Dto\Generation\Filename\filename_dto_generation_should.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\Filename\filename_dto_generation_should.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\Namespace\dto_namespace_is_provided.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\Namespace\dto_namespace_is_not_provided.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\Namespace\dto_namespace_is_provided.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\Namespace\dto_namespace_is_not_provided.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -138,10 +156,17 @@
       <Compile Update="Dto\Generation\SingleDto\Reference\PetDto.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
+      <Compile Update="Dto\Generation\Namespace\Reference\DtoNamespaceIsNotProvidedDto.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Dto\Generation\Namespace\Reference\DtoNamespaceIsProvidedDto.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Dto" />
+      <Folder Include="Dto\Generation\Namespace\Reference" />
     </ItemGroup>
 
 </Project>

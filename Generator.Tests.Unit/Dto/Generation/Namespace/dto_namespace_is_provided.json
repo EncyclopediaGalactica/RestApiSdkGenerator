@@ -1,0 +1,11 @@
+{
+    "openapi_specification_path": "Dto/Generation/Namespace/dto_namespace_is_provided.yaml",
+    "target_directory": "Dto/Generation/Namespace",
+    "solution_base_namespace": "EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit",
+    "dto_project_namespace": "test.namespace",
+    "skip_dto_generating": false,
+    "skip_dto_tests_generating": true,
+    "skip_request_model_generating": true,
+    "skip_request_model_tests_generating": true,
+    "test_mode": true
+}
