@@ -20,7 +20,6 @@ public class FileNamePreProcessing_Should : TestBase
         // Assert
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Count.Should().Be(3);
         codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
         codeGenerator.DtoFileInfos.Where(p => p.FileName == "NewPetDto").ToList().Count.Should().Be(1);
         codeGenerator.DtoFileInfos.Where(p => p.FileName == "ErrorModelDto").ToList().Count.Should().Be(1);

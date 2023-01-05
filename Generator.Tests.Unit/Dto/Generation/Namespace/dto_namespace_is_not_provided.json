@@ -1,8 +1,8 @@
 {
-    "openapi_specification_path": "Dto/PreProcessing/FileName/filename_preprocessing_should.yaml",
-    "target_directory": "Dto/PreProcessing/FileName",
+    "openapi_specification_path": "Dto/Generation/Namespace/dto_namespace_is_not_provided.yaml",
+    "target_directory": "Dto/Generation/Namespace",
     "solution_base_namespace": "EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoInfoCollection",
-    "skip_dto_generating": true,
+    "skip_dto_generating": false,
     "skip_dto_tests_generating": true,
     "skip_request_model_generating": true,
     "skip_request_model_tests_generating": true,
