@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoInfoCollection;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.PropertyType;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -7,14 +7,14 @@ using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class PropertyTypeCollection_Should : TestBase
+public class PropertyTypePreProcessing_Should : TestBase
 {
     [Fact]
     public void Collect_Types()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoInfoCollection";
-        string configFilePath = $"{currentPath}/property_type_collection_should.json";
+        string currentPath = $"{_basePath}/Dto/PreProcessing/PropertyType";
+        string configFilePath = $"{currentPath}/property_type_preprocessing_should.json";
         CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
 
         // Assert

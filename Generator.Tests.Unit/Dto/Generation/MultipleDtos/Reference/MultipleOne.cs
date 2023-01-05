@@ -1,9 +1,9 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoGeneration.MultipleDtos;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Generation.MultipleDtos;
 
 /// <summary>
-///     The DogDto object.
+///     The MultipleOneDto object.
 /// </summary>
-public class DogDto
+public class MultipleOneDto
 {
     /// <summary>
     ///     Gets or set the Id property's value

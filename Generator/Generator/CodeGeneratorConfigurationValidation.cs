@@ -7,7 +7,7 @@ public class CodeGeneratorConfigurationValidation : AbstractValidator<CodeGenera
     public CodeGeneratorConfigurationValidation()
     {
         RuleFor(p => p.OpenApiSpecificationPath).NotNull().NotEmpty();
-        RuleFor(p => p.SolutionDirectory).NotNull().NotEmpty();
+        RuleFor(p => p.TargetDirectory).NotNull().NotEmpty();
         RuleFor(p => p.SolutionBaseNamespace).NotNull().NotEmpty();
     }
 }

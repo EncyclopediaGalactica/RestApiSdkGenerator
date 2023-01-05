@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoGeneration.SingleDto;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Generation.SingleDto;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -13,21 +13,21 @@ public class SingleDto_Generating_Should : TestBase
     public async Task SingleDto()
     {
         // Arrange && Act
-        string referenceFileName = "PetDtoReference.cs";
+        string referenceFileName = "PetDto.cs";
         string generatedFileName = "PetDto.cs";
-        string currentPath = $"{_basePath}/DtoGeneration/SingleDto";
-        string configFilePath = $"{currentPath}/dto_filename_collection_should.json";
+        string currentPath = $"{_basePath}/Dto/Generation/SingleDto";
+        string configFilePath = $"{currentPath}/single_dto_generating_should.json";
         CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
 
         // Assert
-        List<string> referenceResult = File.ReadLines($"{currentPath}/{referenceFileName}").ToList();
+        List<string> referenceResult = File.ReadLines($"{currentPath}/Reference/{referenceFileName}").ToList();
         List<string> generatedResult = File.ReadLines($"{currentPath}/{generatedFileName}").ToList();
         for (int i = 0; i < referenceResult.Count(); i++)
         {
             generatedResult[i].Should().Be(referenceResult[i],
                 $"There is a difference in line {i}. \n" +
-                $"Reference file: {_basePath}{referenceFileName} \n" +
-                $"Generated file: {_basePath}{generatedFileName}");
+                $"Reference file: {currentPath}/{referenceFileName} \n" +
+                $"Generated file: {currentPath}/{generatedFileName}");
         }
     }
 }

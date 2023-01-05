@@ -6,7 +6,7 @@ trigger:
 pool: 'contabo'
 
 variables:
-  solutionName: 'Sdk.Core.sln'
+  solutionName: 'RestApiSdkGenerator.sln'
 
 stages:
   - stage: Variables
@@ -109,9 +109,7 @@ stages:
               dotnet build --configuration Release
             displayName: rebuild
           - script: |
-              dotnet nuget push Core/bin/Release/EncyclopediaGalactica.Sdk.Core.`cat version.txt`.nupkg --api-key $GH_TOKEN --source "https://nuget.pkg.github.com/EncyclopediaGalactica/index.json" --skip-duplicate
-              dotnet nuget push Interfaces/bin/Release/EncyclopediaGalactica.Sdk.Core.Interfaces.`cat version.txt`.nupkg --api-key $GH_TOKEN --source "https://nuget.pkg.github.com/EncyclopediaGalactica/index.json" --skip-duplicate
-              dotnet nuget push Model.Interfaces/bin/Release/EncyclopediaGalactica.Sdk.Core.Model.Interfaces.`cat version.txt`.nupkg --api-key $GH_TOKEN --source "https://nuget.pkg.github.com/EncyclopediaGalactica/index.json" --skip-duplicate
+              dotnet nuget push Generator/bin/Release/EncyclopediaGalactica.RestApiSdkGenerator.Generator.`cat version.txt`.nupkg --api-key $GH_TOKEN --source "https://nuget.pkg.github.com/EncyclopediaGalactica/index.json" --skip-duplicate
             displayName: publish nuget
             env:
               GH_TOKEN: $(githubToken)
