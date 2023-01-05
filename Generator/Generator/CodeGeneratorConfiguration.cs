@@ -54,6 +54,9 @@ public class CodeGeneratorConfiguration
     [JsonProperty("dto_project_namespace")]
     public string? DtoProjectNameSpace { get; set; }
 
+    /// <summary>
+    ///     Gets or sets the dto test project name
+    /// </summary>
     [JsonProperty("dto_test_project_name")]
     public string DtoTestProjectName { get; set; }
 
