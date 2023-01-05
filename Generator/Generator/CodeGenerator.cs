@@ -22,6 +22,8 @@ public class CodeGenerator
         _openApiDocument = openApiDocument;
         _generatorConfiguration = generatorConfiguration;
 
+        Console.WriteLine(
+            $"=== Generator config file: {_generatorConfiguration.OpenApiSpecificationPath}");
         Generate();
     }
 
@@ -52,7 +54,7 @@ public class CodeGenerator
         StringBuilder builder = new StringBuilder();
         if (_generatorConfiguration.TestMode)
         {
-            builder.Append(_generatorConfiguration.SolutionDirectory);
+            builder.Append(_generatorConfiguration.TargetDirectory);
             return builder.ToString();
         }
 
@@ -101,16 +103,33 @@ public class CodeGenerator
             DtoFileInfos.Add(new GeneratedFileInfo
             {
                 FileName = PrepareFilename(aSchema),
+                TargetDirectory = PrepareTargetDirectory(),
                 Namespace = PrepareNamespace(PrepareDtoNamespace()),
                 PropertyInfos = PrepareProperties(aSchema.Value.Properties, aSchema.Value.Required)
             });
         }
     }
 
+    private string? PrepareTargetDirectory()
+    {
+        if (string.IsNullOrEmpty(_generatorConfiguration.TargetDirectory)
+            || string.IsNullOrWhiteSpace(_generatorConfiguration.TargetDirectory))
+        {
+            return null;
+        }
+
+        if (_generatorConfiguration.TargetDirectory[^1].ToString() == "/")
+        {
+            return _generatorConfiguration.TargetDirectory;
+        }
+
+        return _generatorConfiguration.TargetDirectory + "/";
+    }
+
     private string PrepareDtoNamespace()
     {
         StringBuilder builder = new StringBuilder(_generatorConfiguration.SolutionBaseNamespace);
-        if (string.IsNullOrEmpty(_generatorConfiguration.DtoProjectNameSpace))
+        if (!string.IsNullOrEmpty(_generatorConfiguration.DtoProjectNameSpace))
         {
             builder.Append(".").Append(_generatorConfiguration.DtoProjectNameSpace);
         }
@@ -308,21 +327,17 @@ public class CodeGenerator
             {
                 string dtoTemplateString = File.ReadAllText("Templates/dto.handlebars");
                 HandlebarsTemplate<object, object>? template = Handlebars.Compile(dtoTemplateString);
-                var compiledTemplate = template(dtoFileInfo);
+                string? compiledTemplate = template(dtoFileInfo);
                 if (!Directory.Exists($"{dtoPath}"))
                 {
                     Directory.CreateDirectory($"{dtoPath}");
                 }
 
-                if (!File.Exists($"{dtoPath}{dtoFileInfo.FileName}.cs"))
+                using (FileStream file = System.IO.File.Open(
+                           $"{dtoPath}/{dtoFileInfo.FileName}.cs",
+                           FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write))
                 {
-                    File.Create($"{dtoPath}{dtoFileInfo.FileName}.cs");
-                }
-
-                if (File.Exists($"{dtoPath}{dtoFileInfo.FileName}.cs"))
-                {
-                    File.WriteAllText($"{dtoPath}{dtoFileInfo.FileName}.cs",
-                        compiledTemplate);
+                    file.Write(Encoding.ASCII.GetBytes(compiledTemplate));
                 }
 
                 Console.WriteLine($"Generated file: {dtoPath}{dtoFileInfo.FileName}.cs");

@@ -4,19 +4,22 @@ using Newtonsoft.Json;
 
 public class CodeGeneratorConfiguration
 {
-    public CodeGeneratorConfiguration()
-    {
-    }
-
     [JsonProperty("openapi_specification_path")]
     public string OpenApiSpecificationPath { get; set; }
 
-    [JsonProperty("solution_directory")]
-    public string SolutionDirectory { get; set; }
+    [JsonProperty("target_directory")]
+    public string TargetDirectory { get; set; }
 
     [JsonProperty("solution_name")]
     public string SolutionName { get; set; }
 
+    /// <summary>
+    ///     Gets or sets the solution base name space.
+    ///     <remarks>
+    ///         During generation this value is the base.
+    ///         If any other subproject namespace is given they will be concatenated
+    ///     </remarks>
+    /// </summary>
     [JsonProperty("solution_base_namespace")]
     public string SolutionBaseNamespace { get; set; }
 
@@ -42,8 +45,14 @@ public class CodeGeneratorConfiguration
     [JsonProperty("dto_project_additional_path")]
     public string DtoProjectAdditionalPath { get; set; }
 
+    /// <summary>
+    ///     Gets or sets dto project namespace
+    ///     <remarks>
+    ///         This value will be concatenated to solution base namespace
+    ///     </remarks>
+    /// </summary>
     [JsonProperty("dto_project_namespace")]
-    public string DtoProjectNameSpace { get; set; }
+    public string? DtoProjectNameSpace { get; set; }
 
     [JsonProperty("dto_test_project_name")]
     public string DtoTestProjectName { get; set; }

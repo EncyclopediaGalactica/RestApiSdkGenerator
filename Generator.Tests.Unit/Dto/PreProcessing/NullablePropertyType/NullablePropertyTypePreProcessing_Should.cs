@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoInfoCollection;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.NullablePropertyType;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -7,14 +7,14 @@ using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class PropertyNullableTypeCollection_Should : TestBase
+public class NullablePropertyTypePreProcessing_Should : TestBase
 {
     [Fact]
-    public void Collect_Nullable_Types()
+    public void PreProcess_NullablePropertyTypes()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoInfoCollection";
-        string configFilePath = $"{currentPath}/property_nullable_type_collection_should.json";
+        string currentPath = $"{_basePath}/Dto/PreProcessing/NullablePropertyType";
+        string configFilePath = $"{currentPath}/property_nullable_type_preprocessing_should.json";
         CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
 
         // Assert

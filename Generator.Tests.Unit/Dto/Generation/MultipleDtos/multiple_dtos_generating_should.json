@@ -1,0 +1,10 @@
+{
+    "openapi_specification_path": "Dto/Generation/MultipleDtos/multiple_dtos_generating_should.yaml",
+    "target_directory": "Dto/Generation/MultipleDtos",
+    "solution_base_namespace": "EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Generation.MultipleDtos",
+    "skip_dto_generating": false,
+    "skip_dto_tests_generating": true,
+    "skip_request_model_generating": true,
+    "skip_request_model_tests_generating": true,
+    "test_mode": true
+}
