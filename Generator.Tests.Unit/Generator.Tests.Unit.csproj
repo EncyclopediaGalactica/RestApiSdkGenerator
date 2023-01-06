@@ -137,6 +137,12 @@
       <None Update="Dto\Generation\PropertyName\property_name_generation_should.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Dto\Generation\PropertyType\property_type_generation_should.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\PropertyType\property_type_generation_should.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -195,6 +201,9 @@
       <Compile Update="Dto\Generation\PropertyName\Reference\PetDto.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
+      <Compile Update="Dto\Generation\PropertyType\Reference\PetDto.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -202,6 +211,7 @@
       <Folder Include="Dto\Generation\Namespace\Reference" />
       <Folder Include="Dto\Generation\NullablePropertyType\Reference" />
       <Folder Include="Dto\Generation\PropertyName\Reference" />
+      <Folder Include="Dto\Generation\PropertyType\Reference" />
     </ItemGroup>
 
 </Project>

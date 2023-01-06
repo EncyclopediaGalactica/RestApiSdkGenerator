@@ -1,0 +1,10 @@
+{
+    "openapi_specification_path": "Dto/Generation/PropertyType/property_type_generation_should.yaml",
+    "target_directory": "Dto/Generation/PropertyType",
+    "solution_base_namespace": "EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Generation.PropertyType",
+    "skip_dto_generating": false,
+    "skip_dto_tests_generating": true,
+    "skip_request_model_generating": true,
+    "skip_request_model_tests_generating": true,
+    "test_mode": true
+}
