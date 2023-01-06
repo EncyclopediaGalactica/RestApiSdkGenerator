@@ -163,8 +163,17 @@ components:
           format: int64
         name:
           type: string
-        tag_name:
+        tag:
           type: string
-        integer_type_property:
+        integer_type:
           type: integer
           format: int32
+        long_type:
+          type: integer
+          format: int64
+        float_type:
+          type: number
+          format: float
+        double_type:
+          type: number
+          format: double
