@@ -20,7 +20,7 @@ public class PropertyNamePreProcessing_Should : TestBase
         // Assert
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Count.Should().Be(3);
+        codeGenerator.DtoFileInfos.Count.Should().Be(1);
         codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
 
         GeneratedFileInfo aSingleDto = codeGenerator.DtoFileInfos.First(p => p.FileName == "PetDto");
