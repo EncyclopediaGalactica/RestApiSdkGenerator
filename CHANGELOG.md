@@ -1,3 +1,10 @@
+# [0.1.0](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/compare/0.0.1...0.1.0) (2023-01-07)
+
+
+### Features
+
+* **validation:** configuration validation ([#6](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/issues/6)) ([f287c0d](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/commit/f287c0df331524a2b51f41f1b1e78f9263737169))
+
 ## [0.0.1](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/compare/0.0.0...0.0.1) (2023-01-05)
 
 
