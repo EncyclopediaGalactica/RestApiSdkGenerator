@@ -378,38 +378,47 @@ public class CodeGenerator
 
         public CodeGenerator? Generate()
         {
-            if (string.IsNullOrEmpty(_path))
+            try
             {
-                Console.WriteLine("ERROR === Path to configuration file is not defined.");
-                return null;
-            }
+                if (string.IsNullOrEmpty(_path))
+                {
+                    Console.WriteLine("ERROR === Path to configuration file is not defined.");
+                    return null;
+                }
 
-            if (!File.Exists(_path))
+                if (!File.Exists(_path))
+                {
+                    Console.WriteLine($"ERROR === {_path} does not exist.");
+                    return null;
+                }
+
+                string configFileContent = File.ReadAllText(_path);
+                CodeGeneratorConfiguration generatorConfiguration =
+                    JsonConvert.DeserializeObject<CodeGeneratorConfiguration>(configFileContent);
+
+                if (generatorConfiguration is null)
+                {
+                    throw new GeneratorException("Configuration file deserialization is unsuccessful.");
+                }
+
+                CodeGeneratorConfigurationValidator configFileValidator = new CodeGeneratorConfigurationValidator();
+                configFileValidator.Validate(generatorConfiguration, o => { o.ThrowOnFailures(); });
+
+                using FileStream yamlString = new FileStream(
+                    generatorConfiguration.OpenApiSpecificationPath,
+                    FileMode.Open);
+                OpenApiDocument? openApiSpecification = new OpenApiStreamReader().Read(
+                    yamlString,
+                    out OpenApiDiagnostic? openApiDiagnostic);
+                return new CodeGenerator(openApiSpecification, generatorConfiguration);
+            }
+            catch (Exception e)
             {
-                Console.WriteLine($"ERROR === {_path} does not exist.");
-                return null;
+                throw new GeneratorException(
+                    "Unsuccessful code generation. For further information see inner exception. " +
+                    $"Inner exception message: {e.Message}",
+                    e);
             }
-
-            string configFileContent = File.ReadAllText(_path);
-            CodeGeneratorConfiguration generatorConfiguration =
-                JsonConvert.DeserializeObject<CodeGeneratorConfiguration>(configFileContent);
-
-            if (generatorConfiguration is null)
-            {
-                Console.WriteLine("Configuration file deserialization is unsuccessful.");
-                return null;
-            }
-
-            IValidator<CodeGeneratorConfiguration> validator = new InlineValidator<CodeGeneratorConfiguration>();
-            validator.Validate(generatorConfiguration, (options) => { options.ThrowOnFailures(); });
-
-            using FileStream yamlString = new FileStream(
-                generatorConfiguration.OpenApiSpecificationPath,
-                FileMode.Open);
-            OpenApiDocument? openApiSpecification = new OpenApiStreamReader().Read(
-                yamlString,
-                out OpenApiDiagnostic? openApiDiagnostic);
-            return new CodeGenerator(openApiSpecification, generatorConfiguration);
         }
     }
 }

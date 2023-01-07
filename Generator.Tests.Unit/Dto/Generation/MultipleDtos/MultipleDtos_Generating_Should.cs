@@ -20,9 +20,11 @@ public class MultipleDtos_Generating_Should : TestBase
         };
         string currentPath = $"{_basePath}/Dto/Generation/MultipleDtos";
         string configFilePath = $"{currentPath}/multiple_dtos_generating_should.json";
-        CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
+        CodeGenerator? codeGenerator;
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
+        action.Should().NotThrow();
         foreach (KeyValuePair<string, string> filename in filenames)
         {
             List<string> reference = File.ReadLines($"{currentPath}/Reference/{filename.Key}").ToList();

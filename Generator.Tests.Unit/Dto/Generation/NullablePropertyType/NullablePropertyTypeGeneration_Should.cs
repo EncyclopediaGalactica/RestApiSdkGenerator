@@ -23,9 +23,11 @@ public class NullablePropertyTypeGeneration_Should : TestBase
         };
         string currentPath = $"{_basePath}/Dto/Generation/NullablePropertyType";
         string configFilePath = $"{currentPath}/property_nullable_type_generation_should.json";
-        CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
+        CodeGenerator? codeGenerator;
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
+        action.Should().NotThrow();
         foreach (string filename in filenames)
         {
             List<string> generated = File.ReadAllLines($"{currentPath}/{filename}.cs").ToList();
