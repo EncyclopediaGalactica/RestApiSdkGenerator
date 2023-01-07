@@ -17,9 +17,11 @@ public class SingleDto_Generating_Should : TestBase
         string generatedFileName = "PetDto.cs";
         string currentPath = $"{_basePath}/Dto/Generation/SingleDto";
         string configFilePath = $"{currentPath}/single_dto_generating_should.json";
-        CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
+        CodeGenerator? codeGenerator;
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
+        action.Should().NotThrow();
         List<string> referenceResult = File.ReadLines($"{currentPath}/Reference/{referenceFileName}").ToList();
         List<string> generatedResult = File.ReadLines($"{currentPath}/{generatedFileName}").ToList();
         for (int i = 0; i < referenceResult.Count(); i++)

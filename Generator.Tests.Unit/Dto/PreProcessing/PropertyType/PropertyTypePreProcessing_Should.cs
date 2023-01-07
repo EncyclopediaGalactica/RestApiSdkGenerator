@@ -15,9 +15,11 @@ public class PropertyTypePreProcessing_Should : TestBase
         // Arrange && Act
         string currentPath = $"{_basePath}/Dto/PreProcessing/PropertyType";
         string configFilePath = $"{currentPath}/property_type_preprocessing_should.json";
-        CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
+        CodeGenerator? codeGenerator = null;
+        Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
+        action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoFileInfos.Should().NotBeEmpty();
         codeGenerator.DtoFileInfos.Count.Should().Be(3);

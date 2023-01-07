@@ -16,9 +16,11 @@ public class Namespace_Generation_Should : TestBase
         string filename = "DtoNamespaceIsNotProvidedDto.cs";
         string currentPath = $"{_basePath}/Dto/Generation/Namespace";
         string configFilePath = $"{currentPath}/dto_namespace_is_not_provided.json";
-        CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
+        CodeGenerator? codeGenerator;
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
+        action.Should().NotThrow();
         List<string> referenceResult = File.ReadAllLines(
             $"{currentPath}/Reference/{filename}").ToList();
         List<string> generatedResult = File.ReadAllLines($"{currentPath}/{filename}").ToList();
@@ -38,9 +40,11 @@ public class Namespace_Generation_Should : TestBase
         string filename = "DtoNamespaceIsProvidedDto.cs";
         string currentPath = $"{_basePath}/Dto/Generation/Namespace";
         string configFilePath = $"{currentPath}/dto_namespace_is_provided.json";
-        CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
+        CodeGenerator? codeGenerator;
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
+        action.Should().NotThrow();
         List<string> referenceResult = File.ReadAllLines(
             $"{currentPath}/Reference/{filename}").ToList();
         List<string> generatedResult = File.ReadAllLines($"{currentPath}/{filename}").ToList();

@@ -1,6 +1,6 @@
 {
     "openapi_specification_path": "Dto/PreProcessing/PropertyName/property_name_preprocessing_should.yaml",
-    "solution_directory": "./",
+    "target_directory": "Dto/PreProcessing/PropertyName",
     "solution_base_namespace": "EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoInfoCollection",
     "skip_dto_generating": true,
     "skip_dto_tests_generating": true,

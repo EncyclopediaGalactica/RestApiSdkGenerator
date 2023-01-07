@@ -1,6 +1,6 @@
 {
     "openapi_specification_path": "Dto/PreProcessing/Namespace/namespace_preprocessing_should.yaml",
-    "solution_directory": "",
+    "target_directory": "Dto/PreProcessing/Namespace",
     "solution_base_namespace": "EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit",
     "dto_project_namespace": "test.namespace",
     "skip_dto_generating": true,

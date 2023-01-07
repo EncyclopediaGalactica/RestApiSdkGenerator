@@ -16,9 +16,11 @@ public class PropertyNameGeneration_Should : TestBase
         string filename = "PetDto";
         string currentPath = $"{_basePath}/Dto/Generation/PropertyName";
         string configFilePath = $"{currentPath}/property_name_generation_should.json";
-        CodeGenerator? codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate();
+        CodeGenerator? codeGenerator;
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
+        action.Should().NotThrow();
         List<string> reference = File.ReadAllLines($"{currentPath}/Reference/{filename}.cs").ToList();
         List<string> generated = File.ReadAllLines($"{currentPath}/{filename}.cs").ToList();
         for (int i = 0; i < reference.Count; i++)
