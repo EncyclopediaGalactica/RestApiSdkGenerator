@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/EncyclopediaGalactica/RestApiSdkGenerator/main/configuration.schema.json",
     "openapi_specification_path": "Dto/Generation/NullablePropertyType/property_nullable_type_generation_should.yaml",
     "target_directory": "Dto/Generation/NullablePropertyType",
     "solution_base_namespace": "EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Generation.NullablePropertyType",
