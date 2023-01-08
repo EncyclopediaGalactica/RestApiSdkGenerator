@@ -3,6 +3,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator;
 using System.Text;
 using FluentValidation;
 using HandlebarsDotNet;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using Newtonsoft.Json;
 public class CodeGenerator
 {
     private readonly CodeGeneratorConfiguration _generatorConfiguration;
+    private readonly ILogger<CodeGenerator> _logger;
     private readonly OpenApiDocument _openApiDocument;
 
     private CodeGenerator(
@@ -21,13 +23,13 @@ public class CodeGenerator
 
         _openApiDocument = openApiDocument;
         _generatorConfiguration = generatorConfiguration;
-
-        Console.WriteLine(
-            $"=== Generator config file: {_generatorConfiguration.OpenApiSpecificationPath}");
+        _logger = new Logger<CodeGenerator>(LoggerFactory.Create(c => c.AddConsole()));
         Generate();
     }
 
     public List<GeneratedFileInfo> DtoFileInfos { get; } = new List<GeneratedFileInfo>();
+
+    public List<GeneratedFileInfo> DtoTestFileInfos { get; private set; }
 
     private void Generate()
     {
@@ -79,6 +81,7 @@ public class CodeGenerator
     private void DtoPhase()
     {
         CollectDtoInfo();
+        CopyDtoPropertiesToDtoTests();
         if (!_generatorConfiguration.SkipDtoGenerating)
         {
             string dtoTargetPath = CollectDtoGeneratingRelatedPaths();
@@ -87,13 +90,76 @@ public class CodeGenerator
 
         if (!_generatorConfiguration.SkipDtoTestsGenerating)
         {
+            PreprocessDtoTestProperties();
             GenerateDtoTests();
         }
     }
 
+    private void PreprocessDtoTestProperties()
+    {
+        PreprocessDtoTestFileNames();
+        PreProcessDteTestNamespace();
+    }
+
+    private void PreProcessDteTestNamespace()
+    {
+        if (!DtoTestFileInfos.Any()) return;
+
+        foreach (GeneratedFileInfo generatedFileInfo in DtoTestFileInfos)
+        {
+            if (!string.IsNullOrEmpty(generatedFileInfo.Namespace)
+                && !string.IsNullOrWhiteSpace(generatedFileInfo.Namespace))
+            {
+                if (!string.IsNullOrEmpty(_generatorConfiguration.DtoTestProjectNameSpace)
+                    && !string.IsNullOrWhiteSpace(_generatorConfiguration.DtoTestProjectNameSpace))
+                {
+                    string checkedNamespace = PrepareNamespace(
+                        $"{_generatorConfiguration.SolutionBaseNamespace}.{_generatorConfiguration.DtoTestProjectNameSpace}"
+                    );
+                    generatedFileInfo.Namespace = checkedNamespace;
+                }
+                else
+                {
+                    _logger.LogInformation(
+                        "No Dto test project namespace is provided. Solution base namespace will be used"
+                    );
+                    string checkedNamespace = PrepareNamespace(_generatorConfiguration.SolutionBaseNamespace);
+                    generatedFileInfo.Namespace = checkedNamespace;
+                }
+            }
+        }
+    }
+
+    private void PreprocessDtoTestFileNames()
+    {
+        if (!DtoTestFileInfos.Any()) return;
+
+        foreach (GeneratedFileInfo generatedFileInfo in DtoTestFileInfos)
+        {
+            if (!string.IsNullOrEmpty(generatedFileInfo.FileName)
+                && !string.IsNullOrWhiteSpace(generatedFileInfo.FileName))
+            {
+                generatedFileInfo.FileName = PreProcessDtoTestFileName(generatedFileInfo.FileName);
+            }
+        }
+    }
+
+    private string PreProcessDtoTestFileName(string fileName)
+    {
+        return $"{fileName}_Should";
+    }
+
+    /// <summary>
+    ///     Copies the collected Dto information to another property.
+    ///     This way the two operation are separated.
+    /// </summary>
+    private void CopyDtoPropertiesToDtoTests()
+    {
+        DtoTestFileInfos = DtoFileInfos;
+    }
+
     private void GenerateDtoTests()
     {
-        throw new NotImplementedException();
     }
 
     private void CollectDtoInfo()
@@ -128,8 +194,15 @@ public class CodeGenerator
 
     private string PrepareDtoNamespace()
     {
-        StringBuilder builder = new StringBuilder(_generatorConfiguration.SolutionBaseNamespace);
-        if (!string.IsNullOrEmpty(_generatorConfiguration.DtoProjectNameSpace))
+        StringBuilder builder = new(_generatorConfiguration.SolutionBaseNamespace);
+        if (string.IsNullOrEmpty(_generatorConfiguration.DtoProjectNameSpace)
+            && string.IsNullOrWhiteSpace(_generatorConfiguration.DtoProjectNameSpace))
+        {
+            _logger.LogInformation(
+                "No namespace is provided for Dto project. Solution base namespace will be used"
+            );
+        }
+        else
         {
             builder.Append(".").Append(_generatorConfiguration.DtoProjectNameSpace);
         }
@@ -143,6 +216,8 @@ public class CodeGenerator
         {
             return String.Empty;
         }
+
+        namespaceString = CheckIfNamespaceLastCharIsDotAndRemoveIt(namespaceString);
 
         StringBuilder builder = new StringBuilder();
         bool isDot = false;
@@ -162,10 +237,26 @@ public class CodeGenerator
                 continue;
             }
 
+            if (i == 0)
+            {
+                builder.Append(namespaceString[i].ToString().ToUpper());
+                continue;
+            }
+
             builder.Append(namespaceString[i]);
         }
 
         return builder.ToString();
+    }
+
+    private string CheckIfNamespaceLastCharIsDotAndRemoveIt(string namespaceString)
+    {
+        if (namespaceString.Last().ToString() == ".")
+        {
+            return namespaceString.Substring(0, namespaceString.Length - 1);
+        }
+
+        return namespaceString;
     }
 
     private static string PrepareFilename(KeyValuePair<string, OpenApiSchema> aSchema)
@@ -333,6 +424,11 @@ public class CodeGenerator
                     Directory.CreateDirectory($"{dtoPath}");
                 }
 
+                if (File.Exists($"{dtoPath}/{dtoFileInfo.FileName}.cs"))
+                {
+                    File.Delete($"{dtoPath}/{dtoFileInfo.FileName}.cs");
+                }
+
                 using (FileStream file = System.IO.File.Open(
                            $"{dtoPath}/{dtoFileInfo.FileName}.cs",
                            FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write))
@@ -363,7 +459,13 @@ public class CodeGenerator
 
     public class Builder
     {
+        private readonly ILogger<CodeGenerator.Builder> _logger;
         private string _path;
+
+        public Builder()
+        {
+            _logger = new Logger<Builder>(LoggerFactory.Create(c => c.AddConsole()));
+        }
 
         /// <summary>
         ///     Set path to configuration file.
@@ -382,15 +484,17 @@ public class CodeGenerator
             {
                 if (string.IsNullOrEmpty(_path))
                 {
-                    Console.WriteLine("ERROR === Path to configuration file is not defined.");
+                    _logger.LogError("Path to configuration file is not defined");
                     return null;
                 }
 
                 if (!File.Exists(_path))
                 {
-                    Console.WriteLine($"ERROR === {_path} does not exist.");
+                    _logger.LogError("Config file path is invalid: {Path}", _path);
                     return null;
                 }
+
+                _logger.LogInformation("Generator config file path: {Path}", _path);
 
                 string configFileContent = File.ReadAllText(_path);
                 CodeGeneratorConfiguration generatorConfiguration =
@@ -404,6 +508,9 @@ public class CodeGenerator
                 CodeGeneratorConfigurationValidator configFileValidator = new CodeGeneratorConfigurationValidator();
                 configFileValidator.Validate(generatorConfiguration, o => { o.ThrowOnFailures(); });
 
+                _logger.LogInformation("OpenApi yaml file location: {Path}",
+                    generatorConfiguration.OpenApiSpecificationPath);
+
                 using FileStream yamlString = new FileStream(
                     generatorConfiguration.OpenApiSpecificationPath,
                     FileMode.Open);
@@ -414,6 +521,10 @@ public class CodeGenerator
             }
             catch (Exception e)
             {
+                _logger.LogError(
+                    "Unsuccessful code generation. For further information see inner exception. " +
+                    "Inner exception message: {Message} ", e.Message
+                );
                 throw new GeneratorException(
                     "Unsuccessful code generation. For further information see inner exception. " +
                     $"Inner exception message: {e.Message}",

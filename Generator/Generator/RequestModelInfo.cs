@@ -1,6 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator;
-
-using Generator;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator;
 
 public class RequestModelInfo : GeneratedFileInfo
 {

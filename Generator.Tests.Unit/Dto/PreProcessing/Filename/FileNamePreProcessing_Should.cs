@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.FileName;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.Filename;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;

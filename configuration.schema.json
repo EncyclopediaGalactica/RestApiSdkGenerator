@@ -15,24 +15,32 @@
             "type": "string"
         },
         "target_directory": {
-            "description":"Path to the directory where the generated source will be placed. It is also the Solution directory.",
-            "type":"string"
+            "description": "Path to the directory where the generated source will be placed. It is also the Solution directory.",
+            "type": "string"
         },
-        "solution_name":{
+        "solution_name": {
             "description": "The name of the solution.",
             "type": "string"
         },
-        "solution_base_namespace" :{
+        "solution_base_namespace": {
             "description": "The base namespace of the solution.",
             "type": "string"
         },
-        "dto_project_name":{
+        "dto_project_name": {
             "description": "The name of the Data Transfer Object's project.",
             "type": "string"
         },
-        "skip_dto_generating":{
+        "skip_dto_generating": {
             "description": "Controls whether DTO objects will be generated or not.",
             "type": "boolean"
+        },
+        "dto_project_namespace": {
+            "description": "Namespace of the Dto project. Will be concatenated to solution base namespace",
+            "type": "string"
+        },
+        "dto_test_project_namespace": {
+            "description": "Namespace of the Dto test project. It will be concatenated with solution base namespace",
+            "type": "string"
         }
     }
 }
