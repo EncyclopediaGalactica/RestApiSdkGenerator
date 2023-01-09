@@ -143,6 +143,60 @@
       <None Update="Dto\Generation\PropertyType\property_type_generation_should.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="DtoTests\PreProcessing\Filename\single_filename.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Filename\single_filename.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Filename\multiple_filename.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Filename\multiple_filename.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Namespace\dto_test_namespace_is_provided_single.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Namespace\dto_test_namespace_is_provided_single.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Namespace\dto_test_namespace_is_not_provided_single.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Namespace\dto_test_namespace_is_not_provided_single.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Namespace\dto_test_namespace_is_not_provided_multiple.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Namespace\dto_test_namespace_is_not_provided_multiple.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Namespace\dto_test_namespace_is_provided_multiple.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Namespace\dto_test_namespace_is_provided_multiple.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\Namespace\solution_namespace_smallcap.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\Namespace\solution_namespace_no_dots.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\Namespace\solution_namespace_has_dot_as_last_char.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\Namespace\dto_namespace_smallcap.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\Namespace\dto_namespace_without_dots.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\Namespace\dto_namespace_last_char_dot.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

@@ -2,11 +2,15 @@
 
 using System.CommandLine;
 using Generator;
+using Microsoft.Extensions.Logging;
 
 class Program
 {
+    private static ILogger<Program> _logger;
+
     public static async Task<int> Main(string[] args)
     {
+        _logger = new Logger<Program>(LoggerFactory.Create(c => c.AddConsole()));
         Option<string?> configuration = new Option<string?>("--configuration")
         {
             Description = "The path to the OpenApi specification file.",

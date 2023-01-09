@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator;
 
 public class PropertyInfo
 {

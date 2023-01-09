@@ -63,6 +63,12 @@ public class CodeGeneratorConfiguration
     [JsonProperty("dto_test_project_base_path")]
     public string DtoTestProjectBasePath { get; set; }
 
+    /// <summary>
+    ///     Gets or sets dto test project namespace
+    ///     <remarks>
+    ///         This value will be concatenated with solution base namespace
+    ///     </remarks>
+    /// </summary>
     [JsonProperty("dto_test_project_namespace")]
     public string DtoTestProjectNameSpace { get; set; }
 
