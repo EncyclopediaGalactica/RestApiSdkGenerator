@@ -14,7 +14,7 @@ public class FilenamePreprocess_Should : TestBase
     public void PreProcess_SingleFilename()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/FileName";
+        string currentPath = $"{_basePath}/DtoTests/PreProcessing/Filename";
         string configFilePath = $"{currentPath}/single_filename.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -31,7 +31,7 @@ public class FilenamePreprocess_Should : TestBase
     public void PreProcess_MultipleFilenames()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/FileName";
+        string currentPath = $"{_basePath}/DtoTests/PreProcessing/Filename";
         string configFilePath = $"{currentPath}/multiple_filename.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };

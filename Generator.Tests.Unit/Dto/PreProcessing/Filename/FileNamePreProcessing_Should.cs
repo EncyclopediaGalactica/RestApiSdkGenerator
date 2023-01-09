@@ -14,7 +14,7 @@ public class FileNamePreProcessing_Should : TestBase
     public void PreProcess_FileName()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/Dto/PreProcessing/FileName";
+        string currentPath = $"{_basePath}/Dto/PreProcessing/Filename";
         string configFilePath = $"{currentPath}/filename_preprocessing_should.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
