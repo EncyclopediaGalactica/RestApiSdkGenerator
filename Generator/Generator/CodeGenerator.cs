@@ -474,7 +474,9 @@ public class CodeGenerator
     public class Builder
     {
         private readonly ILogger<CodeGenerator.Builder> _logger;
-        private string _path;
+        private string _actualPath = Directory.GetCurrentDirectory();
+        private string _generatorConfigurationPath;
+
 
         public Builder()
         {
@@ -488,7 +490,7 @@ public class CodeGenerator
         /// <returns>Returns a Builder</returns>
         public Builder SetPath(string path)
         {
-            _path = path;
+            _generatorConfigurationPath = path;
             return this;
         }
 
@@ -496,24 +498,24 @@ public class CodeGenerator
         {
             try
             {
-                if (string.IsNullOrEmpty(_path))
+                if (string.IsNullOrEmpty(_generatorConfigurationPath))
                 {
                     _logger.LogError("Path to configuration file is not defined");
                     return null;
                 }
 
-                if (!File.Exists(_path))
+                if (!File.Exists(_generatorConfigurationPath))
                 {
-                    _logger.LogError("Config file path is invalid: {Path}", _path);
+                    _logger.LogError("Config file path is invalid: {Path}", _generatorConfigurationPath);
                     return null;
                 }
 
                 _logger.LogInformation(
                     "=== Encyclopedia Galactica Rest Api Sdk Generator ==="
                 );
-                _logger.LogInformation("Generator config file path: {Path}", _path);
+                _logger.LogInformation("Generator config file path: {Path}", _generatorConfigurationPath);
 
-                string configFileContent = File.ReadAllText(_path);
+                string configFileContent = File.ReadAllText(_generatorConfigurationPath);
                 CodeGeneratorConfiguration generatorConfiguration =
                     JsonConvert.DeserializeObject<CodeGeneratorConfiguration>(configFileContent);
 
@@ -529,11 +531,11 @@ public class CodeGenerator
                 CodeGeneratorConfigurationValidator configFileValidator = new CodeGeneratorConfigurationValidator();
                 configFileValidator.Validate(generatorConfiguration, o => { o.ThrowOnFailures(); });
 
-                _logger.LogInformation("OpenApi yaml file location: {Path}",
-                    generatorConfiguration.OpenApiSpecificationPath);
+                string yamlFileFullPath = $"{_actualPath}/{generatorConfiguration.OpenApiSpecificationPath}";
+                _logger.LogInformation("OpenApi yaml file location: {Path}", yamlFileFullPath);
 
                 using FileStream yamlString = new FileStream(
-                    generatorConfiguration.OpenApiSpecificationPath,
+                    yamlFileFullPath,
                     FileMode.Open);
                 OpenApiDocument? openApiSpecification = new OpenApiStreamReader().Read(
                     yamlString,
