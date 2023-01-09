@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/compare/0.1.0...0.1.1) (2023-01-09)
+
+
+### Bug Fixes
+
+* initial work of generating dto test files ([#8](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/issues/8)) ([6454670](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/commit/6454670d0f799ae520fa9b1bf698ccf8095429c1))
+
 # [0.1.0](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/compare/0.0.1...0.1.0) (2023-01-07)
 
 
