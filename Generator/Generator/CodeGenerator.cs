@@ -524,6 +524,8 @@ public class CodeGenerator
                     throw new GeneratorException(msg);
                 }
 
+                _logger.LogInformation("Generator configuration has been parsed");
+
                 CodeGeneratorConfigurationValidator configFileValidator = new CodeGeneratorConfigurationValidator();
                 configFileValidator.Validate(generatorConfiguration, o => { o.ThrowOnFailures(); });
 
