@@ -80,6 +80,7 @@ public class CodeGenerator
 
     private void DtoPhase()
     {
+        _logger.LogInformation("=== Dto phase started");
         CollectDtoInfo();
         CopyDtoPropertiesToDtoTests();
         if (!_generatorConfiguration.SkipDtoGenerating)
@@ -93,6 +94,8 @@ public class CodeGenerator
             PreprocessDtoTestProperties();
             GenerateDtoTests();
         }
+
+        _logger.LogInformation("=== Dto phase finished");
     }
 
     private void PreprocessDtoTestProperties()
@@ -412,32 +415,43 @@ public class CodeGenerator
 
     private void GenerateDtos(string dtoPath)
     {
-        if (DtoFileInfos.Any())
+        try
         {
-            foreach (GeneratedFileInfo dtoFileInfo in DtoFileInfos)
+            if (DtoFileInfos.Any())
             {
-                string dtoTemplateString = File.ReadAllText("Templates/dto.handlebars");
-                HandlebarsTemplate<object, object>? template = Handlebars.Compile(dtoTemplateString);
-                string? compiledTemplate = template(dtoFileInfo);
-                if (!Directory.Exists($"{dtoPath}"))
+                foreach (GeneratedFileInfo dtoFileInfo in DtoFileInfos)
                 {
-                    Directory.CreateDirectory($"{dtoPath}");
-                }
+                    string dtoTemplateString = File.ReadAllText("Templates/dto.handlebars");
+                    HandlebarsTemplate<object, object>? template = Handlebars.Compile(dtoTemplateString);
+                    string? compiledTemplate = template(dtoFileInfo);
+                    if (!Directory.Exists($"{dtoPath}"))
+                    {
+                        Directory.CreateDirectory($"{dtoPath}");
+                    }
 
-                if (File.Exists($"{dtoPath}/{dtoFileInfo.FileName}.cs"))
-                {
-                    File.Delete($"{dtoPath}/{dtoFileInfo.FileName}.cs");
-                }
+                    if (File.Exists($"{dtoPath}/{dtoFileInfo.FileName}.cs"))
+                    {
+                        File.Delete($"{dtoPath}/{dtoFileInfo.FileName}.cs");
+                    }
 
-                using (FileStream file = System.IO.File.Open(
-                           $"{dtoPath}/{dtoFileInfo.FileName}.cs",
-                           FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write))
-                {
-                    file.Write(Encoding.ASCII.GetBytes(compiledTemplate));
-                }
+                    using (FileStream file = File.Open(
+                               $"{dtoPath}/{dtoFileInfo.FileName}.cs",
+                               FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write))
+                    {
+                        file.Write(Encoding.ASCII.GetBytes(compiledTemplate));
+                    }
 
-                Console.WriteLine($"Generated file: {dtoPath}{dtoFileInfo.FileName}.cs");
+                    Console.WriteLine($"Generated file: {dtoPath}{dtoFileInfo.FileName}.cs");
+                }
             }
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(
+                "Error happened while compiling template and writing generated file. Details: {Details}",
+                e.Message
+            );
+            throw;
         }
     }
 
@@ -494,6 +508,9 @@ public class CodeGenerator
                     return null;
                 }
 
+                _logger.LogInformation(
+                    "=== Encyclopedia Galactica Rest Api Sdk Generator ==="
+                );
                 _logger.LogInformation("Generator config file path: {Path}", _path);
 
                 string configFileContent = File.ReadAllText(_path);
@@ -502,7 +519,9 @@ public class CodeGenerator
 
                 if (generatorConfiguration is null)
                 {
-                    throw new GeneratorException("Configuration file deserialization is unsuccessful.");
+                    string msg = "Configuration file deserialization is unsuccessful.";
+                    _logger.LogError(msg);
+                    throw new GeneratorException(msg);
                 }
 
                 CodeGeneratorConfigurationValidator configFileValidator = new CodeGeneratorConfigurationValidator();
