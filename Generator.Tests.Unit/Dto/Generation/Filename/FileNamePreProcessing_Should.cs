@@ -5,7 +5,6 @@ using FluentAssertions;
 using Generator;
 using Xunit;
 
-[Collection("Generation")]
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class FileName_DtoGeneration_Should : TestBase

@@ -197,6 +197,30 @@
       <None Update="Dto\PreProcessing\Namespace\dto_namespace_last_char_dot.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="DtoTests\PreProcessing\NullablePropertyType\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\NullablePropertyType\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\PropertyName\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\PropertyName\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\PropertyType\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\PropertyType\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\TargetDirectory\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\TargetDirectory\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -256,6 +280,9 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
       <Compile Update="Dto\Generation\PropertyType\Reference\PetDto.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="DtoTests\PreProcessing\PropertyName\PropertyNamePreProcessing_Should.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
     </ItemGroup>

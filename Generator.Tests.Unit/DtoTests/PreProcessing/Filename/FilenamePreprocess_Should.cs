@@ -5,7 +5,6 @@ using FluentAssertions;
 using Generator;
 using Xunit;
 
-[Collection("PreProcessing")]
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class FilenamePreprocess_Should : TestBase
