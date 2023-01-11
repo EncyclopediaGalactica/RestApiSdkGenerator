@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.PropertyName;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoTests.PreProcessing.PropertyName;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -13,19 +13,21 @@ public class PropertyNamePreProcessing_Should : TestBase
     public void Collect_PropertyNames()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/Dto/PreProcessing/PropertyName";
-        string configFilePath = $"{currentPath}/property_name_preprocessing_should.json";
+        string currentPath = $"{_basePath}/DtoTests/PreProcessing/PropertyName";
+        string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
+        codeGenerator.DtoTestFileInfos.Count.Should().Be(1);
+        codeGenerator.DtoTestFileInfos
+            .Where(p => p.FileName == "PropertyNameInDtoTestsPreprocessingDto").ToList().Count.Should().Be(1);
 
-        GeneratedFileInfo aSingleDto = codeGenerator.DtoFileInfos.First(p => p.FileName == "PetDto");
+        GeneratedFileInfo aSingleDto = codeGenerator.DtoFileInfos
+            .First(p => p.FileName == "PropertyNameInDtoTestsPreprocessingDto");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "Id").Should().NotBeNull();
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "Name").Should().NotBeNull();
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "TagName").Should().NotBeNull();

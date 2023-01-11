@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.NullablePropertyType;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoTests.PreProcessing.NullablePropertyType;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -7,25 +7,28 @@ using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class NullablePropertyTypePreProcessing_Should : TestBase
+public class NullablePropertyType_Preprocessing_Should : TestBase
 {
     [Fact]
     public void PreProcess_NullablePropertyTypes()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/Dto/PreProcessing/NullablePropertyType";
-        string configFilePath = $"{currentPath}/property_nullable_type_preprocessing_should.json";
+        string currentPath = $"{_basePath}/DtoTests/PreProcessing/NullablePropertyType";
+        string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
+        codeGenerator.DtoTestFileInfos.Count.Should().Be(1);
+        codeGenerator.DtoTestFileInfos.Where(
+                p => p.FileName == "NullablePropertyTypeInDtoPreprocessingDto")
+            .ToList().Count.Should().Be(1);
 
-        GeneratedFileInfo aSingleDto = codeGenerator.DtoFileInfos.First(p => p.FileName == "PetDto");
+        GeneratedFileInfo aSingleDto = codeGenerator.DtoTestFileInfos
+            .First(p => p.FileName == "NullablePropertyTypeInDtoPreprocessingDto");
 
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringType").PropertyTypeName.Should().Be("string");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringType").IsNullable.Should().BeFalse();
