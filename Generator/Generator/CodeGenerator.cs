@@ -3,6 +3,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator;
 using System.Text;
 using FluentValidation;
 using HandlebarsDotNet;
+using Managers;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
@@ -10,9 +11,13 @@ using Newtonsoft.Json;
 
 public class CodeGenerator
 {
+    private readonly string _dtoTestTemplatePath = "Templates/dto_test.handlebars";
+    private readonly IFileManager _fileManager;
     private readonly CodeGeneratorConfiguration _generatorConfiguration;
     private readonly ILogger<CodeGenerator> _logger;
     private readonly OpenApiDocument _openApiDocument;
+    private readonly IPathManager _pathManager;
+    private readonly ITemplateManager _templateManager;
 
     private CodeGenerator(
         OpenApiDocument openApiDocument,
@@ -24,6 +29,11 @@ public class CodeGenerator
         _openApiDocument = openApiDocument;
         _generatorConfiguration = generatorConfiguration;
         _logger = new Logger<CodeGenerator>(LoggerFactory.Create(c => c.AddConsole()));
+
+        _fileManager = new FileManager();
+        _pathManager = new PathManager();
+        _templateManager = new TemplateManager();
+
         Generate();
     }
 
@@ -163,6 +173,47 @@ public class CodeGenerator
 
     private void GenerateDtoTests()
     {
+        DeleteOldFiles();
+        CheckAndCreatePath();
+        GenerateDtoTestFiles();
+    }
+
+    private void GenerateDtoTestFiles()
+    {
+        _logger.LogInformation("=== Dto test file generation --> start");
+        string basePath = _pathManager.GetCurrentDirectory();
+        string dotTestTemplatePath = _pathManager.BuildPath(
+            basePath,
+            _dtoTestTemplatePath);
+        string templateContent = _fileManager.ReadFileContent(dotTestTemplatePath);
+        _logger.LogInformation("=== Dto test file generation --> end");
+    }
+
+    private void CheckAndCreatePath()
+    {
+        _logger.LogInformation("=== Checking Dto test path --> start");
+        string targetDirectory = _pathManager.BuildPath(
+            _generatorConfiguration.TargetDirectory,
+            _generatorConfiguration.DtoTestProjectBasePath!,
+            _generatorConfiguration.DtoTestProjectAdditionalPath!);
+        _fileManager.CheckIfExistsOrCreate(targetDirectory);
+        _logger.LogInformation("=== Checking Dto test path --> end");
+    }
+
+    private void DeleteOldFiles()
+    {
+        _logger.LogInformation("=== Delete old Dto test files --> start");
+        foreach (GeneratedFileInfo dtoTestFileInfo in DtoTestFileInfos)
+        {
+            string path = _pathManager.BuildPath(
+                _generatorConfiguration.TargetDirectory,
+                _generatorConfiguration.DtoTestProjectBasePath!,
+                _generatorConfiguration.DtoTestProjectAdditionalPath!);
+            string pathWithFilename = _pathManager.BuildPathWithFilename(path, dtoTestFileInfo.FileName);
+            _fileManager.DeleteFile(pathWithFilename);
+        }
+
+        _logger.LogInformation("=== Delete old Dto test files --> end");
     }
 
     private void CollectDtoInfo()

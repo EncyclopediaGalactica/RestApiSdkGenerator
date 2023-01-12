@@ -61,7 +61,17 @@ public class CodeGeneratorConfiguration
     public string DtoTestProjectName { get; set; }
 
     [JsonProperty("dto_test_project_base_path")]
-    public string DtoTestProjectBasePath { get; set; }
+    public string? DtoTestProjectBasePath { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the dto test project additional path
+    ///     <remarks>
+    ///         The role of the additional path here is to define the path where the
+    ///         generated dto test files will be placed within the dto test project.
+    ///     </remarks>
+    /// </summary>
+    [JsonProperty("dto_test_project_additional_path")]
+    public string? DtoTestProjectAdditionalPath { get; set; }
 
     /// <summary>
     ///     Gets or sets dto test project namespace
