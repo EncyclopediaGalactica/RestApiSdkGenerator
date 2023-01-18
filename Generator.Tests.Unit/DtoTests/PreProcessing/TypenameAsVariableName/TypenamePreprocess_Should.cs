@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoTests.PreProcessing.Filename;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoTests.PreProcessing.TypenameAsVariableName;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -7,13 +7,13 @@ using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class FilenamePreprocess_Should : TestBase
+public class TypenamePreprocess_Should : TestBase
 {
     [Fact]
     public void PreProcess_SingleFilename()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/Filename";
+        string currentPath = $"{_basePath}/DtoTests/PreProcessing/TypenameAsVariableName";
         string configFilePath = $"{currentPath}/single_filename.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -22,7 +22,9 @@ public class FilenamePreprocess_Should : TestBase
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoTestFileInfos.Where(p => p.Filename == "SingleFilenameDto_Should").ToList().Count.Should()
+        codeGenerator.DtoTestFileInfos
+            .Where(p => p.TypenameAsVariableName == "singleTypenameInDtoTestPreProcess").ToList().Count
+            .Should()
             .Be(1);
     }
 
@@ -30,7 +32,7 @@ public class FilenamePreprocess_Should : TestBase
     public void PreProcess_MultipleFilenames()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/Filename";
+        string currentPath = $"{_basePath}/DtoTests/PreProcessing/TypenameAsVariableName";
         string configFilePath = $"{currentPath}/multiple_filename.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -39,7 +41,9 @@ public class FilenamePreprocess_Should : TestBase
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoTestFileInfos.Where(p => p.Filename == "FirstDto_Should").ToList().Count.Should().Be(1);
-        codeGenerator.DtoTestFileInfos.Where(p => p.Filename == "SecondDto_Should").ToList().Count.Should().Be(1);
+        codeGenerator.DtoTestFileInfos
+            .Where(p => p.Filename == "firstTypenameInDtoTestPreProcess").ToList().Count.Should().Be(1);
+        codeGenerator.DtoTestFileInfos
+            .Where(p => p.Filename == "secondTypenameInDtoTestPreProcess").ToList().Count.Should().Be(1);
     }
 }

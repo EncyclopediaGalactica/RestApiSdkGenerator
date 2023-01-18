@@ -10,6 +10,10 @@
         "solution_base_namespace"
     ],
     "properties": {
+        "lang": {
+            "description": "The generated programming language. For example: cshapr",
+            "type": "string"
+        },
         "openapi_specification_path": {
             "description": "Path to the OpenApi specification file in yaml format",
             "type": "string"

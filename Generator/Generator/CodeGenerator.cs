@@ -1,23 +1,30 @@
 namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator;
 
 using System.Text;
+using Configuration;
 using FluentValidation;
+using Generators;
 using HandlebarsDotNet;
 using Managers;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
+using Models;
 using Newtonsoft.Json;
 
 public class CodeGenerator
 {
-    private readonly string _dtoTestTemplatePath = "Templates/dto_test.handlebars";
+    private readonly string _dtoTestTemplatePath = "Templates/dto_tests.handlebars";
     private readonly IFileManager _fileManager;
     private readonly CodeGeneratorConfiguration _generatorConfiguration;
     private readonly ILogger<CodeGenerator> _logger;
     private readonly OpenApiDocument _openApiDocument;
     private readonly IPathManager _pathManager;
+    private readonly IStringManager _stringManager;
     private readonly ITemplateManager _templateManager;
+    private List<string> _availableCodeGenerators = new List<string> { "csharp" };
+    private ICodeGenerator _codeGenerator;
+    private string _dtoGenerationFinalPath;
 
     private CodeGenerator(
         OpenApiDocument openApiDocument,
@@ -28,18 +35,41 @@ public class CodeGenerator
 
         _openApiDocument = openApiDocument;
         _generatorConfiguration = generatorConfiguration;
+
         _logger = new Logger<CodeGenerator>(LoggerFactory.Create(c => c.AddConsole()));
-
-        _fileManager = new FileManager();
-        _pathManager = new PathManager();
-        _templateManager = new TemplateManager();
-
-        Generate();
+        _fileManager = new FileManagerImpl();
+        _pathManager = new PathManagerImpl();
+        _templateManager = new TemplateManagerImpl();
+        _stringManager = new StringManagerImpl();
+        CreateGenerator(generatorConfiguration);
+        _codeGenerator!.Generate();
+        // Generate();
     }
 
-    public List<GeneratedFileInfo> DtoFileInfos { get; } = new List<GeneratedFileInfo>();
+    public List<FileInfo> DtoFileInfos { get; } = new List<FileInfo>();
 
-    public List<GeneratedFileInfo> DtoTestFileInfos { get; private set; }
+    public List<FileInfo> DtoTestFileInfos { get; private set; }
+
+    private void CreateGenerator(CodeGeneratorConfiguration generatorConfiguration)
+    {
+        if (!_availableCodeGenerators.Contains(generatorConfiguration.Lang.ToLower()))
+        {
+            throw new GeneratorException($"Language, {generatorConfiguration.Lang}, is not available.");
+        }
+
+        switch (generatorConfiguration.Lang)
+        {
+            case "csharp":
+                _codeGenerator = new CSharpGenerator()
+                    .SetGeneratorConfiguration(generatorConfiguration)
+                    .SetOpenApiYamlSchema(_openApiDocument)
+                    .SetFileManager(_fileManager)
+                    .SetPathManager(_pathManager)
+                    .SetTemplateManager(_templateManager)
+                    .SetStringManager(_stringManager);
+                break;
+        }
+    }
 
     private void Generate()
     {
@@ -61,19 +91,44 @@ public class CodeGenerator
         }
     }
 
-    private string CollectDtoGeneratingRelatedPaths()
+    private string DetermineDtoGenerationBasePath()
     {
         StringBuilder builder = new StringBuilder();
-        if (_generatorConfiguration.TestMode)
+        if (_generatorConfiguration.TargetDirectory[0].ToString() == "/")
         {
+            _logger.LogInformation("Target directory is absolute path. Path: {Path}",
+                _generatorConfiguration.TargetDirectory);
             builder.Append(_generatorConfiguration.TargetDirectory);
-            return builder.ToString();
+        }
+        else
+        {
+            _logger.LogInformation("Target directory is relative path. Transform it to absolute");
+            builder.Append(_pathManager.GetCurrentDirectory())
+                .Append("/")
+                .Append(_generatorConfiguration.TargetDirectory);
         }
 
-        builder.Append(_generatorConfiguration.DtoProjectBasePath);
-        if (!string.IsNullOrEmpty(_generatorConfiguration.DtoProjectAdditionalPath))
+        if (!string.IsNullOrEmpty(_generatorConfiguration.DtoProjectBasePath)
+            || !string.IsNullOrWhiteSpace(_generatorConfiguration.DtoProjectBasePath))
         {
-            builder.Append(_generatorConfiguration.DtoProjectAdditionalPath);
+            if (_generatorConfiguration.DtoProjectBasePath[0].ToString() == "/")
+            {
+                _logger.LogInformation("Dto generation base path is absolute path: {Path}",
+                    _generatorConfiguration.DtoProjectBasePath);
+                throw new GeneratorException(
+                    "Dto project base path must be relative path: " +
+                    $"{_generatorConfiguration.DtoProjectBasePath}"
+                );
+            }
+
+            builder.Append("/").Append(_generatorConfiguration.DtoProjectBasePath);
+        }
+
+        if (!string.IsNullOrEmpty(_generatorConfiguration.DtoProjectAdditionalPath)
+            || !string.IsNullOrWhiteSpace(_generatorConfiguration.DtoProjectAdditionalPath))
+        {
+            builder.Append("/")
+                .Append(_generatorConfiguration.DtoProjectAdditionalPath);
         }
 
         return builder.ToString();
@@ -91,12 +146,12 @@ public class CodeGenerator
     private void DtoPhase()
     {
         _logger.LogInformation("=== Dto phase started");
-        CollectDtoInfo();
+        PreProcessDtoDetails();
         CopyDtoPropertiesToDtoTests();
         if (!_generatorConfiguration.SkipDtoGenerating)
         {
-            string dtoTargetPath = CollectDtoGeneratingRelatedPaths();
-            GenerateDtos(dtoTargetPath);
+            _dtoGenerationFinalPath = DetermineDtoGenerationBasePath();
+            GenerateDtos();
         }
 
         if (!_generatorConfiguration.SkipDtoTestsGenerating)
@@ -111,14 +166,54 @@ public class CodeGenerator
     private void PreprocessDtoTestProperties()
     {
         PreprocessDtoTestFileNames();
-        PreProcessDteTestNamespace();
+        PreProcessDtoTestNamespace();
+        PreProcessDtoTestTypenames();
+        PreProcessDtoTestTypenamesAsVariableNames();
     }
 
-    private void PreProcessDteTestNamespace()
+    private void PreProcessDtoTestTypenamesAsVariableNames()
     {
         if (!DtoTestFileInfos.Any()) return;
 
-        foreach (GeneratedFileInfo generatedFileInfo in DtoTestFileInfos)
+        foreach (FileInfo generatedFileInfo in DtoTestFileInfos)
+        {
+            if (!string.IsNullOrEmpty(generatedFileInfo.OriginalTypename)
+                && !string.IsNullOrWhiteSpace(generatedFileInfo.OriginalTypename))
+            {
+                string variableName = $"{generatedFileInfo.OriginalTypename[0].ToString().ToLower()}" +
+                                      $"{generatedFileInfo.OriginalTypename.Substring(
+                                          1,
+                                          generatedFileInfo.OriginalTypename.Length - 1)}";
+                generatedFileInfo.TypenameAsVariableName = variableName;
+            }
+        }
+    }
+
+    private void PreProcessDtoTestTypenames()
+    {
+        if (!DtoTestFileInfos.Any()) return;
+
+        foreach (FileInfo generatedFileInfo in DtoTestFileInfos)
+        {
+            if (!string.IsNullOrEmpty(generatedFileInfo.Typename)
+                && !string.IsNullOrWhiteSpace(generatedFileInfo.Typename))
+            {
+                generatedFileInfo.OriginalTypename = generatedFileInfo.Typename;
+                generatedFileInfo.Typename = PreProcessDtoTestTypename(generatedFileInfo.Typename);
+            }
+        }
+    }
+
+    private string PreProcessDtoTestTypename(string typename)
+    {
+        return $"{typename}_Should";
+    }
+
+    private void PreProcessDtoTestNamespace()
+    {
+        if (!DtoTestFileInfos.Any()) return;
+
+        foreach (FileInfo generatedFileInfo in DtoTestFileInfos)
         {
             if (!string.IsNullOrEmpty(generatedFileInfo.Namespace)
                 && !string.IsNullOrWhiteSpace(generatedFileInfo.Namespace))
@@ -147,12 +242,12 @@ public class CodeGenerator
     {
         if (!DtoTestFileInfos.Any()) return;
 
-        foreach (GeneratedFileInfo generatedFileInfo in DtoTestFileInfos)
+        foreach (FileInfo generatedFileInfo in DtoTestFileInfos)
         {
-            if (!string.IsNullOrEmpty(generatedFileInfo.FileName)
-                && !string.IsNullOrWhiteSpace(generatedFileInfo.FileName))
+            if (!string.IsNullOrEmpty(generatedFileInfo.Filename)
+                && !string.IsNullOrWhiteSpace(generatedFileInfo.Filename))
             {
-                generatedFileInfo.FileName = PreProcessDtoTestFileName(generatedFileInfo.FileName);
+                generatedFileInfo.Filename = PreProcessDtoTestFileName(generatedFileInfo.Filename);
             }
         }
     }
@@ -182,52 +277,85 @@ public class CodeGenerator
     {
         _logger.LogInformation("=== Dto test file generation --> start");
         string basePath = _pathManager.GetCurrentDirectory();
-        string dotTestTemplatePath = _pathManager.BuildPath(
+        string dotTestTemplatePath = _pathManager.BuildPathString(
             basePath,
             _dtoTestTemplatePath);
-        string templateContent = _fileManager.ReadFileContent(dotTestTemplatePath);
+        string templateContent = _fileManager.ReadAllText(dotTestTemplatePath);
+        foreach (FileInfo generatedFileInfo in DtoFileInfos)
+        {
+            string compiledContent = _templateManager.CompileTemplate(
+                templateContent,
+                generatedFileInfo);
+            string path = _pathManager.BuildPathString(
+                _generatorConfiguration.TargetDirectory,
+                _generatorConfiguration.DtoTestProjectBasePath!,
+                _generatorConfiguration.DtoTestProjectAdditionalPath!);
+            string pathWithFilename = _pathManager.BuildPathStringWithFilename(
+                path,
+                $"{generatedFileInfo.Filename}.cs");
+            _fileManager.WriteContentIntoFile(compiledContent, pathWithFilename);
+        }
+
         _logger.LogInformation("=== Dto test file generation --> end");
     }
 
     private void CheckAndCreatePath()
     {
         _logger.LogInformation("=== Checking Dto test path --> start");
-        string targetDirectory = _pathManager.BuildPath(
+        string targetDirectory = _pathManager.BuildPathString(
             _generatorConfiguration.TargetDirectory,
             _generatorConfiguration.DtoTestProjectBasePath!,
             _generatorConfiguration.DtoTestProjectAdditionalPath!);
-        _fileManager.CheckIfExistsOrCreate(targetDirectory);
+        // _fileManager.CheckIfExistsOrCreate(targetDirectory);
         _logger.LogInformation("=== Checking Dto test path --> end");
     }
 
     private void DeleteOldFiles()
     {
         _logger.LogInformation("=== Delete old Dto test files --> start");
-        foreach (GeneratedFileInfo dtoTestFileInfo in DtoTestFileInfos)
+        foreach (FileInfo dtoTestFileInfo in DtoTestFileInfos)
         {
-            string path = _pathManager.BuildPath(
+            string path = _pathManager.BuildPathString(
                 _generatorConfiguration.TargetDirectory,
                 _generatorConfiguration.DtoTestProjectBasePath!,
                 _generatorConfiguration.DtoTestProjectAdditionalPath!);
-            string pathWithFilename = _pathManager.BuildPathWithFilename(path, dtoTestFileInfo.FileName);
+            string pathWithFilename = _pathManager.BuildPathStringWithFilename(path, dtoTestFileInfo.Filename);
             _fileManager.DeleteFile(pathWithFilename);
         }
 
         _logger.LogInformation("=== Delete old Dto test files --> end");
     }
 
-    private void CollectDtoInfo()
+    private void PreProcessDtoDetails()
     {
         foreach (KeyValuePair<string, OpenApiSchema> aSchema in _openApiDocument.Components.Schemas.ToList())
         {
-            DtoFileInfos.Add(new GeneratedFileInfo
+            DtoFileInfos.Add(new FileInfo
             {
-                FileName = PrepareFilename(aSchema),
+                OriginalTypeNameToken = PrepareOriginalTypeNameToken(aSchema),
+                OriginalTypename = PrepareOriginalTypeName(aSchema),
+                Typename = PrepareTypeName(aSchema),
+                Filename = PrepareFilename(aSchema),
                 TargetDirectory = PrepareTargetDirectory(),
                 Namespace = PrepareNamespace(PrepareDtoNamespace()),
                 PropertyInfos = PrepareProperties(aSchema.Value.Properties, aSchema.Value.Required)
             });
         }
+    }
+
+    private string PrepareOriginalTypeNameToken(KeyValuePair<string, OpenApiSchema> aSchema)
+    {
+        return aSchema.Key;
+    }
+
+    private string PrepareOriginalTypeName(KeyValuePair<string, OpenApiSchema> aSchema)
+    {
+        return $"{aSchema.Key}Dto";
+    }
+
+    private string PrepareTypeName(KeyValuePair<string, OpenApiSchema> aSchema)
+    {
+        return aSchema.Key.First().ToString().ToUpper() + aSchema.Key.Substring(1) + "Dto";
     }
 
     private string? PrepareTargetDirectory()
@@ -313,7 +441,7 @@ public class CodeGenerator
         return namespaceString;
     }
 
-    private static string PrepareFilename(KeyValuePair<string, OpenApiSchema> aSchema)
+    private string PrepareFilename(KeyValuePair<string, OpenApiSchema> aSchema)
     {
         return aSchema.Key.First().ToString().ToUpper() + aSchema.Key.Substring(1) + "Dto";
     }
@@ -464,35 +592,20 @@ public class CodeGenerator
         return builder.ToString();
     }
 
-    private void GenerateDtos(string dtoPath)
+    private void GenerateDtos()
     {
         try
         {
             if (DtoFileInfos.Any())
             {
-                foreach (GeneratedFileInfo dtoFileInfo in DtoFileInfos)
+                foreach (FileInfo dtoFileInfo in DtoFileInfos)
                 {
-                    string dtoTemplateString = File.ReadAllText("Templates/dto.handlebars");
-                    HandlebarsTemplate<object, object>? template = Handlebars.Compile(dtoTemplateString);
-                    string? compiledTemplate = template(dtoFileInfo);
-                    if (!Directory.Exists($"{dtoPath}"))
-                    {
-                        Directory.CreateDirectory($"{dtoPath}");
-                    }
-
-                    if (File.Exists($"{dtoPath}/{dtoFileInfo.FileName}.cs"))
-                    {
-                        File.Delete($"{dtoPath}/{dtoFileInfo.FileName}.cs");
-                    }
-
-                    using (FileStream file = File.Open(
-                               $"{dtoPath}/{dtoFileInfo.FileName}.cs",
-                               FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write))
-                    {
-                        file.Write(Encoding.ASCII.GetBytes(compiledTemplate));
-                    }
-
-                    Console.WriteLine($"Generated file: {dtoPath}{dtoFileInfo.FileName}.cs");
+                    string dtoTemplateString = _fileManager.ReadAllText("Templates/dto.handlebars");
+                    string compiledTemplate = _templateManager.CompileTemplate(dtoTemplateString, dtoFileInfo);
+                    string pathWithFilename = _pathManager.BuildPathStringWithFilename(
+                        _dtoGenerationFinalPath, dtoFileInfo.Filename);
+                    _fileManager.WriteContentIntoFile(compiledTemplate, $"{pathWithFilename}.cs");
+                    _logger.LogInformation("Dto file is generated. Path: {Path}", $"{pathWithFilename}.cs");
                 }
             }
         }
@@ -601,7 +714,8 @@ public class CodeGenerator
                 );
                 throw new GeneratorException(
                     "Unsuccessful code generation. For further information see inner exception. " +
-                    $"Inner exception message: {e.Message}",
+                    $"Inner exception message: {e.Message} " +
+                    $"Stack trace: {e.StackTrace}",
                     e);
             }
         }

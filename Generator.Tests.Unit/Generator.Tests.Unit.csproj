@@ -221,6 +221,48 @@
       <None Update="DtoTests\PreProcessing\TargetDirectory\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Dto\PreProcessing\Typename\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\Typename\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\Typename\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\Typename\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Typename\single_filename.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Typename\single_filename.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Typename\multiple_filename.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\Typename\multiple_filename.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\Generation\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\Generation\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\TypenameAsVariableName\single_filename.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\TypenameAsVariableName\single_filename.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\TypenameAsVariableName\multiple_filename.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\TypenameAsVariableName\multiple_filename.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -285,6 +327,15 @@
       <Compile Update="DtoTests\PreProcessing\PropertyName\PropertyNamePreProcessing_Should.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
+      <Compile Update="Dto\Generation\Typename\Reference\ManyComplexityInTheNameInGenerationPhaseDto.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Dto\Generation\Typename\Reference\SimpleInGenerationPhaseDto.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Dto\Generation\Typename\Reference\SomeComplexityInGenerationPhaseDto.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -293,6 +344,7 @@
       <Folder Include="Dto\Generation\NullablePropertyType\Reference" />
       <Folder Include="Dto\Generation\PropertyName\Reference" />
       <Folder Include="Dto\Generation\PropertyType\Reference" />
+      <Folder Include="Dto\Generation\Typename\Reference" />
     </ItemGroup>
 
 </Project>

@@ -1,17 +1,15 @@
 namespace {{this.Namespace}};
 
-/// <summary>
-///     The {{this.FileName}} object.
-/// </summary>
-public class {{this.FileName}}
+<!--{{[String.Append] "Left side -" "- Right side"}}-->
+
+public class {{this.FileName}}_Should
 {
 {{#each this.PropertyInfos}}
-    /// <summary>
-    ///     Gets or set the {{PropertyName}} property's value
-    /// </summary>
-    public {{PropertyTypeName}}{{#IsNullable}}?{{/IsNullable}} {{PropertyName}} { get; set; }
-    {{#unless @last}}
-
-    {{/unless}}
+    public void DoNotChange{{PropertyTypeName}}_Value() {
+        
+        // Arrange
+        {{PropertyTypeName}} 
+        
+    }
 {{/each}}
 }

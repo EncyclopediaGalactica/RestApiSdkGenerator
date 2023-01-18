@@ -1,9 +1,15 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Configuration;
 
 using Newtonsoft.Json;
 
 public class CodeGeneratorConfiguration
 {
+    /// <summary>
+    ///     Gets or sets the generated programming language name
+    /// </summary>
+    [JsonProperty("lang")]
+    public string Lang { get; set; }
+
     [JsonProperty("openapi_specification_path")]
     public string OpenApiSpecificationPath { get; set; }
 

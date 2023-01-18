@@ -3,6 +3,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoTest
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
+using Generator.Models;
 using Xunit;
 
 [ExcludeFromCodeCoverage]
@@ -24,10 +25,10 @@ public class PropertyTypePreProcessing_Should : TestBase
         codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
         codeGenerator.DtoTestFileInfos.Count.Should().Be(1);
         codeGenerator.DtoTestFileInfos
-            .Where(p => p.FileName == "PropertyTypeInDtoTestsPreprocessingDto").ToList().Count.Should().Be(1);
+            .Where(p => p.Filename == "PropertyTypeInDtoTestsPreprocessingDto").ToList().Count.Should().Be(1);
 
-        GeneratedFileInfo aSingleDto = codeGenerator.DtoFileInfos
-            .First(p => p.FileName == "PropertyTypeInDtoTestsPreprocessingDto");
+        FileInfo aSingleDto = codeGenerator.DtoFileInfos
+            .First(p => p.Filename == "PropertyTypeInDtoTestsPreprocessingDto");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "IntegerType").PropertyTypeName.Should().Be("int");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "LongType").PropertyTypeName.Should().Be("long");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "FloatType").PropertyTypeName.Should().Be("float");

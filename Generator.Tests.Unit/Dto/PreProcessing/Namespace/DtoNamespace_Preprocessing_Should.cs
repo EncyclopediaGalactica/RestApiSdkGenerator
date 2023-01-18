@@ -23,8 +23,8 @@ public class DtoNamespace_Preprocessing_Should : TestBase
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoFileInfos.Should().NotBeEmpty();
         codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.First(p => p.FileName == "PetDto")
+        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto")
             .Namespace.Should().Be("Proper.Solution.Namespace.Dto.Project.Namespace.Smallcap");
     }
 
@@ -42,8 +42,8 @@ public class DtoNamespace_Preprocessing_Should : TestBase
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoFileInfos.Should().NotBeEmpty();
         codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.First(p => p.FileName == "PetDto")
+        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto")
             .Namespace.Should().Be("Proper.Solution.Namespace.Dtoprojectnamespacesmallcap");
     }
 
@@ -61,8 +61,8 @@ public class DtoNamespace_Preprocessing_Should : TestBase
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoFileInfos.Should().NotBeEmpty();
         codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.First(p => p.FileName == "PetDto")
+        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto")
             .Namespace.Should().Be("Proper.Solution.Namespace.Dto.Namespace");
     }
 }

@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Configuration;
 
 using FluentValidation;
 

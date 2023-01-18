@@ -3,6 +3,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoTest
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
+using Generator.Models;
 using Xunit;
 
 [ExcludeFromCodeCoverage]
@@ -24,11 +25,11 @@ public class NullablePropertyType_Preprocessing_Should : TestBase
         codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
         codeGenerator.DtoTestFileInfos.Count.Should().Be(1);
         codeGenerator.DtoTestFileInfos.Where(
-                p => p.FileName == "NullablePropertyTypeInDtoPreprocessingDto")
+                p => p.Filename == "NullablePropertyTypeInDtoPreprocessingDto")
             .ToList().Count.Should().Be(1);
 
-        GeneratedFileInfo aSingleDto = codeGenerator.DtoTestFileInfos
-            .First(p => p.FileName == "NullablePropertyTypeInDtoPreprocessingDto");
+        FileInfo aSingleDto = codeGenerator.DtoTestFileInfos
+            .First(p => p.Filename == "NullablePropertyTypeInDtoPreprocessingDto");
 
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringType").PropertyTypeName.Should().Be("string");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringType").IsNullable.Should().BeFalse();

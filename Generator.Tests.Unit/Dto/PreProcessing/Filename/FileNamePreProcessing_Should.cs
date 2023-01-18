@@ -22,8 +22,8 @@ public class FileNamePreProcessing_Should : TestBase
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "NewPetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "ErrorModelDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoFileInfos.Where(p => p.Filename == "NewPetDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoFileInfos.Where(p => p.Filename == "ErrorModelDto").ToList().Count.Should().Be(1);
     }
 }

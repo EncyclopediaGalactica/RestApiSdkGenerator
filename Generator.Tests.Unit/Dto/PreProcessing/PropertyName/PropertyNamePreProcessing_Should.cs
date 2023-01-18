@@ -3,6 +3,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Pre
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
+using Generator.Models;
 using Xunit;
 
 [ExcludeFromCodeCoverage]
@@ -23,9 +24,9 @@ public class PropertyNamePreProcessing_Should : TestBase
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoFileInfos.Should().NotBeEmpty();
         codeGenerator.DtoFileInfos.Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
 
-        GeneratedFileInfo aSingleDto = codeGenerator.DtoFileInfos.First(p => p.FileName == "PetDto");
+        FileInfo aSingleDto = codeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "Id").Should().NotBeNull();
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "Name").Should().NotBeNull();
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "TagName").Should().NotBeNull();

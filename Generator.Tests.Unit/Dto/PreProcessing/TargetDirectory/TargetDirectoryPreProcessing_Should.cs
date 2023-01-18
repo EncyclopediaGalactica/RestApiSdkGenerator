@@ -3,6 +3,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Pre
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
+using Generator.Models;
 using Xunit;
 
 [ExcludeFromCodeCoverage]
@@ -23,9 +24,9 @@ public class TargetDirectoryPreProcessing_Should : TestBase
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoFileInfos.Should().NotBeEmpty();
         codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "TargetDirectoryDto").ToList().Count.Should().Be(1);
+        codeGenerator.DtoFileInfos.Where(p => p.Filename == "TargetDirectoryDto").ToList().Count.Should().Be(1);
 
-        GeneratedFileInfo aSingleDto = codeGenerator.DtoFileInfos.First(p => p.FileName == "TargetDirectoryDto");
+        FileInfo aSingleDto = codeGenerator.DtoFileInfos.First(p => p.Filename == "TargetDirectoryDto");
         aSingleDto.TargetDirectory.Should().NotBeNull();
         aSingleDto.TargetDirectory.Should().Be("Dto/PreProcessing/TargetDirectory/");
     }

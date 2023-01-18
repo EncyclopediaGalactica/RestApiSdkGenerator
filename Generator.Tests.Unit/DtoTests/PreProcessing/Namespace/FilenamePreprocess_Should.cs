@@ -22,7 +22,7 @@ public class NamespacePreprocess_Should : TestBase
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoTestFileInfos.First(p => p.FileName == "SingleFilenameDto_Should")
+        codeGenerator.DtoTestFileInfos.First(p => p.Filename == "SingleFilenameDto_Should")
             .Namespace.Should().Be("Solution.Namespace.Single");
     }
 
@@ -39,9 +39,9 @@ public class NamespacePreprocess_Should : TestBase
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoTestFileInfos.First(p => p.FileName == "FirstDto_Should")
+        codeGenerator.DtoTestFileInfos.First(p => p.Filename == "FirstDto_Should")
             .Namespace.Should().Be("Solution.Namespace.Multiple");
-        codeGenerator.DtoTestFileInfos.First(p => p.FileName == "SecondDto_Should")
+        codeGenerator.DtoTestFileInfos.First(p => p.Filename == "SecondDto_Should")
             .Namespace.Should().Be("Solution.Namespace.Multiple");
     }
 
@@ -58,7 +58,7 @@ public class NamespacePreprocess_Should : TestBase
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoTestFileInfos.First(p => p.FileName == "SingleDto_Should")
+        codeGenerator.DtoTestFileInfos.First(p => p.Filename == "SingleDto_Should")
             .Namespace.Should().Be("Solution.Namespace.Prov.Single.Dto.Tests");
     }
 
@@ -75,9 +75,9 @@ public class NamespacePreprocess_Should : TestBase
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.DtoTestFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoTestFileInfos.First(p => p.FileName == "FirstNamespaceProvidedDto_Should")
+        codeGenerator.DtoTestFileInfos.First(p => p.Filename == "FirstNamespaceProvidedDto_Should")
             .Namespace.Should().Be("Sol.Namespace.Dto.Tests");
-        codeGenerator.DtoTestFileInfos.First(p => p.FileName == "SecondNamespaceProvidedDto_Should")
+        codeGenerator.DtoTestFileInfos.First(p => p.Filename == "SecondNamespaceProvidedDto_Should")
             .Namespace.Should().Be("Sol.Namespace.Dto.Tests");
     }
 }
