@@ -1,5 +1,7 @@
 namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Processors.CSharp;
 
+using Models;
+
 public interface IDtoProcessor
 {
     void ProcessDtoTypeName(List<FileInfo> dtoFileInfos, string typeNamePostfix);
@@ -11,4 +13,8 @@ public interface IDtoProcessor
         List<FileInfo> dtoFileInfos,
         List<string> reservedWords,
         List<string> valueTypes);
+
+    void ProcessTargetPath(List<FileInfo> dtoFileInfos);
+    void ProcessPathWithFileName(List<FileInfo> dtoFileInfos);
+    void ProcessDtoTemplatePath(List<FileInfo> dtoFileInfos, string dtoTemplatePath);
 }

@@ -11,6 +11,10 @@ public interface IStringManager
     string ConcatCsharpNamespaceTokens(string s1, string s2);
     string ValidateCsharpNamespace(string s);
     string ToLowerCase(string s);
+    void CheckIfFirstCharIsSlashAndThrow(string s);
+    string CheckIfLastCharSlashAndRemoveIt(string s);
+    bool IsLastCharASlash(string s);
+    bool IsFirstCharIsASlash(string s);
 }
 
 public class StringManagerImpl : IStringManager
@@ -130,6 +134,69 @@ public class StringManagerImpl : IStringManager
 
     public string ToLowerCase(string s)
     {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
+        {
+            return s;
+        }
+
         return s.ToLower();
+    }
+
+    public void CheckIfFirstCharIsSlashAndThrow(string s)
+    {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
+        {
+            return;
+        }
+
+        if (s[0].ToString() == "/")
+        {
+            throw new ArgumentException("First character of string cannot be /");
+        }
+    }
+
+    public string CheckIfLastCharSlashAndRemoveIt(string s)
+    {
+        if (string.IsNullOrEmpty(s) && string.IsNullOrWhiteSpace(s))
+        {
+            return s;
+        }
+
+        if (s[^1].ToString() == "/")
+        {
+            return s.Substring(0, s.Length - 2);
+        }
+
+        return s;
+    }
+
+    public bool IsLastCharASlash(string s)
+    {
+        if (string.IsNullOrEmpty(s) && string.IsNullOrWhiteSpace(s))
+        {
+            return false;
+        }
+
+        if (s[^1].ToString() == "/")
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool IsFirstCharIsASlash(string s)
+    {
+        if (string.IsNullOrEmpty(s) && string.IsNullOrWhiteSpace(s))
+        {
+            return false;
+        }
+
+        if (s[0].ToString() == "/")
+        {
+            return true;
+        }
+
+        return false;
     }
 }

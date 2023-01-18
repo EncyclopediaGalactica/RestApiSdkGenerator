@@ -6,9 +6,10 @@ using Processors.CSharp;
 
 public class CSharpGenerator : AbstractGenerator
 {
-    protected const string DtoTypeNamePostFix = "Dto";
-    protected const string DtoFileNamePostFix = "Dto";
-    protected const string FileType = ".cs";
+    private const string DtoTypeNamePostFix = "Dto";
+    private const string DtoFileNamePostFix = "Dto";
+    private const string FileType = ".cs";
+    private const string DtoTemplate = "Templates/dto.handlebars";
 
     private readonly List<string> _reservedWords = new List<string>
     {
@@ -103,9 +104,7 @@ public class CSharpGenerator : AbstractGenerator
 
     public CSharpGenerator()
     {
-        _dtoProcessor = new DtoProcessor(
-            FileManager,
-            StringManager);
+        _dtoProcessor = new DtoProcessor(FileManager, StringManager, PathManager);
     }
 
     protected override string DtoTemplatePath { get; }
@@ -126,8 +125,16 @@ public class CSharpGenerator : AbstractGenerator
         GetOriginalPropertyMetadataFromOpenApiSchema();
         GetOriginalBaseNamespaceTokenFromConfiguration();
         GetOriginalDtoNamespaceTokenFromConfiguration();
+        GetOriginalDtoProjectAdditionalPathFromConfiguration();
+
         PreProcessDtoMetadata();
         CopyRenderDataToRenderObject();
+        Render();
+    }
+
+    private void Render()
+    {
+        throw new NotImplementedException();
     }
 
     private void CopyRenderDataToRenderObject()
@@ -157,7 +164,7 @@ public class CSharpGenerator : AbstractGenerator
             _dtoFileInfosRender.Add(
                 new FileInfo
                 {
-                    Filename = fileInfo.Filename,
+                    TargetPathWithFileName = fileInfo.TargetPathWithFileName,
                     PropertyInfos = propertyInfos
                 });
         }
@@ -167,6 +174,9 @@ public class CSharpGenerator : AbstractGenerator
     {
         _dtoProcessor.ProcessDtoTypeName(DtoFileInfos, DtoTypeNamePostFix);
         _dtoProcessor.ProcessDtoFileNames(DtoFileInfos, DtoFileNamePostFix, FileType);
+        _dtoProcessor.ProcessTargetPath(DtoFileInfos);
+        _dtoProcessor.ProcessPathWithFileName(DtoFileInfos);
+        _dtoProcessor.ProcessDtoTemplatePath(DtoFileInfos, DtoTemplatePath);
         _dtoProcessor.ProcessDtoNamespace(DtoFileInfos);
         _dtoProcessor.ProcessPropertyNames(DtoFileInfos, _reservedWords);
         _dtoProcessor.ProcessPropertyTypeNames(DtoFileInfos, _reservedWords, _valueTypes);

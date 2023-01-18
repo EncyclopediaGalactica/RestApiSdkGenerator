@@ -71,4 +71,7 @@ public class FileInfo
     ///     Gets or sets the property info
     /// </summary>
     public ICollection<PropertyInfo> PropertyInfos { get; set; } = new List<PropertyInfo>();
+
+    public string TargetPathWithFileName { get; set; }
+    public string TemplateAbsolutePathWithFileName { get; set; }
 }
