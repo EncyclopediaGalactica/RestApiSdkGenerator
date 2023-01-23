@@ -102,17 +102,21 @@ public class CSharpGenerator : AbstractGenerator
     private IDtoProcessor _dtoProcessor;
     private Logger<CSharpGenerator> _logger = new(LoggerFactory.Create(c => c.AddConsole()));
 
-    public CSharpGenerator()
-    {
-        _dtoProcessor = new DtoProcessor(FileManager, StringManager, PathManager);
-    }
-
     protected override string DtoTemplatePath { get; }
 
-    public override void Generate()
+    public override ICodeGenerator Generate()
     {
-        if (ShouldIRunDtoGeneration()) GenerateDtos();
-        if (ShouldIRunDtoTestGeneration()) GenerateDtosTests();
+        if (!ShouldIRunDtoGeneration())
+        {
+            GenerateDtos();
+        }
+
+        if (!ShouldIRunDtoTestGeneration())
+        {
+            GenerateDtosTests();
+        }
+
+        return this;
     }
 
     public override void GenerateDtos()
@@ -134,7 +138,19 @@ public class CSharpGenerator : AbstractGenerator
 
     private void Render()
     {
-        throw new NotImplementedException();
+        if (!_dtoFileInfosRender.Any())
+        {
+            _logger.LogInformation("No render objects available");
+        }
+
+        foreach (FileInfo fileInfo in _dtoFileInfosRender)
+        {
+            string compiledContent = TemplateManager.CompileTemplate(
+                fileInfo.TemplateAbsolutePathWithFileName,
+                fileInfo);
+            FileManager.DeleteFile(fileInfo.TargetPathWithFileName);
+            FileManager.WriteContentIntoFile(compiledContent, fileInfo.TargetPathWithFileName);
+        }
     }
 
     private void CopyRenderDataToRenderObject()
@@ -165,7 +181,9 @@ public class CSharpGenerator : AbstractGenerator
                 new FileInfo
                 {
                     TargetPathWithFileName = fileInfo.TargetPathWithFileName,
-                    PropertyInfos = propertyInfos
+                    PropertyInfos = propertyInfos,
+                    Namespace = fileInfo.Namespace,
+                    TemplateAbsolutePathWithFileName = fileInfo.TemplateAbsolutePathWithFileName
                 });
         }
     }
@@ -175,15 +193,22 @@ public class CSharpGenerator : AbstractGenerator
         _dtoProcessor.ProcessDtoTypeName(DtoFileInfos, DtoTypeNamePostFix);
         _dtoProcessor.ProcessDtoFileNames(DtoFileInfos, DtoFileNamePostFix, FileType);
         _dtoProcessor.ProcessTargetPath(DtoFileInfos);
+        _dtoProcessor.CheckIfPropertyNameIsReservedWord(DtoFileInfos, _reservedWords);
         _dtoProcessor.ProcessPathWithFileName(DtoFileInfos);
         _dtoProcessor.ProcessDtoTemplatePath(DtoFileInfos, DtoTemplatePath);
         _dtoProcessor.ProcessDtoNamespace(DtoFileInfos);
-        _dtoProcessor.ProcessPropertyNames(DtoFileInfos, _reservedWords);
+        _dtoProcessor.ProcessPropertyNames(DtoFileInfos);
         _dtoProcessor.ProcessPropertyTypeNames(DtoFileInfos, _reservedWords, _valueTypes);
     }
 
     public override void GenerateDtosTests()
     {
         throw new NotImplementedException();
+    }
+
+    public override ICodeGenerator Initialize()
+    {
+        _dtoProcessor = new DtoProcessor(FileManager, StringManager, PathManager);
+        return this;
     }
 }

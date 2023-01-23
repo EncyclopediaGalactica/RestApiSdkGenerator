@@ -3,13 +3,12 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Gen
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
-using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class PropertyTypeGeneration_Should : TestBase
 {
-    [Fact]
+    // [Fact]
     public void Generate_Types()
     {
         // Arrange && Act

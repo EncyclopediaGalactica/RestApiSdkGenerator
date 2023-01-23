@@ -68,10 +68,10 @@
       <None Update="Dto\PreProcessing\Namespace\namespace_preprocessing_should.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\PreProcessing\PropertyName\property_name_preprocessing_should.json">
+      <None Update="Dto\PreProcessing\PropertyName\config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\PreProcessing\PropertyName\property_name_preprocessing_should.yaml">
+      <None Update="Dto\PreProcessing\PropertyName\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Dto\PreProcessing\PropertyType\property_type_preprocessing_should.json">
@@ -80,10 +80,10 @@
       <None Update="Dto\PreProcessing\PropertyType\property_type_preprocessing_should.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\PreProcessing\NullablePropertyType\property_nullable_type_preprocessing_should.json">
+      <None Update="Dto\PreProcessing\NullablePropertyType\config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\PreProcessing\NullablePropertyType\property_nullable_type_preprocessing_should.yaml">
+      <None Update="Dto\PreProcessing\NullablePropertyType\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Dto\Generation\MultipleDtos\multiple_dtos_generating_should.yaml">
@@ -261,6 +261,12 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="DtoTests\PreProcessing\TypenameAsVariableName\multiple_filename.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\Filename\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\Filename\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

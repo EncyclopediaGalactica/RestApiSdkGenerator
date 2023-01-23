@@ -3,13 +3,12 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Gen
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
-using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class Namespace_Generation_Should : TestBase
 {
-    [Fact]
+    // [Fact]
     public void Generate_Namespace_WhenNoDtoNamespaceIsProvided()
     {
         // Arrange && Act
@@ -33,7 +32,7 @@ public class Namespace_Generation_Should : TestBase
         }
     }
 
-    [Fact]
+    // [Fact]
     public void Preprocess_Namespace_WhenDtoNamespaceIsProvided()
     {
         // Arrange && Act

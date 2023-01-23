@@ -58,14 +58,14 @@ public class DtoProcessor : IDtoProcessor
 
         foreach (FileInfo fileInfo in dtoFileInfos)
         {
-            fileInfo.Namespace = _stringManager.ValidateCsharpNamespace(
+            fileInfo.Namespace = _stringManager.MakeCapitalLetterTheOneAfterTheDot(
                 _stringManager.ConcatCsharpNamespaceTokens(
                     fileInfo.OriginalBaseNamespaceToken,
                     fileInfo.OriginalDtoNamespaceToken));
         }
     }
 
-    public void ProcessPropertyNames(List<FileInfo> dtoFileInfos, List<string> reservedWords)
+    public void ProcessPropertyNames(List<FileInfo> dtoFileInfos)
     {
         if (!dtoFileInfos.Any())
         {
@@ -77,14 +77,7 @@ public class DtoProcessor : IDtoProcessor
         {
             foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
             {
-                if (reservedWords.Contains(propertyInfo.OriginalPropertyNameToken))
-                {
-                    _logger.LogInformation(
-                        "Property name - {PN} - is a reserved word. Please fix it",
-                        propertyInfo.OriginalPropertyNameToken);
-                }
-
-                propertyInfo.PropertyName = _stringManager.MakeFirstCharUpperCase(
+                propertyInfo.PropertyName = _stringManager.MakeSnakeCaseToPascalCase(
                     propertyInfo.OriginalPropertyNameToken);
             }
         }
@@ -226,6 +219,31 @@ public class DtoProcessor : IDtoProcessor
             }
 
             fileInfo.TemplateAbsolutePathWithFileName = builder.ToString();
+        }
+    }
+
+    public void CheckIfPropertyNameIsReservedWord(List<FileInfo> dtoFileInfos, List<string> reservedWords)
+    {
+        if (dtoFileInfos.Any())
+        {
+            _logger.LogInformation("Dto file infos is empty");
+        }
+
+        if (reservedWords.Any())
+        {
+            _logger.LogInformation("List of reserved is empty");
+        }
+
+        foreach (FileInfo fileInfo in dtoFileInfos)
+        {
+            foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
+            {
+                if (reservedWords.Contains(propertyInfo.OriginalPropertyNameToken.ToLower()))
+                {
+                    throw new GeneratorException(
+                        $"PropertyName - {propertyInfo.OriginalPropertyNameToken} - is a reserved word.");
+                }
+            }
         }
     }
 

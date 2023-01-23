@@ -5,61 +5,66 @@ using Microsoft.Extensions.Logging;
 
 public interface IStringManager
 {
-    string Concat(string s1, string s2);
-    string Concat(string s1, string s2, string s3);
-    string MakeFirstCharUpperCase(string s);
+    string Concat(string? s1, string? s2);
+    string Concat(string? s1, string? s2, string? s3);
+    string? MakeFirstCharUpperCase(string s);
     string ConcatCsharpNamespaceTokens(string s1, string s2);
-    string ValidateCsharpNamespace(string s);
+    string MakeCapitalLetterTheOneAfterTheDot(string s);
     string ToLowerCase(string s);
     void CheckIfFirstCharIsSlashAndThrow(string s);
-    string CheckIfLastCharSlashAndRemoveIt(string s);
+    string? CheckIfLastCharSlashAndRemoveIt(string s);
     bool IsLastCharASlash(string s);
     bool IsFirstCharIsASlash(string s);
+    string MakeSnakeCaseToPascalCase(string s);
 }
 
 public class StringManagerImpl : IStringManager
 {
     private readonly Logger<StringManagerImpl> _logger = new(LoggerFactory.Create(c => c.AddConsole()));
 
-    public string Concat(string s1, string s2)
-    {
-        if (string.IsNullOrEmpty(s1)
-            || string.IsNullOrWhiteSpace(s1)
-            || string.IsNullOrEmpty(s2)
-            || string.IsNullOrWhiteSpace(s2))
-        {
-            _logger.LogInformation("First or second parameter is empty, or null or whitespace");
-        }
-
-        return $"{s1}{s2}";
-    }
-
-    public string Concat(string s1, string s2, string s3)
+    public string Concat(string? s1, string? s2)
     {
         StringBuilder builder = new StringBuilder();
         if (!string.IsNullOrEmpty(s1) && !string.IsNullOrWhiteSpace(s1))
         {
-            builder.Append(s1);
+            builder.Append(s1.Trim());
         }
 
         if (!string.IsNullOrEmpty(s2) && !string.IsNullOrWhiteSpace(s2))
         {
-            builder.Append(s2);
-        }
-
-        if (!string.IsNullOrEmpty(s3) && !string.IsNullOrWhiteSpace(s3))
-        {
-            builder.Append(s3);
+            builder.Append(s2.Trim());
         }
 
         return builder.ToString();
     }
 
-    public string MakeFirstCharUpperCase(string s)
+    public string Concat(string? s1, string? s2, string? s3)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (!string.IsNullOrEmpty(s1) && !string.IsNullOrWhiteSpace(s1))
+        {
+            builder.Append(s1.Trim());
+        }
+
+        if (!string.IsNullOrEmpty(s2) && !string.IsNullOrWhiteSpace(s2))
+        {
+            builder.Append(s2.Trim());
+        }
+
+        if (!string.IsNullOrEmpty(s3) && !string.IsNullOrWhiteSpace(s3))
+        {
+            builder.Append(s3.Trim());
+        }
+
+        return builder.ToString();
+    }
+
+    public string? MakeFirstCharUpperCase(string s)
     {
         if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
         {
             _logger.LogInformation("Input string is null, empty or whitespace");
+            return s;
         }
 
         return $"{s[0].ToString().ToUpper()}{s.Substring(1, s.Length - 1)}";
@@ -77,7 +82,7 @@ public class StringManagerImpl : IStringManager
 
             if (s1[^1].ToString() == ".")
             {
-                builder.Append(s1[^2]);
+                builder.Append(s1.Substring(0, s1.Length - 1));
             }
             else
             {
@@ -94,18 +99,32 @@ public class StringManagerImpl : IStringManager
 
             if (s2[^1].ToString() == ".")
             {
-                builder.Append(".").Append(s2[^2]);
+                if (builder.Length > 0)
+                {
+                    builder.Append(".").Append(s2[..^1]);
+                }
+                else
+                {
+                    builder.Append(s2[..^1]);
+                }
             }
             else
             {
-                builder.Append(s2);
+                if (builder.Length > 0)
+                {
+                    builder.Append(".").Append(s2);
+                }
+                else
+                {
+                    builder.Append(s2);
+                }
             }
         }
 
         return builder.ToString();
     }
 
-    public string ValidateCsharpNamespace(string s)
+    public string MakeCapitalLetterTheOneAfterTheDot(string s)
     {
         StringBuilder builder = new StringBuilder();
         bool shouldBeCapital = false;
@@ -114,17 +133,23 @@ public class StringManagerImpl : IStringManager
             if (i == 0)
             {
                 builder.Append(s[i].ToString().ToUpper());
+                continue;
             }
 
             if (shouldBeCapital)
             {
                 builder.Append(s[i].ToString().ToUpper());
                 shouldBeCapital = false;
+                continue;
             }
 
             if (s[i].ToString() == ".")
             {
                 shouldBeCapital = true;
+                builder.Append(s[i]);
+            }
+            else
+            {
                 builder.Append(s[i]);
             }
         }
@@ -155,7 +180,7 @@ public class StringManagerImpl : IStringManager
         }
     }
 
-    public string CheckIfLastCharSlashAndRemoveIt(string s)
+    public string? CheckIfLastCharSlashAndRemoveIt(string s)
     {
         if (string.IsNullOrEmpty(s) && string.IsNullOrWhiteSpace(s))
         {
@@ -164,7 +189,7 @@ public class StringManagerImpl : IStringManager
 
         if (s[^1].ToString() == "/")
         {
-            return s.Substring(0, s.Length - 2);
+            return s[..^1];
         }
 
         return s;
@@ -198,5 +223,41 @@ public class StringManagerImpl : IStringManager
         }
 
         return false;
+    }
+
+    public string MakeSnakeCaseToPascalCase(string s)
+    {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
+        {
+            return s;
+        }
+
+        bool makeNextcharCapital = false;
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (i == 0 && s[i].ToString() != "_")
+            {
+                builder.Append(s[0].ToString().ToUpper());
+                continue;
+            }
+
+            if (s[i].ToString() == "_")
+            {
+                makeNextcharCapital = true;
+                continue;
+            }
+
+            if (makeNextcharCapital)
+            {
+                builder.Append(s[i].ToString().ToUpper());
+                makeNextcharCapital = false;
+                continue;
+            }
+
+            builder.Append(s[i]);
+        }
+
+        return builder.ToString();
     }
 }

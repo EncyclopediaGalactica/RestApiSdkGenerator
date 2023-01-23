@@ -14,16 +14,20 @@ public class FileNamePreProcessing_Should : TestBase
     {
         // Arrange && Act
         string currentPath = $"{_basePath}/Dto/PreProcessing/Filename";
-        string configFilePath = $"{currentPath}/filename_preprocessing_should.json";
+        string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.Where(p => p.Filename == "NewPetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.Where(p => p.Filename == "ErrorModelDto").ToList().Count.Should().Be(1);
+        codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos
+            .Where(p => p.Filename == "PetDto.cs").ToList().Count.Should().Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos
+            .Where(p => p.Filename == "NewPetDto.cs").ToList().Count.Should().Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos
+            .Where(p => p.Filename == "ErrorModelDto.cs").ToList().Count.Should().Be(1);
     }
 }

@@ -11,8 +11,8 @@ public interface IFileManager
     ///         If the files does not exist no error will be displayed
     ///     </remarks>
     /// </summary>
-    /// <param name="pathWithFilename">path to the file</param>
-    void DeleteFile(string pathWithFilename);
+    /// <param name="pathToFile">path to the file</param>
+    void DeleteFile(string pathToFile);
 
     /// <summary>
     ///     Checks if the directory exists. If not creates one.
@@ -20,8 +20,10 @@ public interface IFileManager
     ///         It creates only the last segment of the path. If further segments are missing it fails.
     ///     </remarks>
     /// </summary>
-    /// <param name="dir">path to be checked</param>
-    void CheckIfExistsOrCreate(string dir);
+    /// <param name="pathToFile">path to be checked</param>
+    void CheckIfExistsOrCreate(string pathToFile);
+
+    bool CheckIfFileExist(string pathToFile);
 
     /// <summary>
     ///     Reads the content of the designated file and stores in memory for further processing
@@ -37,68 +39,90 @@ public interface IFileManager
     ///         One has to make sure the file exist.
     ///     </remarks>
     /// </summary>
-    /// <param name="compiledContent">the content</param>
+    /// <param name="content">the content</param>
     /// <param name="pathToFile">the file</param>
-    void WriteContentIntoFile(string compiledContent, string pathToFile);
+    void WriteContentIntoFile(string content, string pathToFile);
 }
 
 public class FileManagerImpl : IFileManager
 {
-    private ILogger<FileManagerImpl> _logger =
+    private readonly ILogger<FileManagerImpl> _logger =
         new Logger<FileManagerImpl>(LoggerFactory.Create(c => { c.AddConsole(); }));
 
     /// <inheritdoc />
-    public void DeleteFile(string pathWithFilename)
+    public void DeleteFile(string pathToFile)
     {
-        if (string.IsNullOrEmpty(pathWithFilename) || string.IsNullOrWhiteSpace(pathWithFilename))
+        if (!string.IsNullOrEmpty(pathToFile)
+            || !string.IsNullOrWhiteSpace(pathToFile))
         {
-            if (File.Exists(pathWithFilename))
+            if (CheckIfFileExist(pathToFile))
             {
-                File.Delete(pathWithFilename);
-                _logger.LogInformation("File is deleted: {Path}", pathWithFilename);
+                File.Delete(pathToFile);
+                _logger.LogInformation("File is deleted: {Path}", pathToFile);
                 return;
             }
 
-            _logger.LogInformation("Path does not exist: {Path}", pathWithFilename);
+            _logger.LogInformation("Path does not exist: {Path}", pathToFile);
             return;
         }
 
-        _logger.LogInformation("Path is not provided: {Path}", pathWithFilename);
+        _logger.LogInformation("Path is not provided: {Path}", pathToFile);
     }
 
     /// <inheritdoc />
-    public void CheckIfExistsOrCreate(string dir)
+    public void CheckIfExistsOrCreate(string pathToFile)
     {
-        if (!File.Exists(dir))
+        if (string.IsNullOrEmpty(pathToFile)
+            || string.IsNullOrWhiteSpace(pathToFile))
         {
-            _logger.LogInformation("Path does not exist, it will be created. {Path}", dir);
-            File.Create(dir);
+            throw new ArgumentNullException(nameof(pathToFile));
         }
+
+        if (CheckIfFileExist(pathToFile)) return;
+
+        _logger.LogInformation("Path does not exist, it will be created. {Path}", pathToFile);
+        File.Create(pathToFile);
+    }
+
+    public bool CheckIfFileExist(string pathToFile)
+    {
+        if (!string.IsNullOrEmpty(pathToFile)
+            && !string.IsNullOrWhiteSpace(pathToFile))
+        {
+            return File.Exists(pathToFile);
+        }
+
+        return false;
     }
 
     /// <inheritdoc />
     public string ReadAllText(string pathToFile)
     {
+        if (string.IsNullOrEmpty(pathToFile)
+            || string.IsNullOrWhiteSpace(pathToFile))
+        {
+            throw new ArgumentNullException(nameof(pathToFile));
+        }
+
         string? result = File.ReadAllText(pathToFile);
 
         if (string.IsNullOrEmpty(result) || string.IsNullOrWhiteSpace(result))
         {
             _logger.LogInformation(
                 "Reading file resulted empty or null. Filepath: {PathToFile}", pathToFile);
-            throw new Exception($"Reading file resulted empty or null. " +
-                                $"Filepath: {pathToFile}");
         }
 
         return result;
     }
 
-    public void WriteContentIntoFile(string compiledContent, string pathToFile)
+    public void WriteContentIntoFile(string content, string pathToFile)
     {
         ASCIIEncoding asciiEncoding = new ASCIIEncoding();
         using FileStream fileStream = File.Open(pathToFile,
             FileMode.OpenOrCreate,
             FileAccess.ReadWrite,
             FileShare.Inheritable);
-        fileStream.Write(asciiEncoding.GetBytes(compiledContent), 0, asciiEncoding.GetByteCount(compiledContent));
+        fileStream.Write(asciiEncoding.GetBytes(content), 0, asciiEncoding.GetByteCount(content));
+        _logger.LogInformation("Content is written in the {file}", pathToFile);
     }
 }

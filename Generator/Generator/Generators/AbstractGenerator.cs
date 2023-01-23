@@ -22,11 +22,11 @@ public abstract class AbstractGenerator : ICodeGenerator
     protected IStringManager StringManager;
 
     protected ITemplateManager TemplateManager;
+    protected abstract string DtoTemplatePath { get; }
 
     public List<FileInfo> DtoFileInfos { get; } = new List<FileInfo>();
 
     public List<FileInfo> DtoTestFileInfos { get; } = new List<FileInfo>();
-    protected abstract string DtoTemplatePath { get; }
 
     public ICodeGenerator SetTemplateManager(ITemplateManager templateManager)
     {
@@ -53,7 +53,7 @@ public abstract class AbstractGenerator : ICodeGenerator
     public ICodeGenerator SetFileManager(IFileManager fileManager)
     {
         ArgumentNullException.ThrowIfNull(fileManager);
-        this.FileManager = fileManager;
+        FileManager = fileManager;
         return this;
     }
 
@@ -64,7 +64,7 @@ public abstract class AbstractGenerator : ICodeGenerator
         return this;
     }
 
-    public abstract void Generate();
+    public abstract ICodeGenerator Generate();
     public abstract void GenerateDtos();
     public abstract void GenerateDtosTests();
 
@@ -74,6 +74,8 @@ public abstract class AbstractGenerator : ICodeGenerator
         StringManager = stringManager;
         return this;
     }
+
+    public abstract ICodeGenerator Initialize();
 
     protected bool ShouldIRunDtoGeneration()
     {

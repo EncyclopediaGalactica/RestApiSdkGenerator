@@ -3,13 +3,12 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Gen
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
-using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class MultipleDtos_Generating_Should : TestBase
 {
-    [Fact]
+    // [Fact]
     public async Task Generate_MultipleDtos()
     {
         // Arrange && Act

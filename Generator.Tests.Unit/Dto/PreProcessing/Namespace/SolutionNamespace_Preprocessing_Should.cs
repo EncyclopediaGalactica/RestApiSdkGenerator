@@ -22,10 +22,12 @@ public class SolutionNamespace_Preprocessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto")
+        codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Count.Should().Be(3);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto.cs").ToList().Count.Should()
+            .Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto.cs")
             .Namespace.Should().Be("EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoInfoCollection");
     }
 
@@ -41,10 +43,12 @@ public class SolutionNamespace_Preprocessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto")
+        codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Count.Should().Be(3);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto.cs").ToList().Count.Should()
+            .Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto.cs")
             .Namespace.Should().Be("EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Test.Namespace");
     }
 
@@ -60,10 +64,12 @@ public class SolutionNamespace_Preprocessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto")
+        codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Count.Should().Be(3);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto.cs").ToList().Count.Should()
+            .Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto.cs")
             .Namespace.Should().Be("Smallcap.Namespace");
     }
 
@@ -79,10 +85,12 @@ public class SolutionNamespace_Preprocessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto")
+        codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Count.Should().Be(3);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto.cs").ToList().Count.Should()
+            .Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto.cs")
             .Namespace.Should().Be("Smallcap");
     }
 
@@ -98,10 +106,12 @@ public class SolutionNamespace_Preprocessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Count.Should().Be(3);
-        codeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto")
+        codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Count.Should().Be(3);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto.cs").ToList().Count.Should()
+            .Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto.cs")
             .Namespace.Should().Be("Smallcap");
     }
 }

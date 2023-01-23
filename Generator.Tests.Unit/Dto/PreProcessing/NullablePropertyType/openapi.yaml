@@ -196,26 +196,3 @@ components:
         double_type_nullable:
           type: number
           format: double
-    newPet:
-      type: object
-      required:
-        - name
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        tag:
-          type: string
-    errorModel:
-      type: object
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
