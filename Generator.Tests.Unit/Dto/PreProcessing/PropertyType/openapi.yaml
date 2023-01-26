@@ -152,7 +152,7 @@ paths:
                 "$ref": '#/components/schemas/errorModel'
 components:
   schemas:
-    targetDirectory:
+    pet:
       type: object
       required:
         - id
@@ -177,26 +177,3 @@ components:
         double_type:
           type: number
           format: double
-    newPet:
-      type: object
-      required:
-        - name
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        tag:
-          type: string
-    errorModel:
-      type: object
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string

@@ -60,8 +60,11 @@ public class FileInfo
 
     /// <summary>
     ///     Gets or sets the target directory
+    ///     <remarks>
+    ///         The provided path is absolute path.
+    ///     </remarks>
     /// </summary>
-    public string? TargetDirectory { get; set; }
+    public string? AbsoluteTargetPath { get; set; }
 
     public string OriginalTargetDirectoryToken { get; set; }
     public string OriginalDtoPojectBasePathToken { get; set; }
@@ -74,4 +77,5 @@ public class FileInfo
 
     public string TargetPathWithFileName { get; set; }
     public string TemplateAbsolutePathWithFileName { get; set; }
+    public ISet<string> RequiredProperties { get; set; }
 }

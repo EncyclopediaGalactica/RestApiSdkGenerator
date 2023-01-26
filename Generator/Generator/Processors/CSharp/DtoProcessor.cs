@@ -26,11 +26,12 @@ public class DtoProcessor : IDtoProcessor
         _pathManager = pathManager;
     }
 
-    public void ProcessDtoTypeName(List<FileInfo> dtoFileInfos, string typeNamePostfix)
+    public void ProcessTypename(List<FileInfo> dtoFileInfos, string? typeNamePostfix)
     {
         if (!dtoFileInfos.Any())
         {
             _logger.LogInformation("Dto file infos is empty");
+            return;
         }
 
         if (string.IsNullOrEmpty(typeNamePostfix) || string.IsNullOrWhiteSpace(typeNamePostfix))
@@ -118,6 +119,31 @@ public class DtoProcessor : IDtoProcessor
         }
     }
 
+    public void ProcessNullablePropertyTypes(List<FileInfo> dtoFileInfos)
+    {
+        if (!dtoFileInfos.Any())
+        {
+            _logger.LogInformation("No available dto file infos");
+            return;
+        }
+
+        foreach (FileInfo fileInfo in dtoFileInfos)
+        {
+            foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
+            {
+                if (fileInfo.RequiredProperties.Contains(propertyInfo.OriginalPropertyNameToken))
+                {
+                    propertyInfo.IsNullable = false;
+                }
+                else
+                {
+                    propertyInfo.IsNullable = true;
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc />
     public void ProcessTargetPath(List<FileInfo> dtoFileInfos)
     {
         if (!dtoFileInfos.Any())
@@ -134,10 +160,12 @@ public class DtoProcessor : IDtoProcessor
             {
                 if (_stringManager.IsFirstCharIsASlash(fileInfo.OriginalTargetDirectoryToken))
                 {
-                    builder.Append(_pathManager.GetCurrentDirectory());
+                    builder.Append(
+                        _stringManager.CheckIfLastCharSlashAndRemoveIt(fileInfo.OriginalTargetDirectoryToken));
                 }
                 else
                 {
+                    builder.Append(_pathManager.GetCurrentDirectory()).Append("/");
                     if (_stringManager.IsLastCharASlash(fileInfo.OriginalTargetDirectoryToken))
                     {
                         builder.Append(_stringManager.CheckIfLastCharSlashAndRemoveIt(
@@ -162,7 +190,7 @@ public class DtoProcessor : IDtoProcessor
                     _stringManager.CheckIfLastCharSlashAndRemoveIt(fileInfo.OriginalDtoProjectAdditionalPathToken));
             }
 
-            fileInfo.TargetDirectory = builder.ToString();
+            fileInfo.AbsoluteTargetPath = builder.ToString();
         }
     }
 
@@ -176,7 +204,8 @@ public class DtoProcessor : IDtoProcessor
 
         foreach (FileInfo fileInfo in dtoFileInfos)
         {
-            if (string.IsNullOrEmpty(fileInfo.TargetDirectory) || string.IsNullOrWhiteSpace(fileInfo.TargetDirectory))
+            if (string.IsNullOrEmpty(fileInfo.AbsoluteTargetPath) ||
+                string.IsNullOrWhiteSpace(fileInfo.AbsoluteTargetPath))
             {
                 _logger.LogInformation("Target directory is not defined");
             }
@@ -187,7 +216,7 @@ public class DtoProcessor : IDtoProcessor
             }
 
             fileInfo.TargetPathWithFileName = _stringManager.Concat(
-                fileInfo.TargetDirectory,
+                fileInfo.AbsoluteTargetPath,
                 fileInfo.Filename);
         }
     }
@@ -247,26 +276,146 @@ public class DtoProcessor : IDtoProcessor
         }
     }
 
-    public void ProcessDtoFileNames(List<FileInfo> dtoFileInfos, string dtoFileNamePostFix, string fileType)
+    public void ProcessOpenApiTypesToCsharpTypes(
+        List<FileInfo> dtoFileInfos,
+        Dictionary<string, string> openApiCsharpTypeMap)
     {
         if (dtoFileInfos.Any())
         {
             _logger.LogInformation("Dto file infos is empty");
         }
 
-        if (string.IsNullOrEmpty(dtoFileNamePostFix) || string.IsNullOrWhiteSpace(dtoFileNamePostFix))
+        foreach (FileInfo fileInfo in dtoFileInfos)
+        {
+            foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
+            {
+                propertyInfo.PropertyTypeName = DecideCsharpType(
+                    propertyInfo.OriginalPropertyTypeNameToken,
+                    propertyInfo.OriginalPropertyTypeFormat,
+                    openApiCsharpTypeMap);
+            }
+        }
+    }
+
+    public void ProcessFilename(
+        List<FileInfo> fileInfos,
+        string? filenamePostfix,
+        string? fileType)
+    {
+        if (!fileInfos.Any())
+        {
+            _logger.LogInformation("Dto file infos is empty");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(filenamePostfix)
+            || string.IsNullOrWhiteSpace(filenamePostfix))
         {
             _logger.LogInformation("Typename postfix is empty, null or whitespace");
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        if (string.IsNullOrEmpty(fileType)
+            || string.IsNullOrWhiteSpace(fileType))
+        {
+            throw new ArgumentException("No file type provided");
+        }
+
+        foreach (FileInfo fileInfo in fileInfos)
         {
             string fileName = _stringManager.Concat(
                 _stringManager.MakeFirstCharUpperCase(fileInfo.OriginalTypeNameToken),
-                dtoFileNamePostFix,
-                fileType
+                filenamePostfix,
+                _stringManager.CheckIfFirstCharIsDotOrAddIt(fileType!)
             );
             fileInfo.Filename = fileName;
+        }
+    }
+
+    private string? DecideCsharpType(
+        string? originalPropertyTypenameToken,
+        string? originalPropertyTypeFormatToken,
+        Dictionary<string, string> openApiCsharpTypeMap)
+    {
+        if (string.IsNullOrEmpty(originalPropertyTypenameToken)
+            || string.IsNullOrWhiteSpace(originalPropertyTypenameToken))
+        {
+            _logger.LogInformation("Original property type name parameter is empty. Exiting.");
+            return string.Empty;
+        }
+
+        if (!openApiCsharpTypeMap.Any())
+        {
+            _logger.LogInformation("Open api type - csharp type map is empty. Exiting.");
+            return string.Empty;
+        }
+
+        string? type;
+        switch (originalPropertyTypenameToken.ToLower())
+        {
+            case "integer":
+                switch (originalPropertyTypeFormatToken.ToLower())
+                {
+                    case "int32":
+                        openApiCsharpTypeMap.TryGetValue("integer-int32", out type);
+                        return type;
+
+                    case "int64":
+                        openApiCsharpTypeMap.TryGetValue("integer-int64", out type);
+                        return type;
+
+                    default:
+                        throw new GeneratorException(
+                            $"No type for {originalPropertyTypenameToken} - {originalPropertyTypeFormatToken}");
+                }
+
+            case "number":
+                switch (originalPropertyTypeFormatToken.ToLower())
+                {
+                    case "float":
+                        openApiCsharpTypeMap.TryGetValue("number-float", out type);
+                        return type;
+
+                    case "double":
+                        openApiCsharpTypeMap.TryGetValue("number-double", out type);
+                        return type;
+
+                    default:
+                        throw new GeneratorException(
+                            $"No type for {originalPropertyTypenameToken} - {originalPropertyTypeFormatToken}");
+                }
+
+            case "string":
+                if (!string.IsNullOrEmpty(originalPropertyTypeFormatToken)
+                    || !string.IsNullOrWhiteSpace(originalPropertyTypeFormatToken))
+                {
+                    switch (originalPropertyTypeFormatToken.ToLower())
+                    {
+                        case "byte":
+                            openApiCsharpTypeMap.TryGetValue("string-byte", out type);
+                            return type;
+                        case "binary":
+                            openApiCsharpTypeMap.TryGetValue("string-binary", out type);
+                            return type;
+                        case "date":
+                            openApiCsharpTypeMap.TryGetValue("string-date", out type);
+                            return type;
+                        case "date-time":
+                            openApiCsharpTypeMap.TryGetValue("string-date-time", out type);
+                            return type;
+                        default:
+                            openApiCsharpTypeMap.TryGetValue("string", out type);
+                            return type;
+                    }
+                }
+
+                openApiCsharpTypeMap.TryGetValue("string", out type);
+                return type;
+
+            case "boolean":
+                openApiCsharpTypeMap.TryGetValue("boolean", out type);
+                return type;
+            default:
+                throw new GeneratorException();
         }
     }
 }

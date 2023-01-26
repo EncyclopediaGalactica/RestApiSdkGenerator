@@ -127,7 +127,7 @@ public abstract class AbstractGenerator : ICodeGenerator
         }
     }
 
-    protected void GetOriginalTargetLocationFromConfiguration()
+    protected void GetOriginalTargetPathFromConfiguration()
     {
         if (string.IsNullOrEmpty(GeneratorConfiguration.TargetDirectory)
             || string.IsNullOrWhiteSpace(GeneratorConfiguration.TargetDirectory))
@@ -234,23 +234,17 @@ public abstract class AbstractGenerator : ICodeGenerator
                 continue;
             }
 
+            fileInfo.RequiredProperties = openApiSchemaKeyValuePair.Value.Required;
+
             foreach (KeyValuePair<string, OpenApiSchema> property in openApiSchemaKeyValuePair.Value.Properties)
             {
                 fileInfo.PropertyInfos.Add(new PropertyInfo
                 {
                     OriginalPropertyNameToken = property.Key,
                     OriginalPropertyTypeNameToken = property.Value.Type,
-                    IsNullable = DeterminePropertyNullability(property.Key, property.Value.Required)
+                    OriginalPropertyTypeFormat = property.Value.Format
                 });
             }
         }
-    }
-
-    private bool DeterminePropertyNullability(string key, ISet<string> set)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(key);
-        if (!set.Any()) return false;
-
-        return set.Contains(key);
     }
 }

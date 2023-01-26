@@ -102,6 +102,20 @@ public class CSharpGenerator : AbstractGenerator
     private IDtoProcessor _dtoProcessor;
     private Logger<CSharpGenerator> _logger = new(LoggerFactory.Create(c => c.AddConsole()));
 
+    private Dictionary<string, string> OpenApiCsharpTypeMap = new()
+    {
+        { "integer-int32", "int" },
+        { "integer-int64", "long" },
+        { "number-float", "float" },
+        { "number-double", "double" },
+        { "string", "string" },
+        { "string-byte", "string" },
+        { "string-binary", "string" },
+        { "string-date", "string" },
+        { "string-date-time", "string" },
+        { "boolean", "bool" },
+    };
+
     protected override string DtoTemplatePath { get; }
 
     public override ICodeGenerator Generate()
@@ -121,14 +135,14 @@ public class CSharpGenerator : AbstractGenerator
 
     public override void GenerateDtos()
     {
-        GetOriginalTargetLocationFromConfiguration();
-        GetOriginalDtoProjectBasePathFromConfiguration();
-        GetOriginalDtoProjectAdditionalPathFromConfiguration();
-
         GetOriginalTypeNameTokenFromOpenApiSchema();
         GetOriginalPropertyMetadataFromOpenApiSchema();
         GetOriginalBaseNamespaceTokenFromConfiguration();
         GetOriginalDtoNamespaceTokenFromConfiguration();
+        GetOriginalDtoProjectAdditionalPathFromConfiguration();
+
+        GetOriginalTargetPathFromConfiguration();
+        GetOriginalDtoProjectBasePathFromConfiguration();
         GetOriginalDtoProjectAdditionalPathFromConfiguration();
 
         PreProcessDtoMetadata();
@@ -190,8 +204,8 @@ public class CSharpGenerator : AbstractGenerator
 
     private void PreProcessDtoMetadata()
     {
-        _dtoProcessor.ProcessDtoTypeName(DtoFileInfos, DtoTypeNamePostFix);
-        _dtoProcessor.ProcessDtoFileNames(DtoFileInfos, DtoFileNamePostFix, FileType);
+        _dtoProcessor.ProcessTypename(DtoFileInfos, DtoTypeNamePostFix);
+        _dtoProcessor.ProcessFilename(DtoFileInfos, DtoFileNamePostFix, FileType);
         _dtoProcessor.ProcessTargetPath(DtoFileInfos);
         _dtoProcessor.CheckIfPropertyNameIsReservedWord(DtoFileInfos, _reservedWords);
         _dtoProcessor.ProcessPathWithFileName(DtoFileInfos);
@@ -199,6 +213,8 @@ public class CSharpGenerator : AbstractGenerator
         _dtoProcessor.ProcessDtoNamespace(DtoFileInfos);
         _dtoProcessor.ProcessPropertyNames(DtoFileInfos);
         _dtoProcessor.ProcessPropertyTypeNames(DtoFileInfos, _reservedWords, _valueTypes);
+        _dtoProcessor.ProcessNullablePropertyTypes(DtoFileInfos);
+        _dtoProcessor.ProcessOpenApiTypesToCsharpTypes(DtoFileInfos, OpenApiCsharpTypeMap);
     }
 
     public override void GenerateDtosTests()

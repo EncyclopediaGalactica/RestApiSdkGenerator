@@ -74,10 +74,10 @@
       <None Update="Dto\PreProcessing\PropertyName\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\PreProcessing\PropertyType\property_type_preprocessing_should.json">
+      <None Update="Dto\PreProcessing\PropertyType\config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\PreProcessing\PropertyType\property_type_preprocessing_should.yaml">
+      <None Update="Dto\PreProcessing\PropertyType\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Dto\PreProcessing\NullablePropertyType\config.json">
@@ -92,10 +92,10 @@
       <None Update="Dto\Generation\MultipleDtos\multiple_dtos_generating_should.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\PreProcessing\TargetDirectory\target_directory_preprocessing_should.json">
+      <None Update="Dto\PreProcessing\TargetDirectory\config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\PreProcessing\TargetDirectory\target_directory_preprocessing_should.yaml">
+      <None Update="Dto\PreProcessing\TargetDirectory\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Dto\PreProcessing\Namespace\dto_namespace_is_provided.json">

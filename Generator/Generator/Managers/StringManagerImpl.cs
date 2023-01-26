@@ -16,6 +16,7 @@ public interface IStringManager
     bool IsLastCharASlash(string s);
     bool IsFirstCharIsASlash(string s);
     string MakeSnakeCaseToPascalCase(string s);
+    string CheckIfFirstCharIsDotOrAddIt(string s);
 }
 
 public class StringManagerImpl : IStringManager
@@ -259,5 +260,15 @@ public class StringManagerImpl : IStringManager
         }
 
         return builder.ToString();
+    }
+
+    public string CheckIfFirstCharIsDotOrAddIt(string s)
+    {
+        if (s[0].ToString() != ".")
+        {
+            return $".{s}";
+        }
+
+        return s;
     }
 }
