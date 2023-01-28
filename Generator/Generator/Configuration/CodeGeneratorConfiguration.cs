@@ -88,6 +88,9 @@ public class CodeGeneratorConfiguration
     [JsonProperty("dto_test_project_namespace")]
     public string DtoTestProjectNameSpace { get; set; }
 
+    [JsonProperty("skip_dto_preprocess")]
+    public bool SkipDtoPreProcess { get; set; }
+
     [JsonProperty("skip_dto_generating")]
     public bool SkipDtoGenerating { get; set; }
 

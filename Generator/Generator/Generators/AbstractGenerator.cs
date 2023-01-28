@@ -76,10 +76,16 @@ public abstract class AbstractGenerator : ICodeGenerator
     }
 
     public abstract ICodeGenerator Initialize();
+    public abstract void PreProcessDtos();
 
     protected bool ShouldIRunDtoGeneration()
     {
         return GeneratorConfiguration.SkipDtoGenerating;
+    }
+
+    protected bool ShouldIRunDtoPreProcessing()
+    {
+        return GeneratorConfiguration.SkipDtoPreProcess;
     }
 
     protected bool ShouldIRunDtoTestGeneration()
@@ -234,7 +240,8 @@ public abstract class AbstractGenerator : ICodeGenerator
                 continue;
             }
 
-            fileInfo.RequiredProperties = openApiSchemaKeyValuePair.Value.Required;
+            fileInfo.RequiredProperties = openApiSchemaKeyValuePair.Value.Required.ToList();
+            fileInfo.RequiredProperties = fileInfo.RequiredProperties.ConvertAll(d => d.ToLower());
 
             foreach (KeyValuePair<string, OpenApiSchema> property in openApiSchemaKeyValuePair.Value.Properties)
             {

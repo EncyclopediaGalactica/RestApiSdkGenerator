@@ -15,7 +15,7 @@ public interface IStringManager
     string? CheckIfLastCharSlashAndRemoveIt(string s);
     bool IsLastCharASlash(string s);
     bool IsFirstCharIsASlash(string s);
-    string MakeSnakeCaseToPascalCase(string s);
+    string? MakeSnakeCaseToPascalCase(string? s);
     string CheckIfFirstCharIsDotOrAddIt(string s);
 }
 
@@ -226,7 +226,7 @@ public class StringManagerImpl : IStringManager
         return false;
     }
 
-    public string MakeSnakeCaseToPascalCase(string s)
+    public string? MakeSnakeCaseToPascalCase(string? s)
     {
         if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
         {

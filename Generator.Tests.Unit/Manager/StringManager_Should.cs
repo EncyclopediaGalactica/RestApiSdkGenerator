@@ -207,10 +207,10 @@ public class StringManager_Should
     [InlineData(null, null)]
     [InlineData("", "")]
     [InlineData(" ", " ")]
-    public void MakeSnakeCaseToPascalCase(string s, string expected)
+    public void MakeSnakeCaseToPascalCase(string? s, string expected)
     {
         // Arrange && Act
-        string result = _sut.MakeSnakeCaseToPascalCase(s);
+        string? result = _sut.MakeSnakeCaseToPascalCase(s);
 
         // Assert
         result.Should().Be(expected);

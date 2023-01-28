@@ -6,25 +6,36 @@ using Xunit;
 
 public partial class DtoProcessor_Should
 {
-    [Fact]
-    public void ProcessFilename()
+    [Theory]
+    [InlineData("filenameToken", "Dto", ".cs", "FilenameTokenDto.cs")]
+    [InlineData("FilenameToken", "Dto", ".cs", "FilenameTokenDto.cs")]
+    [InlineData("filenameToken", "dto", ".cs", "FilenameTokenDto.cs")]
+    [InlineData("filenameToken", "Dto", "cs", "FilenameTokenDto.cs")]
+    [InlineData("filenameToken", "Dto", ".Cs", "FilenameTokenDto.cs")]
+    [InlineData("filenameToken", "Dto", ".CS", "FilenameTokenDto.cs")]
+    [InlineData("filenameToken", "Dto", "CS", "FilenameTokenDto.cs")]
+    public void ProcessFilename(
+        string typenameToken,
+        string filenamePostfix,
+        string fileType,
+        string expected)
     {
         // Arrange
         List<FileInfo> fileInfos = new List<FileInfo>
         {
             new FileInfo
             {
-                OriginalTypeNameToken = "originalTypenameToken"
+                OriginalTypeNameToken = typenameToken
             }
         };
-        string typenamePostfix = "Dto";
-        string filetype = ".cs";
+        string typenamePostfix = filenamePostfix;
+        string filetype = fileType;
 
         // Act
         _sut.ProcessFilename(fileInfos, typenamePostfix, filetype);
 
         // Assert
-        fileInfos[0].Filename.Should().Be("OriginalTypenameTokenDto.cs");
+        fileInfos[0].Filename.Should().Be(expected);
     }
 
     [Fact]

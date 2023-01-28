@@ -86,12 +86,6 @@
       <None Update="Dto\PreProcessing\NullablePropertyType\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\Generation\MultipleDtos\multiple_dtos_generating_should.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Dto\Generation\MultipleDtos\multiple_dtos_generating_should.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="Dto\PreProcessing\TargetDirectory\config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
@@ -105,12 +99,6 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Dto\Generation\SingleDto\single_dto_generating_should.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Dto\Generation\Filename\filename_dto_generation_should.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Dto\Generation\Filename\filename_dto_generation_should.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Dto\Generation\Namespace\dto_namespace_is_provided.json">
@@ -227,12 +215,6 @@
       <None Update="Dto\PreProcessing\Typename\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Dto\Generation\Typename\config.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Dto\Generation\Typename\openapi.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="DtoTests\PreProcessing\Typename\single_filename.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
@@ -267,6 +249,12 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Dto\PreProcessing\Filename\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
@@ -333,24 +321,16 @@
       <Compile Update="DtoTests\PreProcessing\PropertyName\PropertyNamePreProcessing_Should.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
-      <Compile Update="Dto\Generation\Typename\Reference\ManyComplexityInTheNameInGenerationPhaseDto.cs">
+      <Compile Update="Dto\Generation\Reference\MultipleOne.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
-      <Compile Update="Dto\Generation\Typename\Reference\SimpleInGenerationPhaseDto.cs">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Dto\Generation\Typename\Reference\SomeComplexityInGenerationPhaseDto.cs">
+      <Compile Update="Dto\Generation\Reference\MultipleTwo.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Dto" />
-      <Folder Include="Dto\Generation\Namespace\Reference" />
-      <Folder Include="Dto\Generation\NullablePropertyType\Reference" />
-      <Folder Include="Dto\Generation\PropertyName\Reference" />
-      <Folder Include="Dto\Generation\PropertyType\Reference" />
-      <Folder Include="Dto\Generation\Typename\Reference" />
     </ItemGroup>
 
 </Project>

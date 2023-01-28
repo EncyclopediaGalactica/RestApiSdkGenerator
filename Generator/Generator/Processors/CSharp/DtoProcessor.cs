@@ -5,6 +5,7 @@ using Managers;
 using Microsoft.Extensions.Logging;
 using Models;
 
+/// <inheritdoc />
 public class DtoProcessor : IDtoProcessor
 {
     private readonly IFileManager _fileManager;
@@ -26,6 +27,7 @@ public class DtoProcessor : IDtoProcessor
         _pathManager = pathManager;
     }
 
+    /// <inheritdoc />
     public void ProcessTypename(List<FileInfo> dtoFileInfos, string? typeNamePostfix)
     {
         if (!dtoFileInfos.Any())
@@ -49,6 +51,7 @@ public class DtoProcessor : IDtoProcessor
         }
     }
 
+    /// <inheritdoc />
     public void ProcessDtoNamespace(List<FileInfo> dtoFileInfos)
     {
         if (!dtoFileInfos.Any())
@@ -66,7 +69,8 @@ public class DtoProcessor : IDtoProcessor
         }
     }
 
-    public void ProcessPropertyNames(List<FileInfo> dtoFileInfos)
+    /// <inheritdoc />
+    public void ProcessPropertyNames(List<FileInfo> dtoFileInfos, List<string> reservedWords)
     {
         if (!dtoFileInfos.Any())
         {
@@ -78,12 +82,26 @@ public class DtoProcessor : IDtoProcessor
         {
             foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
             {
+                if (string.IsNullOrEmpty(propertyInfo.OriginalPropertyNameToken)
+                    || string.IsNullOrWhiteSpace(propertyInfo.OriginalPropertyNameToken))
+                {
+                    propertyInfo.PropertyName = propertyInfo.OriginalPropertyNameToken;
+                    continue;
+                }
+
+                if (reservedWords.Contains(propertyInfo.OriginalPropertyNameToken.ToLower()))
+                {
+                    throw new GeneratorException(
+                        $"{propertyInfo.OriginalPropertyNameToken} is a reserved word.");
+                }
+
                 propertyInfo.PropertyName = _stringManager.MakeSnakeCaseToPascalCase(
                     propertyInfo.OriginalPropertyNameToken);
             }
         }
     }
 
+    /// <inheritdoc />
     public void ProcessPropertyTypeNames(
         List<FileInfo> dtoFileInfos,
         List<string> reservedWords,
@@ -131,14 +149,21 @@ public class DtoProcessor : IDtoProcessor
         {
             foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
             {
-                if (fileInfo.RequiredProperties.Contains(propertyInfo.OriginalPropertyNameToken))
+                if (string.IsNullOrEmpty(propertyInfo.OriginalPropertyNameToken)
+                    || string.IsNullOrWhiteSpace(propertyInfo.OriginalPropertyNameToken))
+                {
+                    continue;
+                }
+
+                if (fileInfo.RequiredProperties is not null
+                    && fileInfo.RequiredProperties.Any()
+                    && fileInfo.RequiredProperties.Contains(propertyInfo.OriginalPropertyNameToken.ToLower()))
                 {
                     propertyInfo.IsNullable = false;
+                    continue;
                 }
-                else
-                {
-                    propertyInfo.IsNullable = true;
-                }
+
+                propertyInfo.IsNullable = true;
             }
         }
     }
@@ -160,17 +185,17 @@ public class DtoProcessor : IDtoProcessor
             {
                 if (_stringManager.IsFirstCharIsASlash(fileInfo.OriginalTargetDirectoryToken))
                 {
-                    builder.Append(
-                        _stringManager.CheckIfLastCharSlashAndRemoveIt(fileInfo.OriginalTargetDirectoryToken));
+                    builder
+                        .Append(_stringManager.CheckIfLastCharSlashAndRemoveIt(fileInfo.OriginalTargetDirectoryToken))
+                        .Append("/");
                 }
                 else
                 {
-                    builder.Append(_pathManager.GetCurrentDirectory()).Append("/");
-                    if (_stringManager.IsLastCharASlash(fileInfo.OriginalTargetDirectoryToken))
-                    {
-                        builder.Append(_stringManager.CheckIfLastCharSlashAndRemoveIt(
-                            fileInfo.OriginalTargetDirectoryToken));
-                    }
+                    builder
+                        .Append(_pathManager.GetCurrentDirectory())
+                        .Append("/")
+                        .Append(_stringManager.CheckIfLastCharSlashAndRemoveIt(fileInfo.OriginalTargetDirectoryToken))
+                        .Append("/");
                 }
             }
 
@@ -178,14 +203,14 @@ public class DtoProcessor : IDtoProcessor
                 && !string.IsNullOrWhiteSpace(fileInfo.OriginalDtoPojectBasePathToken))
             {
                 _stringManager.CheckIfFirstCharIsSlashAndThrow(fileInfo.OriginalDtoPojectBasePathToken);
-                builder.Append("/").Append(
+                builder.Append(
                     _stringManager.CheckIfLastCharSlashAndRemoveIt(fileInfo.OriginalDtoPojectBasePathToken));
             }
 
             if (!string.IsNullOrEmpty(fileInfo.OriginalDtoProjectAdditionalPathToken)
                 && !string.IsNullOrWhiteSpace(fileInfo.OriginalDtoProjectAdditionalPathToken))
             {
-                _stringManager.CheckIfFirstCharIsSlashAndThrow(fileInfo.OriginalDtoPojectBasePathToken);
+                _stringManager.CheckIfFirstCharIsSlashAndThrow(fileInfo.OriginalDtoProjectAdditionalPathToken);
                 builder.Append("/").Append(
                     _stringManager.CheckIfLastCharSlashAndRemoveIt(fileInfo.OriginalDtoProjectAdditionalPathToken));
             }
@@ -208,14 +233,16 @@ public class DtoProcessor : IDtoProcessor
                 string.IsNullOrWhiteSpace(fileInfo.AbsoluteTargetPath))
             {
                 _logger.LogInformation("Target directory is not defined");
+                return;
             }
 
             if (string.IsNullOrEmpty(fileInfo.Filename) || string.IsNullOrWhiteSpace(fileInfo.Filename))
             {
                 _logger.LogInformation("Filename is not defined");
+                return;
             }
 
-            fileInfo.TargetPathWithFileName = _stringManager.Concat(
+            fileInfo.TargetPathWithFileName = _pathManager.BuildPathString(
                 fileInfo.AbsoluteTargetPath,
                 fileInfo.Filename);
         }
@@ -223,50 +250,50 @@ public class DtoProcessor : IDtoProcessor
 
     public void ProcessDtoTemplatePath(List<FileInfo> dtoFileInfos, string dtoTemplatePath)
     {
-        if (dtoFileInfos.Any())
+        if (!dtoFileInfos.Any())
         {
             _logger.LogInformation("Dto file infos is empty");
+            return;
         }
 
         if (string.IsNullOrEmpty(dtoTemplatePath) || string.IsNullOrWhiteSpace(dtoTemplatePath))
         {
             _logger.LogInformation("Dto template path is not provided");
+            return;
         }
 
         foreach (FileInfo fileInfo in dtoFileInfos)
         {
-            StringBuilder builder = new StringBuilder();
-            if (!_stringManager.IsFirstCharIsASlash(dtoTemplatePath))
-            {
-                builder.Append(_stringManager.CheckIfLastCharSlashAndRemoveIt(_pathManager.GetCurrentDirectory()))
-                    .Append("/")
-                    .Append(dtoTemplatePath);
-            }
-            else
-            {
-                builder.Append(dtoTemplatePath);
-            }
+            dtoTemplatePath = _pathManager.CheckIfPathAbsoluteOrMakeItOne(dtoTemplatePath);
 
-            fileInfo.TemplateAbsolutePathWithFileName = builder.ToString();
+            fileInfo.TemplateAbsolutePathWithFileName = dtoTemplatePath;
         }
     }
 
     public void CheckIfPropertyNameIsReservedWord(List<FileInfo> dtoFileInfos, List<string> reservedWords)
     {
-        if (dtoFileInfos.Any())
+        if (!dtoFileInfos.Any())
         {
             _logger.LogInformation("Dto file infos is empty");
+            return;
         }
 
-        if (reservedWords.Any())
+        if (!reservedWords.Any())
         {
             _logger.LogInformation("List of reserved is empty");
+            return;
         }
 
         foreach (FileInfo fileInfo in dtoFileInfos)
         {
             foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
             {
+                if (string.IsNullOrEmpty(propertyInfo.OriginalPropertyNameToken)
+                    || string.IsNullOrWhiteSpace(propertyInfo.OriginalPropertyNameToken))
+                {
+                    continue;
+                }
+
                 if (reservedWords.Contains(propertyInfo.OriginalPropertyNameToken.ToLower()))
                 {
                     throw new GeneratorException(
@@ -324,8 +351,9 @@ public class DtoProcessor : IDtoProcessor
         {
             string fileName = _stringManager.Concat(
                 _stringManager.MakeFirstCharUpperCase(fileInfo.OriginalTypeNameToken),
-                filenamePostfix,
-                _stringManager.CheckIfFirstCharIsDotOrAddIt(fileType!)
+                _stringManager.MakeFirstCharUpperCase(filenamePostfix!),
+                _stringManager.CheckIfFirstCharIsDotOrAddIt(
+                    _stringManager.ToLowerCase(fileType!))
             );
             fileInfo.Filename = fileName;
         }
@@ -353,6 +381,13 @@ public class DtoProcessor : IDtoProcessor
         switch (originalPropertyTypenameToken.ToLower())
         {
             case "integer":
+
+                if (string.IsNullOrEmpty(originalPropertyTypeFormatToken)
+                    || string.IsNullOrWhiteSpace(originalPropertyTypeFormatToken))
+                {
+                    throw new GeneratorException($"No format is specified for integer");
+                }
+
                 switch (originalPropertyTypeFormatToken.ToLower())
                 {
                     case "int32":
@@ -369,6 +404,13 @@ public class DtoProcessor : IDtoProcessor
                 }
 
             case "number":
+
+                if (string.IsNullOrEmpty(originalPropertyTypeFormatToken)
+                    || string.IsNullOrWhiteSpace(originalPropertyTypeFormatToken))
+                {
+                    throw new GeneratorException($"No format is specified for number");
+                }
+
                 switch (originalPropertyTypeFormatToken.ToLower())
                 {
                     case "float":

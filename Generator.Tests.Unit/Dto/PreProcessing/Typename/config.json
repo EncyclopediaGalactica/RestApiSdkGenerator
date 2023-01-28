@@ -3,6 +3,7 @@
     "openapi_specification_path": "Dto/PreProcessing/Typename/openapi.yaml",
     "target_directory": "Dto/PreProcessing/Typename",
     "solution_base_namespace": "Dto.PreProcessing.Typename",
+    "skip_dto_preprocess": false,
     "skip_dto_generating": true,
     "skip_dto_tests_generating": true,
     "skip_request_model_generating": true,

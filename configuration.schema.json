@@ -34,6 +34,9 @@
             "description": "The name of the Data Transfer Object's project.",
             "type": "string"
         },
+        "skip_dto_preprocess": {
+          "description": "Controls whether DTO objects related data will be preprocessed. Useful in testing."  
+        },
         "skip_dto_generating": {
             "description": "Controls whether DTO objects will be generated or not.",
             "type": "boolean"

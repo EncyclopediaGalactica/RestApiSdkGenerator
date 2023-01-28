@@ -77,5 +77,5 @@ public class FileInfo
 
     public string TargetPathWithFileName { get; set; }
     public string TemplateAbsolutePathWithFileName { get; set; }
-    public ISet<string> RequiredProperties { get; set; }
+    public List<string> RequiredProperties { get; set; }
 }

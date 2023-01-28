@@ -17,5 +17,21 @@ public class CodeGeneratorConfigurationValidator : AbstractValidator<CodeGenerat
 
         RuleFor(p => p.Lang).NotNull().NotEmpty().NotEqual(string.Empty)
             .WithMessage("Lang must be defined");
+
+        When(p => string.IsNullOrEmpty(p.DtoProjectBasePath) == false
+                  && string.IsNullOrWhiteSpace(p.DtoProjectBasePath) == false,
+            () =>
+            {
+                RuleFor(p => p.DtoProjectBasePath[0].ToString() != "/").Equal(true)
+                    .WithMessage("Dto project base path url must not be absolute path. It has to be relative path.");
+            });
+
+        When(p => string.IsNullOrEmpty(p.DtoProjectAdditionalPath) == false
+                  && string.IsNullOrWhiteSpace(p.DtoProjectAdditionalPath) == false,
+            () =>
+            {
+                RuleFor(p => p.DtoProjectAdditionalPath[0].ToString() != "/").Equal(true)
+                    .WithMessage("Dto project additional path must not be absolute path. It must be relative path.");
+            });
     }
 }

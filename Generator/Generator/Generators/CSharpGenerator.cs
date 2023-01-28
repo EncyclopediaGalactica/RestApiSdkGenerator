@@ -10,6 +10,7 @@ public class CSharpGenerator : AbstractGenerator
     private const string DtoFileNamePostFix = "Dto";
     private const string FileType = ".cs";
     private const string DtoTemplate = "Templates/dto.handlebars";
+    private readonly Logger<CSharpGenerator> _logger = new(LoggerFactory.Create(c => c.AddConsole()));
 
     private readonly List<string> _reservedWords = new List<string>
     {
@@ -100,9 +101,8 @@ public class CSharpGenerator : AbstractGenerator
     private List<FileInfo> _dtoFileInfosRender = new List<FileInfo>();
 
     private IDtoProcessor _dtoProcessor;
-    private Logger<CSharpGenerator> _logger = new(LoggerFactory.Create(c => c.AddConsole()));
 
-    private Dictionary<string, string> OpenApiCsharpTypeMap = new()
+    public Dictionary<string, string> OpenApiCsharpTypeMap { get; } = new()
     {
         { "integer-int32", "int" },
         { "integer-int64", "long" },
@@ -120,6 +120,11 @@ public class CSharpGenerator : AbstractGenerator
 
     public override ICodeGenerator Generate()
     {
+        if (!ShouldIRunDtoPreProcessing())
+        {
+            PreProcessDtos();
+        }
+
         if (!ShouldIRunDtoGeneration())
         {
             GenerateDtos();
@@ -133,7 +138,7 @@ public class CSharpGenerator : AbstractGenerator
         return this;
     }
 
-    public override void GenerateDtos()
+    public override void PreProcessDtos()
     {
         GetOriginalTypeNameTokenFromOpenApiSchema();
         GetOriginalPropertyMetadataFromOpenApiSchema();
@@ -147,6 +152,10 @@ public class CSharpGenerator : AbstractGenerator
 
         PreProcessDtoMetadata();
         CopyRenderDataToRenderObject();
+    }
+
+    public override void GenerateDtos()
+    {
         Render();
     }
 
@@ -211,7 +220,7 @@ public class CSharpGenerator : AbstractGenerator
         _dtoProcessor.ProcessPathWithFileName(DtoFileInfos);
         _dtoProcessor.ProcessDtoTemplatePath(DtoFileInfos, DtoTemplatePath);
         _dtoProcessor.ProcessDtoNamespace(DtoFileInfos);
-        _dtoProcessor.ProcessPropertyNames(DtoFileInfos);
+        _dtoProcessor.ProcessPropertyNames(DtoFileInfos, _reservedWords);
         _dtoProcessor.ProcessPropertyTypeNames(DtoFileInfos, _reservedWords, _valueTypes);
         _dtoProcessor.ProcessNullablePropertyTypes(DtoFileInfos);
         _dtoProcessor.ProcessOpenApiTypesToCsharpTypes(DtoFileInfos, OpenApiCsharpTypeMap);

@@ -1,14 +1,15 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Generation.MultipleDtos;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Generation;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
+using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class MultipleDtos_Generating_Should : TestBase
+public class DtoGenerating_Should : TestBase
 {
-    // [Fact]
+    [Fact]
     public async Task Generate_MultipleDtos()
     {
         // Arrange && Act
@@ -17,8 +18,8 @@ public class MultipleDtos_Generating_Should : TestBase
             { "MultipleOne.cs", "MultipleOneDto.cs" },
             { "MultipleTwo.cs", "MultipleTwoDto.cs" },
         };
-        string currentPath = $"{_basePath}/Dto/Generation/MultipleDtos";
-        string configFilePath = $"{currentPath}/multiple_dtos_generating_should.json";
+        string currentPath = $"{_basePath}/Dto/Generation";
+        string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator;
         Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
