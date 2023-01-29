@@ -3,27 +3,119 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Managers
 using System.Text;
 using Microsoft.Extensions.Logging;
 
+/// <summary>
+///     String manager interface
+///     <remarks>
+///         It provides methods for dealing with all strings related operations during code generation
+///     </remarks>
+/// </summary>
 public interface IStringManager
 {
-    string Concat(string? s1, string? s2);
-    string Concat(string? s1, string? s2, string? s3);
-    string? MakeFirstCharUpperCase(string s);
-    string ConcatCsharpNamespaceTokens(string s1, string s2);
-    string MakeCapitalLetterTheOneAfterTheDot(string s);
-    string ToLowerCase(string s);
-    void CheckIfFirstCharIsSlashAndThrow(string s);
-    string? CheckIfLastCharSlashAndRemoveIt(string s);
-    bool IsLastCharASlash(string s);
-    bool IsFirstCharIsASlash(string s);
+    /// <summary>
+    ///     Concatenates two string fragments
+    /// </summary>
+    /// <param name="s1">string 1</param>
+    /// <param name="s2">string 2</param>
+    /// <returns>the new string</returns>
+    string Concat(string s1, string? s2);
+
+    /// <summary>
+    ///     Concatenates three string fragments
+    /// </summary>
+    /// <param name="s1">string 1</param>
+    /// <param name="s2">string 2</param>
+    /// <param name="s3">string 3</param>
+    /// <returns>the new string</returns>
+    string Concat(string s1, string s2, string s3);
+
+    /// <summary>
+    ///     Makes the first character of the provided string uppercase
+    ///     <remarks>
+    ///         If the input is null, empty or whitespace the method returns these
+    ///     </remarks>
+    /// </summary>
+    /// <param name="s">string</param>
+    /// <returns>the new string</returns>
+    string MakeFirstCharUpperCase(string s);
+
+    /// <summary>
+    ///     Concatenates two string as they were C# namespaces.
+    ///     <remarks>
+    ///         The two string will be separated by a dot (.).
+    ///         If both of the strings are null, empty or whitespace the method returns string.empty
+    ///     </remarks>
+    /// </summary>
+    /// <param name="s1">namespace 1</param>
+    /// <param name="s2">namespace 2</param>
+    /// <returns>Concatenated namespaces</returns>
+    string ConcatCsharpNamespaceTokens(string s1, string? s2);
+
+    /// <summary>
+    ///     Makes all capital letter in the provided string uppercase
+    ///     <remarks>
+    ///         C# namespaces are in this format
+    ///         If the input string is null, empty or whitespace the method returns string.empty
+    ///     </remarks>
+    /// </summary>
+    /// <param name="s">string</param>
+    /// <returns>modified string</returns>
+    string? MakeUppercaseTheCharAfterTheDot(string? s);
+
+    /// <summary>
+    ///     Makes the input string lowercase
+    ///     <remarks>
+    ///         If the input string is null, empty or whitespace string empty sill be returned
+    ///     </remarks>
+    /// </summary>
+    /// <param name="s">string</param>
+    /// <returns>modified string</returns>
+    string ToLowerCase(string? s);
+
+    /// <summary>
+    ///     Checks if the first character of the provided string is "/" and throws if it is.
+    /// </summary>
+    /// <param name="s">string</param>
+    void CheckIfFirstCharIsSlashAndThrow(string? s);
+
+    /// <summary>
+    ///     Checks if the provided string's last character is a "/", if so removes it
+    ///     <remarks>
+    ///         If the input string null, empty or whitespace string.empty will return
+    ///     </remarks>
+    /// </summary>
+    /// <param name="s">input string</param>
+    /// <returns>modified string</returns>
+    string CheckIfLastCharSlashAndRemoveIt(string? s);
+
+    /// <summary>
+    ///     Checks if the first char of the provided string is a "/"
+    /// </summary>
+    /// <param name="s">input string</param>
+    /// <returns>bool</returns>
+    bool IsFirstCharIsASlash(string? s);
+
+    /// <summary>
+    ///     Transforms a snake_case string to PascalCase
+    /// </summary>
+    /// <param name="s">input string</param>
+    /// <returns>modified string</returns>
     string? MakeSnakeCaseToPascalCase(string? s);
-    string CheckIfFirstCharIsDotOrAddIt(string s);
+
+    /// <summary>
+    ///     Checks if the first character of the provided string is a dot ".", if not adds it
+    /// </summary>
+    /// <param name="s">input string</param>
+    /// <returns>modified string</returns>
+    string? CheckIfFirstCharIsDotOrAddIt(string? s);
 }
 
+/// <inheritdoc />
 public class StringManagerImpl : IStringManager
 {
     private readonly Logger<StringManagerImpl> _logger = new(LoggerFactory.Create(c => c.AddConsole()));
 
-    public string Concat(string? s1, string? s2)
+    /// <inheritdoc />
+    public string Concat(string s1, string? s2)
     {
         StringBuilder builder = new StringBuilder();
         if (!string.IsNullOrEmpty(s1) && !string.IsNullOrWhiteSpace(s1))
@@ -39,7 +131,8 @@ public class StringManagerImpl : IStringManager
         return builder.ToString();
     }
 
-    public string Concat(string? s1, string? s2, string? s3)
+    /// <inheritdoc />
+    public string Concat(string s1, string s2, string s3)
     {
         StringBuilder builder = new StringBuilder();
         if (!string.IsNullOrEmpty(s1) && !string.IsNullOrWhiteSpace(s1))
@@ -60,7 +153,8 @@ public class StringManagerImpl : IStringManager
         return builder.ToString();
     }
 
-    public string? MakeFirstCharUpperCase(string s)
+    /// <inheritdoc />
+    public string MakeFirstCharUpperCase(string s)
     {
         if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
         {
@@ -71,7 +165,8 @@ public class StringManagerImpl : IStringManager
         return $"{s[0].ToString().ToUpper()}{s.Substring(1, s.Length - 1)}";
     }
 
-    public string ConcatCsharpNamespaceTokens(string s1, string s2)
+    /// <inheritdoc />
+    public string ConcatCsharpNamespaceTokens(string? s1, string? s2)
     {
         StringBuilder builder = new StringBuilder();
         if (!string.IsNullOrEmpty(s1) && !string.IsNullOrWhiteSpace(s1))
@@ -125,8 +220,14 @@ public class StringManagerImpl : IStringManager
         return builder.ToString();
     }
 
-    public string MakeCapitalLetterTheOneAfterTheDot(string s)
+    /// <inheritdoc />
+    public string MakeUppercaseTheCharAfterTheDot(string? s)
     {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
+        {
+            return string.Empty;
+        }
+
         StringBuilder builder = new StringBuilder();
         bool shouldBeCapital = false;
         for (int i = 0; i < s.Length; i++)
@@ -158,17 +259,19 @@ public class StringManagerImpl : IStringManager
         return builder.ToString();
     }
 
-    public string ToLowerCase(string s)
+    /// <inheritdoc />
+    public string ToLowerCase(string? s)
     {
         if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
         {
-            return s;
+            return String.Empty;
         }
 
         return s.ToLower();
     }
 
-    public void CheckIfFirstCharIsSlashAndThrow(string s)
+    /// <inheritdoc />
+    public void CheckIfFirstCharIsSlashAndThrow(string? s)
     {
         if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
         {
@@ -181,11 +284,11 @@ public class StringManagerImpl : IStringManager
         }
     }
 
-    public string? CheckIfLastCharSlashAndRemoveIt(string s)
+    public string CheckIfLastCharSlashAndRemoveIt(string? s)
     {
-        if (string.IsNullOrEmpty(s) && string.IsNullOrWhiteSpace(s))
+        if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
         {
-            return s;
+            return String.Empty;
         }
 
         if (s[^1].ToString() == "/")
@@ -196,24 +299,10 @@ public class StringManagerImpl : IStringManager
         return s;
     }
 
-    public bool IsLastCharASlash(string s)
+    /// <inheritdoc />
+    public bool IsFirstCharIsASlash(string? s)
     {
-        if (string.IsNullOrEmpty(s) && string.IsNullOrWhiteSpace(s))
-        {
-            return false;
-        }
-
-        if (s[^1].ToString() == "/")
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool IsFirstCharIsASlash(string s)
-    {
-        if (string.IsNullOrEmpty(s) && string.IsNullOrWhiteSpace(s))
+        if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
         {
             return false;
         }
@@ -226,6 +315,7 @@ public class StringManagerImpl : IStringManager
         return false;
     }
 
+    /// <inheritdoc />
     public string? MakeSnakeCaseToPascalCase(string? s)
     {
         if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
@@ -233,7 +323,7 @@ public class StringManagerImpl : IStringManager
             return s;
         }
 
-        bool makeNextcharCapital = false;
+        bool makeNextCharCapital = false;
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < s.Length; i++)
         {
@@ -245,14 +335,14 @@ public class StringManagerImpl : IStringManager
 
             if (s[i].ToString() == "_")
             {
-                makeNextcharCapital = true;
+                makeNextCharCapital = true;
                 continue;
             }
 
-            if (makeNextcharCapital)
+            if (makeNextCharCapital)
             {
                 builder.Append(s[i].ToString().ToUpper());
-                makeNextcharCapital = false;
+                makeNextCharCapital = false;
                 continue;
             }
 
@@ -262,8 +352,14 @@ public class StringManagerImpl : IStringManager
         return builder.ToString();
     }
 
-    public string CheckIfFirstCharIsDotOrAddIt(string s)
+    /// <inheritdoc />
+    public string? CheckIfFirstCharIsDotOrAddIt(string? s)
     {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
+        {
+            return s;
+        }
+
         if (s[0].ToString() != ".")
         {
             return $".{s}";

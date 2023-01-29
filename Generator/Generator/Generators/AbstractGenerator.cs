@@ -8,7 +8,7 @@ using Models;
 
 public abstract class AbstractGenerator : ICodeGenerator
 {
-    private Logger<AbstractGenerator> _logger = new Logger<AbstractGenerator>(LoggerFactory.Create(
+    private readonly Logger<AbstractGenerator> _logger = new Logger<AbstractGenerator>(LoggerFactory.Create(
         c => c.AddConsole()));
 
     protected IFileManager FileManager;
@@ -22,7 +22,7 @@ public abstract class AbstractGenerator : ICodeGenerator
     protected IStringManager StringManager;
 
     protected ITemplateManager TemplateManager;
-    protected abstract string DtoTemplatePath { get; }
+    public abstract string DtoTemplatePath { get; }
 
     public List<FileInfo> DtoFileInfos { get; } = new List<FileInfo>();
 
@@ -65,8 +65,6 @@ public abstract class AbstractGenerator : ICodeGenerator
     }
 
     public abstract ICodeGenerator Generate();
-    public abstract void GenerateDtos();
-    public abstract void GenerateDtosTests();
 
     public ICodeGenerator SetStringManager(IStringManager stringManager)
     {
@@ -75,7 +73,7 @@ public abstract class AbstractGenerator : ICodeGenerator
         return this;
     }
 
-    public abstract ICodeGenerator Initialize();
+    public abstract ICodeGenerator Build();
     public abstract void PreProcessDtos();
 
     protected bool ShouldIRunDtoGeneration()
@@ -171,7 +169,7 @@ public abstract class AbstractGenerator : ICodeGenerator
 
         foreach (FileInfo fileInfo in DtoFileInfos)
         {
-            fileInfo.OriginalDtoPojectBasePathToken = GeneratorConfiguration.DtoProjectBasePath;
+            fileInfo.OriginalDtoProjectBasePathToken = GeneratorConfiguration.DtoProjectBasePath;
         }
     }
 

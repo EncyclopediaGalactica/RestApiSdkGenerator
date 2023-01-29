@@ -3,6 +3,12 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Managers
 using System.Text;
 using Microsoft.Extensions.Logging;
 
+/// <summary>
+///     Filemanager interface
+///     <remarks>
+///         Provides an interface to deal with all the file related operation during code generation.
+///     </remarks>
+/// </summary>
 public interface IFileManager
 {
     /// <summary>
@@ -23,6 +29,11 @@ public interface IFileManager
     /// <param name="pathToFile">path to be checked</param>
     void CheckIfExistsOrCreate(string pathToFile);
 
+    /// <summary>
+    ///     Checks if teh given file exists
+    /// </summary>
+    /// <param name="pathToFile">the path to the file</param>
+    /// <returns>bool</returns>
     bool CheckIfFileExist(string pathToFile);
 
     /// <summary>

@@ -4,7 +4,10 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-///     Deals with all the path related tasks during code generation
+///     Path manager interfaces
+///     <remarks>
+///         Deals with all the path related tasks during code generation
+///     </remarks>
 /// </summary>
 public interface IPathManager
 {
@@ -63,10 +66,39 @@ public interface IPathManager
     /// <returns>Current directory path</returns>
     string GetCurrentDirectory();
 
+    /// <summary>
+    ///     Checks if given path exists
+    /// </summary>
+    /// <param name="path">the path to the directory</param>
+    /// <returns>bool</returns>
     bool IsPathExists(string path);
+
+    /// <summary>
+    ///     Creates the designated path
+    /// </summary>
+    /// <param name="path">the path</param>
     void CreatePath(string path);
+
+    /// <summary>
+    ///     Deletes the designated path
+    /// </summary>
+    /// <param name="path">the path</param>
+    /// <param name="recursive">should the deletion be recursive or not</param>
     void DeletePath(string path, bool recursive = false);
+
+    /// <summary>
+    ///     Checks if the given path has "/" as last character. If so, it removes it and returns this new version.
+    /// </summary>
+    /// <param name="path">the path</param>
+    /// <returns>string</returns>
     string CheckAndRemoveEndSlash(string path);
+
+    /// <summary>
+    ///     It checks if a path is absolute or relative. If relative it makes an absolute one. It uses the directory path where
+    ///     the code runs and creates an absolute path
+    /// </summary>
+    /// <param name="path">the path</param>
+    /// <returns>the new path</returns>
     string CheckIfPathAbsoluteOrMakeItOne(string path);
 }
 

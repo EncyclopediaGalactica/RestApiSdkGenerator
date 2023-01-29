@@ -57,7 +57,7 @@ public partial class DtoProcessor_Should
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
-    public void Throw_WhenFilenamePostfix_IsNotProvided(string? filetype)
+    public void Throw_WhenFilenamePostfix_IsNotProvided(string filetype)
     {
         // Arrange
         List<FileInfo> fileInfos = new List<FileInfo>

@@ -60,7 +60,7 @@ public class CodeGenerator
                     .SetPathManager(_pathManager)
                     .SetTemplateManager(_templateManager)
                     .SetStringManager(_stringManager)
-                    .Initialize();
+                    .Build();
                 break;
         }
     }

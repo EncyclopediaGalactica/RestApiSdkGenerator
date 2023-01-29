@@ -21,7 +21,7 @@ public partial class DtoProcessor_Should
             new FileInfo
             {
                 OriginalTargetDirectoryToken = targetDirectoryToken,
-                OriginalDtoPojectBasePathToken = dtoBasePathToken,
+                OriginalDtoProjectBasePathToken = dtoBasePathToken,
                 OriginalDtoProjectAdditionalPathToken = dtoAdditionalPathToken
             }
         };
@@ -54,7 +54,7 @@ public partial class DtoProcessor_Should
             new FileInfo
             {
                 OriginalTargetDirectoryToken = targetDirectoryToken,
-                OriginalDtoPojectBasePathToken = dtoBasePathToken,
+                OriginalDtoProjectBasePathToken = dtoBasePathToken,
                 OriginalDtoProjectAdditionalPathToken = dtoAdditionalPathToken
             }
         };

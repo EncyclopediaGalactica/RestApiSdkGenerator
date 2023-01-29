@@ -62,7 +62,7 @@ public class DtoProcessor : IDtoProcessor
 
         foreach (FileInfo fileInfo in dtoFileInfos)
         {
-            fileInfo.Namespace = _stringManager.MakeCapitalLetterTheOneAfterTheDot(
+            fileInfo.Namespace = _stringManager.MakeUppercaseTheCharAfterTheDot(
                 _stringManager.ConcatCsharpNamespaceTokens(
                     fileInfo.OriginalBaseNamespaceToken,
                     fileInfo.OriginalDtoNamespaceToken));
@@ -199,12 +199,12 @@ public class DtoProcessor : IDtoProcessor
                 }
             }
 
-            if (!string.IsNullOrEmpty(fileInfo.OriginalDtoPojectBasePathToken)
-                && !string.IsNullOrWhiteSpace(fileInfo.OriginalDtoPojectBasePathToken))
+            if (!string.IsNullOrEmpty(fileInfo.OriginalDtoProjectBasePathToken)
+                && !string.IsNullOrWhiteSpace(fileInfo.OriginalDtoProjectBasePathToken))
             {
-                _stringManager.CheckIfFirstCharIsSlashAndThrow(fileInfo.OriginalDtoPojectBasePathToken);
+                _stringManager.CheckIfFirstCharIsSlashAndThrow(fileInfo.OriginalDtoProjectBasePathToken);
                 builder.Append(
-                    _stringManager.CheckIfLastCharSlashAndRemoveIt(fileInfo.OriginalDtoPojectBasePathToken));
+                    _stringManager.CheckIfLastCharSlashAndRemoveIt(fileInfo.OriginalDtoProjectBasePathToken));
             }
 
             if (!string.IsNullOrEmpty(fileInfo.OriginalDtoProjectAdditionalPathToken)
@@ -326,8 +326,8 @@ public class DtoProcessor : IDtoProcessor
 
     public void ProcessFilename(
         List<FileInfo> fileInfos,
-        string? filenamePostfix,
-        string? fileType)
+        string filenamePostfix,
+        string fileType)
     {
         if (!fileInfos.Any())
         {
@@ -359,8 +359,8 @@ public class DtoProcessor : IDtoProcessor
         }
     }
 
-    private string? DecideCsharpType(
-        string? originalPropertyTypenameToken,
+    private string DecideCsharpType(
+        string originalPropertyTypenameToken,
         string? originalPropertyTypeFormatToken,
         Dictionary<string, string> openApiCsharpTypeMap)
     {
@@ -377,7 +377,7 @@ public class DtoProcessor : IDtoProcessor
             return string.Empty;
         }
 
-        string? type;
+        string type;
         switch (originalPropertyTypenameToken.ToLower())
         {
             case "integer":

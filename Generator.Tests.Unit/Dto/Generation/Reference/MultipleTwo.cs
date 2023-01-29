@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.Generation.MultipleDtos;
+namespace Test.Generation.Dto.Project;
 
 /// <summary>
 ///     The MultipleTwoDto object.

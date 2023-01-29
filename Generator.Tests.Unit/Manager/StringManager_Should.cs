@@ -69,7 +69,7 @@ public class StringManager_Should
     public void MakeFirstCharUpperCase(string s1, string expected)
     {
         // Arrange && Act
-        string? result = _sut.MakeFirstCharUpperCase(s1);
+        string result = _sut.MakeFirstCharUpperCase(s1);
 
         // Assert
         result.Should().Be(result);
@@ -91,7 +91,12 @@ public class StringManager_Should
     [InlineData(".name.", ".space.", "name.space")]
     [InlineData(".na.me.", ".space.", "na.me.space")]
     [InlineData("name", ".spa.ce.", "name.space")]
-    public void ConcatenateCSharpNamespaceTokens(string s1, string s2, string expected)
+    [InlineData(null, null, "")]
+    [InlineData("", null, "")]
+    [InlineData(" ", null, "")]
+    [InlineData(null, "", "")]
+    [InlineData(null, " ", "")]
+    public void ConcatenateCSharpNamespaceTokens(string s1, string? s2, string expected)
     {
         // Arrange && Act
         string result = _sut.ConcatCsharpNamespaceTokens(s1, s2);
@@ -104,10 +109,13 @@ public class StringManager_Should
     [InlineData("namespace", "Namespace")]
     [InlineData("name.sp.ace", "Name.Sp.Ace")]
     [InlineData("n.a.m.e.s.p.a.c.e", "N.A.M.E.S.P.A.C.E")]
-    public void MakeCapitalLetterTheOneAfterTheDot(string s, string expected)
+    [InlineData(null, "")]
+    [InlineData("", "")]
+    [InlineData(" ", "")]
+    public void MakeUppercaseTheCharAfterTheDot(string s, string expected)
     {
         // Arrange && Act
-        string result = _sut.MakeCapitalLetterTheOneAfterTheDot(s);
+        string? result = _sut.MakeUppercaseTheCharAfterTheDot(s);
 
         // Assert
         result.Should().Be(expected);
@@ -117,9 +125,9 @@ public class StringManager_Should
     [InlineData("lower", "lower")]
     [InlineData("Lower", "lower")]
     [InlineData("LOWER", "lower")]
-    [InlineData(null, null)]
+    [InlineData(null, "")]
     [InlineData("", "")]
-    [InlineData(" ", " ")]
+    [InlineData(" ", "")]
     public void MakeTheStringLowerCase(string s, string expected)
     {
         // Arrange && Assert
@@ -155,29 +163,13 @@ public class StringManager_Should
     [Theory]
     [InlineData("asd", "asd")]
     [InlineData("asd/", "asd")]
-    [InlineData(null, null)]
+    [InlineData(null, "")]
     [InlineData("", "")]
-    [InlineData(" ", " ")]
+    [InlineData(" ", "")]
     public void CheckIfLastCharSlashAndRemoveIt(string s, string expected)
     {
         // Arrange && Act
         string? result = _sut.CheckIfLastCharSlashAndRemoveIt(s);
-
-        // Assert
-        result.Should().Be(expected);
-    }
-
-    [Theory]
-    [InlineData("asd", false)]
-    [InlineData("asd/", true)]
-    [InlineData("/", true)]
-    [InlineData(null, false)]
-    [InlineData("", false)]
-    [InlineData(" ", false)]
-    public void IsLastCharASlash(string s, bool expected)
-    {
-        // Arrange && Assert
-        bool result = _sut.IsLastCharASlash(s);
 
         // Assert
         result.Should().Be(expected);
@@ -211,6 +203,23 @@ public class StringManager_Should
     {
         // Arrange && Act
         string? result = _sut.MakeSnakeCaseToPascalCase(s);
+
+        // Assert
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData("asd", ".asd")]
+    [InlineData(".asd", ".asd")]
+    [InlineData(null, null)]
+    [InlineData("", "")]
+    [InlineData(" ", " ")]
+    public void CheckIfFirstCharIsDotOrAddIt(string? s, string? expected)
+    {
+        // Arrange
+
+        // Act
+        string? result = _sut.CheckIfFirstCharIsDotOrAddIt(s);
 
         // Assert
         result.Should().Be(expected);
