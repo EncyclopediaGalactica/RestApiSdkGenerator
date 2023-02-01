@@ -35,9 +35,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <None Update="petstore.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="Templates\**\*">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>

@@ -41,6 +41,10 @@
             "description": "Controls whether DTO objects will be generated or not.",
             "type": "boolean"
         },
+        "skip_dto_test_preprocess": {
+            "description": "Controls whether Dto tests related data will be preprocessed. Useful in testing.",
+            "type": "string"
+        },
         "dto_project_namespace": {
             "description": "Namespace of the Dto project. Will be concatenated to solution base namespace",
             "type": "string"

@@ -14,6 +14,7 @@ public abstract class AbstractGenerator : ICodeGenerator
     protected IFileManager FileManager;
 
     protected CodeGeneratorConfiguration GeneratorConfiguration;
+    protected IOpenApiToFileInfoManager OpenApiToFileInfoManager;
 
     protected OpenApiDocument OpenApiYamlSchema;
 
@@ -24,9 +25,9 @@ public abstract class AbstractGenerator : ICodeGenerator
     protected ITemplateManager TemplateManager;
     public abstract string DtoTemplatePath { get; }
 
-    public List<FileInfo> DtoFileInfos { get; } = new List<FileInfo>();
+    public List<TypeInfo> DtoFileInfos { get; } = new List<TypeInfo>();
 
-    public List<FileInfo> DtoTestFileInfos { get; } = new List<FileInfo>();
+    public List<TypeInfo> DtoTestFileInfos { get; } = new List<TypeInfo>();
 
     public ICodeGenerator SetTemplateManager(ITemplateManager templateManager)
     {
@@ -74,6 +75,14 @@ public abstract class AbstractGenerator : ICodeGenerator
     }
 
     public abstract ICodeGenerator Build();
+
+    public ICodeGenerator SetOpenApiToFileInfoManager(IOpenApiToFileInfoManager openApiToFileInfoManager)
+    {
+        ArgumentNullException.ThrowIfNull(openApiToFileInfoManager);
+        OpenApiToFileInfoManager = openApiToFileInfoManager;
+        return this;
+    }
+
     public abstract void PreProcessDtos();
 
     protected bool ShouldIRunDtoGeneration()
@@ -86,12 +95,37 @@ public abstract class AbstractGenerator : ICodeGenerator
         return GeneratorConfiguration.SkipDtoPreProcess;
     }
 
+    protected bool ShouldIRunDtoTestPreProcessing()
+    {
+        return GeneratorConfiguration.SkipDtoTestPreProcessing;
+    }
+
     protected bool ShouldIRunDtoTestGeneration()
     {
         return GeneratorConfiguration.SkipDtoTestsGenerating;
     }
 
-    protected void GetOriginalBaseNamespaceTokenFromConfiguration()
+    /// <summary>
+    ///     Checks if every library is initialised for starting code generation.
+    /// </summary>
+    /// <exception cref="GeneratorException">
+    ///     If any of the libraries are null
+    /// </exception>
+    protected void Init()
+    {
+        if (FileManager is null
+            || PathManager is null
+            || StringManager is null
+            || OpenApiToFileInfoManager is null
+            || GeneratorConfiguration is null
+            || OpenApiYamlSchema is null)
+        {
+            throw new GeneratorException(
+                "Generator initialization failed. One or some of the supporting libraries are not initialized.");
+        }
+    }
+
+    protected void GetOriginalBaseNamespaceTokenFromConfiguration(List<TypeInfo> fileInfos)
     {
         if (string.IsNullOrEmpty(GeneratorConfiguration.SolutionBaseNamespace)
             || string.IsNullOrWhiteSpace(GeneratorConfiguration.SolutionBaseNamespace))
@@ -99,18 +133,18 @@ public abstract class AbstractGenerator : ICodeGenerator
             _logger.LogInformation("No Dto project namespace is provided");
         }
 
-        if (!DtoFileInfos.Any())
+        if (!fileInfos.Any())
         {
             _logger.LogInformation("No available DtoFileInfo");
         }
 
-        foreach (FileInfo fileInfo in DtoFileInfos)
+        foreach (TypeInfo fileInfo in fileInfos)
         {
             fileInfo.OriginalBaseNamespaceToken = GeneratorConfiguration.SolutionBaseNamespace;
         }
     }
 
-    protected void GetOriginalDtoNamespaceTokenFromConfiguration()
+    protected void GetOriginalDtoNamespaceTokenFromConfiguration(List<TypeInfo> fileInfos)
     {
         if (string.IsNullOrEmpty(GeneratorConfiguration.DtoProjectNameSpace)
             || string.IsNullOrWhiteSpace(GeneratorConfiguration.DtoProjectNameSpace))
@@ -119,19 +153,19 @@ public abstract class AbstractGenerator : ICodeGenerator
             return;
         }
 
-        if (!DtoFileInfos.Any())
+        if (!fileInfos.Any())
         {
             _logger.LogInformation("No available DtoFileInfo");
             return;
         }
 
-        foreach (FileInfo fileInfo in DtoFileInfos)
+        foreach (TypeInfo fileInfo in fileInfos)
         {
             fileInfo.OriginalDtoNamespaceToken = GeneratorConfiguration.DtoProjectNameSpace;
         }
     }
 
-    protected void GetOriginalTargetPathFromConfiguration()
+    protected void GetOriginalTargetPathFromConfiguration(List<TypeInfo> fileInfos)
     {
         if (string.IsNullOrEmpty(GeneratorConfiguration.TargetDirectory)
             || string.IsNullOrWhiteSpace(GeneratorConfiguration.TargetDirectory))
@@ -140,19 +174,19 @@ public abstract class AbstractGenerator : ICodeGenerator
             return;
         }
 
-        if (!DtoFileInfos.Any())
+        if (!fileInfos.Any())
         {
             _logger.LogInformation("No available DtoFileInfo");
             return;
         }
 
-        foreach (FileInfo fileInfo in DtoFileInfos)
+        foreach (TypeInfo fileInfo in fileInfos)
         {
             fileInfo.OriginalTargetDirectoryToken = GeneratorConfiguration.TargetDirectory;
         }
     }
 
-    protected void GetOriginalDtoProjectBasePathFromConfiguration()
+    protected void GetOriginalDtoProjectBasePathFromConfiguration(List<TypeInfo> fileInfos)
     {
         if (string.IsNullOrEmpty(GeneratorConfiguration.DtoProjectBasePath)
             || string.IsNullOrWhiteSpace(GeneratorConfiguration.DtoProjectBasePath))
@@ -161,19 +195,19 @@ public abstract class AbstractGenerator : ICodeGenerator
             return;
         }
 
-        if (!DtoFileInfos.Any())
+        if (!fileInfos.Any())
         {
             _logger.LogInformation("No available DtoFileInfo");
             return;
         }
 
-        foreach (FileInfo fileInfo in DtoFileInfos)
+        foreach (TypeInfo fileInfo in fileInfos)
         {
             fileInfo.OriginalDtoProjectBasePathToken = GeneratorConfiguration.DtoProjectBasePath;
         }
     }
 
-    protected void GetOriginalDtoProjectAdditionalPathFromConfiguration()
+    protected void GetOriginalDtoProjectAdditionalPathFromConfiguration(List<TypeInfo> fileInfos)
     {
         if (string.IsNullOrEmpty(GeneratorConfiguration.DtoProjectAdditionalPath)
             || string.IsNullOrWhiteSpace(GeneratorConfiguration.DtoProjectAdditionalPath))
@@ -182,39 +216,26 @@ public abstract class AbstractGenerator : ICodeGenerator
             return;
         }
 
-        if (!DtoFileInfos.Any())
+        if (!fileInfos.Any())
         {
             _logger.LogInformation("No available DtoFileInfo");
             return;
         }
 
-        foreach (FileInfo fileInfo in DtoFileInfos)
+        foreach (TypeInfo fileInfo in fileInfos)
         {
             fileInfo.OriginalDtoProjectAdditionalPathToken = GeneratorConfiguration.DtoProjectAdditionalPath;
         }
     }
 
-    protected void GetOriginalTypeNameTokenFromOpenApiSchema()
+    protected void GetOriginalTypeNameTokenFromOpenApiSchema(List<TypeInfo> fileInfos)
     {
-        if (!OpenApiYamlSchema.Components.Schemas.Any())
-        {
-            _logger.LogInformation("No schemas are available in the YAML file");
-            return;
-        }
-
-        foreach (KeyValuePair<string, OpenApiSchema> schema in OpenApiYamlSchema.Components.Schemas)
-        {
-            DtoFileInfos.Add(
-                new FileInfo
-                {
-                    OriginalTypeNameToken = schema.Key
-                });
-        }
+        OpenApiToFileInfoManager.GetTypeNamesFromOpenApiAndAddToFileInfo(fileInfos, OpenApiYamlSchema);
     }
 
-    protected void GetOriginalPropertyMetadataFromOpenApiSchema()
+    protected void GetOriginalPropertyMetadataFromOpenApiSchema(List<TypeInfo> fileInfos)
     {
-        if (!DtoFileInfos.Any())
+        if (!fileInfos.Any())
         {
             _logger.LogInformation("No file info metadata available");
             return;
@@ -226,7 +247,7 @@ public abstract class AbstractGenerator : ICodeGenerator
             return;
         }
 
-        foreach (FileInfo fileInfo in DtoFileInfos)
+        foreach (TypeInfo fileInfo in fileInfos)
         {
             KeyValuePair<string, OpenApiSchema> openApiSchemaKeyValuePair = OpenApiYamlSchema.Components.Schemas
                 .First(p => p.Key == fileInfo.OriginalTypeNameToken);

@@ -16,7 +16,7 @@ public interface ICodeGenerator
     ///         This property stores all the data needed preprocessing Dto generation phase.
     ///     </remarks>
     /// </summary>
-    public List<FileInfo> DtoFileInfos { get; }
+    public List<TypeInfo> DtoFileInfos { get; }
 
     /// <summary>
     ///     Gets or sets the DtoFileInfos value.
@@ -24,7 +24,7 @@ public interface ICodeGenerator
     ///         This property stores all the data needed Dto Tests preprocessing.
     ///     </remarks>
     /// </summary>
-    public List<FileInfo> DtoTestFileInfos { get; }
+    public List<TypeInfo> DtoTestFileInfos { get; }
 
     /// <summary>
     ///     Builder method for providing configuration values for the generator.
@@ -82,4 +82,6 @@ public interface ICodeGenerator
     /// </summary>
     /// <returns>Instance of <see cref="ICodeGenerator" /></returns>
     ICodeGenerator Build();
+
+    ICodeGenerator SetOpenApiToFileInfoManager(IOpenApiToFileInfoManager openApiToFileInfoManager);
 }

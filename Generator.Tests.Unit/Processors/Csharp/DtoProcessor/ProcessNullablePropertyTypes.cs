@@ -18,9 +18,9 @@ public partial class DtoProcessor_Should
     public void ProcessNullablePropertyTypes(string typeName, bool isNullable, bool expected)
     {
         // Arrange
-        List<FileInfo> fileInfos = new()
+        List<TypeInfo> fileInfos = new()
         {
-            new FileInfo
+            new TypeInfo
             {
                 PropertyInfos = new List<PropertyInfo>
                 {

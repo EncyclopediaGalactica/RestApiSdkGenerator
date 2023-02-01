@@ -21,9 +21,9 @@ public partial class DtoProcessor_Should
         string expected)
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 OriginalTypeNameToken = typenameToken
             }
@@ -42,7 +42,7 @@ public partial class DtoProcessor_Should
     public void NoOperationExecuted_When_FileInfosListIsEmpty()
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>();
+        List<TypeInfo> fileInfos = new List<TypeInfo>();
         string typenamePostfix = "Dto";
         string filetype = ".cs";
 
@@ -60,9 +60,9 @@ public partial class DtoProcessor_Should
     public void Throw_WhenFilenamePostfix_IsNotProvided(string filetype)
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 OriginalTypeNameToken = "originalTypenameToken"
             }

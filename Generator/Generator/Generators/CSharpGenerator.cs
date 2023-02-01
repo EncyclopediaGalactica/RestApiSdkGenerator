@@ -97,9 +97,10 @@ public class CSharpGenerator : AbstractGenerator
         "int", "long", "boolean", "float", "double", "string"
     };
 
-    private List<FileInfoRender> _dtoFileInfosRender = new List<FileInfoRender>();
+    private List<TypeInfoRender> _dtoFileInfosRender = new List<TypeInfoRender>();
 
     private IDtoProcessor _dtoProcessor;
+    private IDtoTestsProcessor _dtoTestsProcessor;
     public override string DtoTemplatePath { get; } = "Templates/dto.handlebars";
 
     public Dictionary<string, string> OpenApiCsharpTypeMap { get; } = new()
@@ -128,6 +129,11 @@ public class CSharpGenerator : AbstractGenerator
             GenerateDtos();
         }
 
+        if (!ShouldIRunDtoTestPreProcessing())
+        {
+            PreProcessDtoTest();
+        }
+
         if (!ShouldIRunDtoTestGeneration())
         {
             GenerateDtosTests();
@@ -136,17 +142,28 @@ public class CSharpGenerator : AbstractGenerator
         return this;
     }
 
+    private void PreProcessDtoTest()
+    {
+        GetOriginalTypeNameTokenFromOpenApiSchema(DtoTestFileInfos);
+        GetOriginalPropertyMetadataFromOpenApiSchema(DtoTestFileInfos);
+        GetOriginalBaseNamespaceTokenFromConfiguration(DtoTestFileInfos);
+        GetOriginalDtoNamespaceTokenFromConfiguration(DtoTestFileInfos);
+
+        GetOriginalTargetPathFromConfiguration(DtoTestFileInfos);
+        GetOriginalDtoProjectBasePathFromConfiguration(DtoTestFileInfos);
+        GetOriginalDtoProjectAdditionalPathFromConfiguration(DtoTestFileInfos);
+    }
+
     public override void PreProcessDtos()
     {
-        GetOriginalTypeNameTokenFromOpenApiSchema();
-        GetOriginalPropertyMetadataFromOpenApiSchema();
-        GetOriginalBaseNamespaceTokenFromConfiguration();
-        GetOriginalDtoNamespaceTokenFromConfiguration();
-        GetOriginalDtoProjectAdditionalPathFromConfiguration();
+        GetOriginalTypeNameTokenFromOpenApiSchema(DtoFileInfos);
+        GetOriginalPropertyMetadataFromOpenApiSchema(DtoFileInfos);
+        GetOriginalBaseNamespaceTokenFromConfiguration(DtoFileInfos);
+        GetOriginalDtoNamespaceTokenFromConfiguration(DtoFileInfos);
 
-        GetOriginalTargetPathFromConfiguration();
-        GetOriginalDtoProjectBasePathFromConfiguration();
-        GetOriginalDtoProjectAdditionalPathFromConfiguration();
+        GetOriginalTargetPathFromConfiguration(DtoFileInfos);
+        GetOriginalDtoProjectBasePathFromConfiguration(DtoFileInfos);
+        GetOriginalDtoProjectAdditionalPathFromConfiguration(DtoFileInfos);
 
         PreProcessDtoMetadata();
         CopyRenderDataToRenderObject();
@@ -165,10 +182,10 @@ public class CSharpGenerator : AbstractGenerator
             return;
         }
 
-        foreach (FileInfo fileInfo in DtoFileInfos)
+        foreach (TypeInfo fileInfo in DtoFileInfos)
         {
             string template = FileManager.ReadAllText(fileInfo.TemplateAbsolutePathWithFileName);
-            FileInfoRender singleRender = _dtoFileInfosRender
+            TypeInfoRender singleRender = _dtoFileInfosRender
                 .Where(p => p.Namespace == fileInfo.Namespace)
                 .First(p => p.TypeName == fileInfo.Typename);
             string compiledContent = TemplateManager.CompileTemplate(template, singleRender);
@@ -185,7 +202,7 @@ public class CSharpGenerator : AbstractGenerator
             return;
         }
 
-        foreach (FileInfo fileInfo in DtoFileInfos)
+        foreach (TypeInfo fileInfo in DtoFileInfos)
         {
             List<PropertyInfoRender> propertyInfos = new List<PropertyInfoRender>();
             if (fileInfo.PropertyInfos.Any())
@@ -202,7 +219,7 @@ public class CSharpGenerator : AbstractGenerator
             }
 
             _dtoFileInfosRender.Add(
-                new FileInfoRender()
+                new TypeInfoRender()
                 {
                     PropertyInfos = propertyInfos,
                     Namespace = fileInfo.Namespace,
@@ -233,7 +250,9 @@ public class CSharpGenerator : AbstractGenerator
 
     public override ICodeGenerator Build()
     {
+        Init();
         _dtoProcessor = new DtoProcessor(FileManager, StringManager, PathManager);
+        _dtoTestsProcessor = new DtoTestProcessor(FileManager, StringManager, PathManager);
         return this;
     }
 }

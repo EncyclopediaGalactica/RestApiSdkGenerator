@@ -28,7 +28,7 @@ public class DtoProcessor : IDtoProcessor
     }
 
     /// <inheritdoc />
-    public void ProcessTypename(List<FileInfo> dtoFileInfos, string? typeNamePostfix)
+    public void ProcessTypename(List<TypeInfo> dtoFileInfos, string? typeNamePostfix)
     {
         if (!dtoFileInfos.Any())
         {
@@ -41,7 +41,7 @@ public class DtoProcessor : IDtoProcessor
             _logger.LogInformation("Typename postfix is empty, null or whitespace");
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             string typeName = _stringManager.Concat(
                 _stringManager.MakeFirstCharUpperCase(fileInfo.OriginalTypeNameToken),
@@ -52,7 +52,7 @@ public class DtoProcessor : IDtoProcessor
     }
 
     /// <inheritdoc />
-    public void ProcessDtoNamespace(List<FileInfo> dtoFileInfos)
+    public void ProcessDtoNamespace(List<TypeInfo> dtoFileInfos)
     {
         if (!dtoFileInfos.Any())
         {
@@ -60,7 +60,7 @@ public class DtoProcessor : IDtoProcessor
             return;
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             fileInfo.Namespace = _stringManager.MakeUppercaseTheCharAfterTheDot(
                 _stringManager.ConcatCsharpNamespaceTokens(
@@ -70,7 +70,7 @@ public class DtoProcessor : IDtoProcessor
     }
 
     /// <inheritdoc />
-    public void ProcessPropertyNames(List<FileInfo> dtoFileInfos, List<string> reservedWords)
+    public void ProcessPropertyNames(List<TypeInfo> dtoFileInfos, List<string> reservedWords)
     {
         if (!dtoFileInfos.Any())
         {
@@ -78,7 +78,7 @@ public class DtoProcessor : IDtoProcessor
             return;
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
             {
@@ -103,7 +103,7 @@ public class DtoProcessor : IDtoProcessor
 
     /// <inheritdoc />
     public void ProcessPropertyTypeNames(
-        List<FileInfo> dtoFileInfos,
+        List<TypeInfo> dtoFileInfos,
         List<string> reservedWords,
         List<string> valueTypes)
     {
@@ -113,7 +113,7 @@ public class DtoProcessor : IDtoProcessor
             return;
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
             {
@@ -137,7 +137,7 @@ public class DtoProcessor : IDtoProcessor
         }
     }
 
-    public void ProcessNullablePropertyTypes(List<FileInfo> dtoFileInfos)
+    public void ProcessNullablePropertyTypes(List<TypeInfo> dtoFileInfos)
     {
         if (!dtoFileInfos.Any())
         {
@@ -145,7 +145,7 @@ public class DtoProcessor : IDtoProcessor
             return;
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
             {
@@ -169,7 +169,7 @@ public class DtoProcessor : IDtoProcessor
     }
 
     /// <inheritdoc />
-    public void ProcessTargetPath(List<FileInfo> dtoFileInfos)
+    public void ProcessTargetPath(List<TypeInfo> dtoFileInfos)
     {
         if (!dtoFileInfos.Any())
         {
@@ -177,7 +177,7 @@ public class DtoProcessor : IDtoProcessor
             return;
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             StringBuilder builder = new StringBuilder();
             if (!string.IsNullOrEmpty(fileInfo.OriginalTargetDirectoryToken)
@@ -219,7 +219,7 @@ public class DtoProcessor : IDtoProcessor
         }
     }
 
-    public void ProcessPathWithFileName(List<FileInfo> dtoFileInfos)
+    public void ProcessPathWithFileName(List<TypeInfo> dtoFileInfos)
     {
         if (!dtoFileInfos.Any())
         {
@@ -227,7 +227,7 @@ public class DtoProcessor : IDtoProcessor
             return;
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             if (string.IsNullOrEmpty(fileInfo.AbsoluteTargetPath) ||
                 string.IsNullOrWhiteSpace(fileInfo.AbsoluteTargetPath))
@@ -248,7 +248,7 @@ public class DtoProcessor : IDtoProcessor
         }
     }
 
-    public void ProcessDtoTemplatePath(List<FileInfo> dtoFileInfos, string dtoTemplatePath)
+    public void ProcessDtoTemplatePath(List<TypeInfo> dtoFileInfos, string dtoTemplatePath)
     {
         if (!dtoFileInfos.Any())
         {
@@ -262,7 +262,7 @@ public class DtoProcessor : IDtoProcessor
             return;
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             dtoTemplatePath = _pathManager.CheckIfPathAbsoluteOrMakeItOne(dtoTemplatePath);
 
@@ -270,7 +270,7 @@ public class DtoProcessor : IDtoProcessor
         }
     }
 
-    public void CheckIfPropertyNameIsReservedWord(List<FileInfo> dtoFileInfos, List<string> reservedWords)
+    public void CheckIfPropertyNameIsReservedWord(List<TypeInfo> dtoFileInfos, List<string> reservedWords)
     {
         if (!dtoFileInfos.Any())
         {
@@ -284,7 +284,7 @@ public class DtoProcessor : IDtoProcessor
             return;
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
             {
@@ -304,7 +304,7 @@ public class DtoProcessor : IDtoProcessor
     }
 
     public void ProcessOpenApiTypesToCsharpTypes(
-        List<FileInfo> dtoFileInfos,
+        List<TypeInfo> dtoFileInfos,
         Dictionary<string, string> openApiCsharpTypeMap)
     {
         if (dtoFileInfos.Any())
@@ -312,7 +312,7 @@ public class DtoProcessor : IDtoProcessor
             _logger.LogInformation("Dto file infos is empty");
         }
 
-        foreach (FileInfo fileInfo in dtoFileInfos)
+        foreach (TypeInfo fileInfo in dtoFileInfos)
         {
             foreach (PropertyInfo propertyInfo in fileInfo.PropertyInfos)
             {
@@ -325,7 +325,7 @@ public class DtoProcessor : IDtoProcessor
     }
 
     public void ProcessFilename(
-        List<FileInfo> fileInfos,
+        List<TypeInfo> fileInfos,
         string filenamePostfix,
         string fileType)
     {
@@ -347,7 +347,7 @@ public class DtoProcessor : IDtoProcessor
             throw new ArgumentException("No file type provided");
         }
 
-        foreach (FileInfo fileInfo in fileInfos)
+        foreach (TypeInfo fileInfo in fileInfos)
         {
             string fileName = _stringManager.Concat(
                 _stringManager.MakeFirstCharUpperCase(fileInfo.OriginalTypeNameToken),

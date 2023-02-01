@@ -20,9 +20,9 @@ public partial class DtoProcessor_Should
         string expected)
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 AbsoluteTargetPath = targetPath,
                 Filename = fileName

@@ -16,9 +16,9 @@ public partial class DtoProcessor_Should
     public void ProcessPropertyNames(string name, string expected)
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 PropertyInfos = new List<PropertyInfo>
                 {
@@ -43,9 +43,9 @@ public partial class DtoProcessor_Should
     public void Throw_WhenPropertyName_AReservedWord(string name, string reserved)
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 PropertyInfos = new List<PropertyInfo>
                 {

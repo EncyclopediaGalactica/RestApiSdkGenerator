@@ -14,9 +14,9 @@ public partial class DtoProcessor_Should
     public void CheckIfPropertyNameReservedWord(string word, string reservedWord, bool shouldThrow)
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 PropertyInfos = new List<PropertyInfo>
                 {
@@ -40,7 +40,7 @@ public partial class DtoProcessor_Should
     public void CheckIfPropertyNameReservedWord_NotThrow_WhenFileInfoListEmpty()
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo> { };
+        List<TypeInfo> fileInfos = new List<TypeInfo> { };
         List<string> reservedWords = new List<string> { "reserved" };
 
         // Act
@@ -54,9 +54,9 @@ public partial class DtoProcessor_Should
     public void CheckIfPropertyNameReservedWord_WhenReservedWordsListEmpty()
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 PropertyInfos = new List<PropertyInfo>
                 {

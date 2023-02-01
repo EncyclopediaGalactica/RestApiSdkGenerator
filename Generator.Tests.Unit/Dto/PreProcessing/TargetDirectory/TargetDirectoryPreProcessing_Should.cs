@@ -27,7 +27,7 @@ public class TargetDirectoryPreProcessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoFileInfos.Where(p => p.Filename == "TargetDirectoryDto.cs")
             .ToList().Count.Should().Be(1);
 
-        FileInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoFileInfos
+        TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoFileInfos
             .First(p => p.Filename == "TargetDirectoryDto.cs");
         aSingleDto.AbsoluteTargetPath.Should().NotBeNull();
         aSingleDto.AbsoluteTargetPath.Should().Be(

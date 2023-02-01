@@ -10,9 +10,9 @@ public partial class DtoProcessor_Should
     public void ProcessDtoTypename()
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 OriginalTypeNameToken = "originalTypenameToken"
             }
@@ -30,7 +30,7 @@ public partial class DtoProcessor_Should
     public void MakeNoChange_ThrowNoError_When_EmptyFileInfoInput()
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>();
+        List<TypeInfo> fileInfos = new List<TypeInfo>();
         string typeNamePostfix = "Dto";
 
         // Act
@@ -44,9 +44,9 @@ public partial class DtoProcessor_Should
     public void ProcessDtoTypename_IfNoPostfixProvided()
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 OriginalTypeNameToken = "originalTypenameToken"
             }

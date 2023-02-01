@@ -16,9 +16,9 @@ public partial class DtoProcessor_Should
         string expected)
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 OriginalTargetDirectoryToken = targetDirectoryToken,
                 OriginalDtoProjectBasePathToken = dtoBasePathToken,
@@ -49,9 +49,9 @@ public partial class DtoProcessor_Should
         string dtoAdditionalPathToken)
     {
         // Arrange
-        List<FileInfo> fileInfos = new List<FileInfo>
+        List<TypeInfo> fileInfos = new List<TypeInfo>
         {
-            new FileInfo
+            new TypeInfo
             {
                 OriginalTargetDirectoryToken = targetDirectoryToken,
                 OriginalDtoProjectBasePathToken = dtoBasePathToken,

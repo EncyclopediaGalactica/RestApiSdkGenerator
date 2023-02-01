@@ -105,4 +105,7 @@ public class CodeGeneratorConfiguration
 
     [JsonProperty("test_mode")]
     public bool TestMode { get; set; }
+
+    [JsonProperty("skip_dto_test_preprocess")]
+    public bool SkipDtoTestPreProcessing { get; set; }
 }

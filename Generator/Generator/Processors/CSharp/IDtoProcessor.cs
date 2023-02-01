@@ -10,12 +10,12 @@ public interface IDtoProcessor
     ///     <remarks>
     ///         The provided type is the OriginalTypeNameToken,
     ///         while the processed typename is the Typename property in the
-    ///         <see cref="FileInfo" /> object.
+    ///         <see cref="TypeInfo" /> object.
     ///     </remarks>
     /// </summary>
     /// <param name="dtoFileInfos"></param>
     /// <param name="typeNamePostfix"></param>
-    void ProcessTypename(List<FileInfo> dtoFileInfos, string typeNamePostfix);
+    void ProcessTypename(List<TypeInfo> dtoFileInfos, string typeNamePostfix);
 
     /// <summary>
     ///     Creates valid C# filename for the Dto class.
@@ -31,19 +31,19 @@ public interface IDtoProcessor
     ///         </para>
     ///     </remarks>
     /// </summary>
-    /// <param name="fileInfos">List of <see cref="FileInfo" /></param>
+    /// <param name="fileInfos">List of <see cref="TypeInfo" /></param>
     /// <param name="filenamePostfix">Filename postfix</param>
     /// <param name="fileType">File type</param>
     /// <exception cref="ArgumentException">
     ///     When File type is not provided
     /// </exception>
-    void ProcessFilename(List<FileInfo> fileInfos, string filenamePostfix, string fileType);
+    void ProcessFilename(List<TypeInfo> fileInfos, string filenamePostfix, string fileType);
 
     /// <summary>
     ///     Takes the namespace information and creates valid C# namespace names.
     /// </summary>
     /// <param name="dtoFileInfos">File infos</param>
-    void ProcessDtoNamespace(List<FileInfo> dtoFileInfos);
+    void ProcessDtoNamespace(List<TypeInfo> dtoFileInfos);
 
     /// <summary>
     ///     Takes the property name information and makes a valid C# property
@@ -51,49 +51,49 @@ public interface IDtoProcessor
     /// </summary>
     /// <param name="dtoFileInfos">file infos</param>
     /// <param name="reservedWords">reserved words list</param>
-    void ProcessPropertyNames(List<FileInfo> dtoFileInfos, List<string> reservedWords);
+    void ProcessPropertyNames(List<TypeInfo> dtoFileInfos, List<string> reservedWords);
 
     void ProcessPropertyTypeNames(
-        List<FileInfo> dtoFileInfos,
+        List<TypeInfo> dtoFileInfos,
         List<string> reservedWords,
         List<string> valueTypes);
 
     /// <summary>
     ///     Takes the property type information and determines if the type is nullable
     /// </summary>
-    /// <param name="dtoFileInfos">list of <see cref="FileInfo" /></param>
-    void ProcessNullablePropertyTypes(List<FileInfo> dtoFileInfos);
+    /// <param name="dtoFileInfos">list of <see cref="TypeInfo" /></param>
+    void ProcessNullablePropertyTypes(List<TypeInfo> dtoFileInfos);
 
     /// <summary>
     ///     Takes the available path related configuration values and create valid absolute path
     /// </summary>
     /// <param name="dtoFileInfos">list of dto file info</param>
-    void ProcessTargetPath(List<FileInfo> dtoFileInfos);
+    void ProcessTargetPath(List<TypeInfo> dtoFileInfos);
 
     /// <summary>
     ///     Concatenates the prepared absolute path with the provided filename.
     /// </summary>
     /// <param name="dtoFileInfos">list of dto file infos</param>
-    void ProcessPathWithFileName(List<FileInfo> dtoFileInfos);
+    void ProcessPathWithFileName(List<TypeInfo> dtoFileInfos);
 
     /// <summary>
     ///     Adds template path information to the file information objects
     /// </summary>
-    /// <param name="dtoFileInfos">list of <see cref="FileInfo" /></param>
+    /// <param name="dtoFileInfos">list of <see cref="TypeInfo" /></param>
     /// <param name="dtoTemplatePath">path to template used to generate the file</param>
-    void ProcessDtoTemplatePath(List<FileInfo> dtoFileInfos, string dtoTemplatePath);
+    void ProcessDtoTemplatePath(List<TypeInfo> dtoFileInfos, string dtoTemplatePath);
 
     /// <summary>
     ///     Checks if the property name is a reserved word
     /// </summary>
-    /// <param name="dtoFileInfos">list of <see cref="FileInfo" /></param>
+    /// <param name="dtoFileInfos">list of <see cref="TypeInfo" /></param>
     /// <param name="reservedWords">list of reserved words</param>
-    void CheckIfPropertyNameIsReservedWord(List<FileInfo> dtoFileInfos, List<string> reservedWords);
+    void CheckIfPropertyNameIsReservedWord(List<TypeInfo> dtoFileInfos, List<string> reservedWords);
 
     /// <summary>
     ///     Determines the C# type for given OpenApi type using the provided map
     /// </summary>
-    /// <param name="dtoFileInfos">List of <see cref="FileInfo" /></param>
+    /// <param name="dtoFileInfos">List of <see cref="TypeInfo" /></param>
     /// <param name="openApiCsharpTypeMap">C# map of types</param>
-    void ProcessOpenApiTypesToCsharpTypes(List<FileInfo> dtoFileInfos, Dictionary<string, string> openApiCsharpTypeMap);
+    void ProcessOpenApiTypesToCsharpTypes(List<TypeInfo> dtoFileInfos, Dictionary<string, string> openApiCsharpTypeMap);
 }

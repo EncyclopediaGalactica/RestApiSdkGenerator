@@ -16,7 +16,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Models;
 ///         </list>
 ///     </remarks>
 /// </summary>
-public class FileInfo
+public class TypeInfo
 {
     /// <summary>
     ///     Gets or sets the original type name property.

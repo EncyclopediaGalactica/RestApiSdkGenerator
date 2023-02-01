@@ -28,7 +28,7 @@ public class PropertyTypePreProcessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto.cs").ToList().Count.Should()
             .Be(1);
 
-        FileInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto.cs");
+        TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto.cs");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "IntegerType").PropertyTypeName.Should().Be("int");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "LongType").PropertyTypeName.Should().Be("long");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "FloatType").PropertyTypeName.Should().Be("float");

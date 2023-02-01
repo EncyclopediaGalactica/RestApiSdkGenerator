@@ -1,6 +1,6 @@
 namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Models;
 
-public class RequestModelInfo : FileInfo
+public class RequestModelInfo : TypeInfo
 {
     public string RequestModelInfoType { get; set; }
 }

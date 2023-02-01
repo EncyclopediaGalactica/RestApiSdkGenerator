@@ -257,6 +257,9 @@
       <None Update="Dto\Generation\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Manager\OpenApiDocumentManager\petstore.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

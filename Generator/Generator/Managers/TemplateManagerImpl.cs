@@ -25,10 +25,10 @@ public class TemplateManagerImpl : ITemplateManager
     }
 
     /// <inheritdoc />
-    public string CompileTemplate(string template, FileInfoRender fileInfoRender)
+    public string CompileTemplate(string template, TypeInfoRender typeInfoRender)
     {
         HandlebarsTemplate<object, object>? compiledTemplate = _handlebarsContext.Compile(template);
-        string compiledResult = compiledTemplate(fileInfoRender);
+        string compiledResult = compiledTemplate(typeInfoRender);
 
         if (string.IsNullOrWhiteSpace(compiledResult) || string.IsNullOrEmpty(compiledResult))
         {
@@ -46,7 +46,7 @@ public interface ITemplateManager
     ///     Compiles Handlebar template using the provided data structure.
     /// </summary>
     /// <param name="template">the Handlebar template content</param>
-    /// <param name="fileInfoRender">file information</param>
+    /// <param name="typeInfoRender">file information</param>
     /// <returns>the compiled template</returns>
-    string CompileTemplate(string template, FileInfoRender fileInfoRender);
+    string CompileTemplate(string template, TypeInfoRender typeInfoRender);
 }
