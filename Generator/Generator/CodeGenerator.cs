@@ -16,7 +16,7 @@ public class CodeGenerator
     private readonly CodeGeneratorConfiguration _generatorConfiguration;
     private readonly ILogger<CodeGenerator> _logger;
     private readonly OpenApiDocument _openApiDocument;
-    private readonly IOpenApiToFileInfoManager _openApiToFileInfoManager;
+    private readonly IOpenApiToTypeInfoManager _openApiToTypeInfoManager;
     private readonly IPathManager _pathManager;
     private readonly IStringManager _stringManager;
     private readonly ITemplateManager _templateManager;
@@ -37,7 +37,7 @@ public class CodeGenerator
         _pathManager = new PathManagerImpl();
         _templateManager = new TemplateManagerImpl();
         _stringManager = new StringManagerImpl();
-        _openApiToFileInfoManager = new OpenApiToFileInfoManager();
+        _openApiToTypeInfoManager = new OpenApiToTypeInfoManager();
         CreateGenerator(generatorConfiguration);
         SpecificCodeGenerator!.Generate();
         // Generate();
@@ -62,7 +62,7 @@ public class CodeGenerator
                     .SetPathManager(_pathManager)
                     .SetTemplateManager(_templateManager)
                     .SetStringManager(_stringManager)
-                    .SetOpenApiToFileInfoManager(_openApiToFileInfoManager)
+                    .SetOpenApiToFileInfoManager(_openApiToTypeInfoManager)
                     .Build();
                 break;
         }

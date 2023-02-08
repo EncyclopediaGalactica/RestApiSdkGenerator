@@ -22,12 +22,12 @@ public class FileNamePreProcessing_Should : TestBase
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .Where(p => p.Filename == "PetDto.cs").ToList().Count.Should().Be(1);
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .Where(p => p.Filename == "NewPetDto.cs").ToList().Count.Should().Be(1);
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .Where(p => p.Filename == "ErrorModelDto.cs").ToList().Count.Should().Be(1);
     }
 }

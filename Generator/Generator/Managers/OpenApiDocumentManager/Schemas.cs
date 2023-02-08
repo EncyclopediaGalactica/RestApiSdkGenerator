@@ -20,11 +20,6 @@ public class Schemas : ISchemas
     {
         if (!openApiDocument.Components.Schemas.Any())
         {
-            throw new ArgumentException("Openapi schema does not any components.schemas");
-        }
-
-        if (!openApiDocument.Components.Schemas.Any())
-        {
             return new Dictionary<string, OpenApiSchema>();
         }
 
@@ -47,5 +42,23 @@ public class Schemas : ISchemas
         }
 
         return schemas.First(p => p.Key == schemaName).Value.Required.ToList();
+    }
+
+    /// <inheritdoc />
+    public List<string> GetPropertyNamesBySchema(string schemaName, OpenApiDocument openApiDocument)
+    {
+        if (string.IsNullOrEmpty(schemaName) || string.IsNullOrWhiteSpace(schemaName))
+        {
+            throw new ArgumentException(nameof(schemaName));
+        }
+
+        IDictionary<string, OpenApiSchema> schemas = GetSchemas(openApiDocument);
+
+        if (!schemas.Any() || schemas.Where(p => p.Key == schemaName).ToList().Count == 0)
+        {
+            return new List<string>();
+        }
+
+        return schemas.First(p => p.Key == schemaName).Value.Properties.Keys.ToList();
     }
 }

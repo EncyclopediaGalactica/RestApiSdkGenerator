@@ -14,7 +14,7 @@ public abstract class AbstractGenerator : ICodeGenerator
     protected IFileManager FileManager;
 
     protected CodeGeneratorConfiguration GeneratorConfiguration;
-    protected IOpenApiToFileInfoManager OpenApiToFileInfoManager;
+    protected IOpenApiToTypeInfoManager OpenApiToTypeInfoManager;
 
     protected OpenApiDocument OpenApiYamlSchema;
 
@@ -25,9 +25,9 @@ public abstract class AbstractGenerator : ICodeGenerator
     protected ITemplateManager TemplateManager;
     public abstract string DtoTemplatePath { get; }
 
-    public List<TypeInfo> DtoFileInfos { get; } = new List<TypeInfo>();
+    public List<TypeInfo> DtoTypeInfos { get; } = new List<TypeInfo>();
 
-    public List<TypeInfo> DtoTestFileInfos { get; } = new List<TypeInfo>();
+    public List<TypeInfo> DtoTestTypeInfos { get; } = new List<TypeInfo>();
 
     public ICodeGenerator SetTemplateManager(ITemplateManager templateManager)
     {
@@ -76,10 +76,10 @@ public abstract class AbstractGenerator : ICodeGenerator
 
     public abstract ICodeGenerator Build();
 
-    public ICodeGenerator SetOpenApiToFileInfoManager(IOpenApiToFileInfoManager openApiToFileInfoManager)
+    public ICodeGenerator SetOpenApiToFileInfoManager(IOpenApiToTypeInfoManager openApiToTypeInfoManager)
     {
-        ArgumentNullException.ThrowIfNull(openApiToFileInfoManager);
-        OpenApiToFileInfoManager = openApiToFileInfoManager;
+        ArgumentNullException.ThrowIfNull(openApiToTypeInfoManager);
+        OpenApiToTypeInfoManager = openApiToTypeInfoManager;
         return this;
     }
 
@@ -116,7 +116,7 @@ public abstract class AbstractGenerator : ICodeGenerator
         if (FileManager is null
             || PathManager is null
             || StringManager is null
-            || OpenApiToFileInfoManager is null
+            || OpenApiToTypeInfoManager is null
             || GeneratorConfiguration is null
             || OpenApiYamlSchema is null)
         {
@@ -228,9 +228,19 @@ public abstract class AbstractGenerator : ICodeGenerator
         }
     }
 
-    protected void GetOriginalTypeNameTokenFromOpenApiSchema(List<TypeInfo> fileInfos)
+    protected void GetOriginalTypeNameTokenFromOpenApiSchema(List<TypeInfo> typeInfos)
     {
-        OpenApiToFileInfoManager.GetTypeNamesFromOpenApiAndAddToFileInfo(fileInfos, OpenApiYamlSchema);
+        OpenApiToTypeInfoManager.GetTypeNamesFromOpenApiAndAddToTypeInfo(typeInfos, OpenApiYamlSchema);
+    }
+
+    protected void GetOriginalRequiredPropertiesByTypeFromOpenApiSchema(List<TypeInfo> typeInfos)
+    {
+        OpenApiToTypeInfoManager.GetRequiredPropertiesByTypeAndAddToTypeInfo(typeInfos, OpenApiYamlSchema);
+    }
+
+    protected void GetOriginalPropertyNamesByTypeFromOpenApiSchema(List<TypeInfo> typeInfos)
+    {
+        OpenApiToTypeInfoManager.GetPropertyNamesByTypeAndAddToTypeInfo(typeInfos, OpenApiYamlSchema);
     }
 
     protected void GetOriginalPropertyMetadataFromOpenApiSchema(List<TypeInfo> fileInfos)

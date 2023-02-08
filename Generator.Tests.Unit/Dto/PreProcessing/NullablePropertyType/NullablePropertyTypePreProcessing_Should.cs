@@ -23,12 +23,12 @@ public class NullablePropertyTypePreProcessing_Should : TestBase
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
         codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Count.Should().Be(1);
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Where(p => p.Filename == "PetDto.cs").ToList().Count.Should()
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Count.Should().Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.Filename == "PetDto.cs").ToList().Count.Should()
             .Be(1);
 
-        TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoFileInfos.First(p => p.Filename == "PetDto.cs");
+        TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.Filename == "PetDto.cs");
 
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringType").PropertyTypeName.Should().Be("string");
         aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringType").IsNullable.Should().BeFalse();

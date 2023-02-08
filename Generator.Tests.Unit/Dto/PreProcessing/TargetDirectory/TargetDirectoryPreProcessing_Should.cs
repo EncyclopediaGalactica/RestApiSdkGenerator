@@ -22,12 +22,12 @@ public class TargetDirectoryPreProcessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Count.Should().Be(1);
-        codeGenerator.SpecificCodeGenerator.DtoFileInfos.Where(p => p.Filename == "TargetDirectoryDto.cs")
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Count.Should().Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.Filename == "TargetDirectoryDto.cs")
             .ToList().Count.Should().Be(1);
 
-        TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoFileInfos
+        TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .First(p => p.Filename == "TargetDirectoryDto.cs");
         aSingleDto.AbsoluteTargetPath.Should().NotBeNull();
         aSingleDto.AbsoluteTargetPath.Should().Be(

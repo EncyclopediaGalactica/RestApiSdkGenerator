@@ -20,12 +20,14 @@ public interface ISchemas
     /// <summary>
     ///     Returns list of schemas from the provided OpenApi file.
     ///     <remarks>
+    ///         When the <see cref="OpenApiDocument" /> does not have schemas (type in C# regime) the method returns an empty
+    ///         list.
     ///         Important to note that what OpenApi calls schema C# calls class name or type name.
     ///         <a href="https://swagger.io/specification/#schema-object">Schema object</a>
     ///     </remarks>
     /// </summary>
-    /// <param name="openApiDocument"></param>
-    /// <returns></returns>
+    /// <param name="openApiDocument">the <see cref="OpenApiDocument" /></param>
+    /// <returns>List of <see cref="IDictionary{TKey,TValue}" /></returns>
     IDictionary<string, OpenApiSchema> GetSchemas(OpenApiDocument openApiDocument);
 
     /// <summary>
@@ -43,4 +45,18 @@ public interface ISchemas
     /// </param>
     /// <returns>List of required properties</returns>
     List<string> GetRequiredPropertiesBySchema(string schemaName, OpenApiDocument openApiDocument);
+
+    /// <summary>
+    ///     Returns the property names of the given schema
+    ///     <remarks>
+    ///         Important to note that what OpenApi calls schema in the C# regime it is called type
+    ///         If the schema does not have properties empty list will be returned
+    ///     </remarks>
+    /// </summary>
+    /// <param name="schemaName">Name of the schema / type name</param>
+    /// <param name="openApiDocument">
+    ///     <see cref="OpenApiDocument" />
+    /// </param>
+    /// <returns></returns>
+    List<string> GetPropertyNamesBySchema(string schemaName, OpenApiDocument openApiDocument);
 }
