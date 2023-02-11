@@ -243,44 +243,49 @@ public abstract class AbstractGenerator : ICodeGenerator
         OpenApiToTypeInfoManager.GetPropertyNamesByTypeAndAddToTypeInfo(typeInfos, OpenApiYamlSchema);
     }
 
-    protected void GetOriginalPropertyMetadataFromOpenApiSchema(List<TypeInfo> fileInfos)
+    protected void GetOriginalPropertyTypesByTypeFromOpenApiSchema(List<TypeInfo> typeInfos)
     {
-        if (!fileInfos.Any())
-        {
-            _logger.LogInformation("No file info metadata available");
-            return;
-        }
-
-        if (!OpenApiYamlSchema.Components.Schemas.Any())
-        {
-            _logger.LogInformation("No schemas are available in the YAML file");
-            return;
-        }
-
-        foreach (TypeInfo fileInfo in fileInfos)
-        {
-            KeyValuePair<string, OpenApiSchema> openApiSchemaKeyValuePair = OpenApiYamlSchema.Components.Schemas
-                .First(p => p.Key == fileInfo.OriginalTypeNameToken);
-
-            if (!openApiSchemaKeyValuePair.Value.Properties.Any())
-            {
-                _logger.LogInformation("Schema name - {SchemaName} - does not have any property",
-                    fileInfo.OriginalTypeNameToken);
-                continue;
-            }
-
-            fileInfo.RequiredProperties = openApiSchemaKeyValuePair.Value.Required.ToList();
-            fileInfo.RequiredProperties = fileInfo.RequiredProperties.ConvertAll(d => d.ToLower());
-
-            foreach (KeyValuePair<string, OpenApiSchema> property in openApiSchemaKeyValuePair.Value.Properties)
-            {
-                fileInfo.PropertyInfos.Add(new PropertyInfo
-                {
-                    OriginalPropertyNameToken = property.Key,
-                    OriginalPropertyTypeNameToken = property.Value.Type,
-                    OriginalPropertyTypeFormat = property.Value.Format
-                });
-            }
-        }
+        OpenApiToTypeInfoManager.GetPropertyTypesByTypeAndAddTypeInfo(typeInfos, OpenApiYamlSchema);
     }
+
+    // protected void GetOriginalPropertyMetadataFromOpenApiSchema(List<TypeInfo> fileInfos)
+    // {
+    //     if (!fileInfos.Any())
+    //     {
+    //         _logger.LogInformation("No file info metadata available");
+    //         return;
+    //     }
+    //
+    //     if (!OpenApiYamlSchema.Components.Schemas.Any())
+    //     {
+    //         _logger.LogInformation("No schemas are available in the YAML file");
+    //         return;
+    //     }
+    //
+    //     foreach (TypeInfo fileInfo in fileInfos)
+    //     {
+    //         KeyValuePair<string, OpenApiSchema> openApiSchemaKeyValuePair = OpenApiYamlSchema.Components.Schemas
+    //             .First(p => p.Key == fileInfo.OriginalTypeNameToken);
+    //
+    //         if (!openApiSchemaKeyValuePair.Value.Properties.Any())
+    //         {
+    //             _logger.LogInformation("Schema name - {SchemaName} - does not have any property",
+    //                 fileInfo.OriginalTypeNameToken);
+    //             continue;
+    //         }
+    //
+    //         fileInfo.RequiredProperties = openApiSchemaKeyValuePair.Value.Required.ToList();
+    //         fileInfo.RequiredProperties = fileInfo.RequiredProperties.ConvertAll(d => d.ToLower());
+    //
+    //         foreach (KeyValuePair<string, OpenApiSchema> property in openApiSchemaKeyValuePair.Value.Properties)
+    //         {
+    //             fileInfo.PropertyInfos.Add(new PropertyInfo
+    //             {
+    //                 OriginalPropertyNameToken = property.Key,
+    //                 OriginalPropertyTypeNameToken = property.Value.Type,
+    //                 OriginalPropertyTypeFormat = property.Value.Format
+    //             });
+    //         }
+    //     }
+    // }
 }

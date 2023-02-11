@@ -147,8 +147,9 @@ public class CSharpGenerator : AbstractGenerator
         GetOriginalTypeNameTokenFromOpenApiSchema(DtoTestTypeInfos);
         GetOriginalRequiredPropertiesByTypeFromOpenApiSchema(DtoTypeInfos);
         GetOriginalPropertyNamesByTypeFromOpenApiSchema(DtoTypeInfos);
+        GetOriginalPropertyTypesByTypeFromOpenApiSchema(DtoTypeInfos);
 
-        GetOriginalPropertyMetadataFromOpenApiSchema(DtoTestTypeInfos);
+        // GetOriginalPropertyMetadataFromOpenApiSchema(DtoTestTypeInfos);
         GetOriginalBaseNamespaceTokenFromConfiguration(DtoTestTypeInfos);
         GetOriginalDtoNamespaceTokenFromConfiguration(DtoTestTypeInfos);
 
@@ -162,8 +163,9 @@ public class CSharpGenerator : AbstractGenerator
         GetOriginalTypeNameTokenFromOpenApiSchema(DtoTypeInfos);
         GetOriginalRequiredPropertiesByTypeFromOpenApiSchema(DtoTypeInfos);
         GetOriginalPropertyNamesByTypeFromOpenApiSchema(DtoTypeInfos);
+        GetOriginalPropertyTypesByTypeFromOpenApiSchema(DtoTypeInfos);
 
-        GetOriginalPropertyMetadataFromOpenApiSchema(DtoTypeInfos);
+        // GetOriginalPropertyMetadataFromOpenApiSchema(DtoTypeInfos);
         GetOriginalBaseNamespaceTokenFromConfiguration(DtoTypeInfos);
         GetOriginalDtoNamespaceTokenFromConfiguration(DtoTypeInfos);
 

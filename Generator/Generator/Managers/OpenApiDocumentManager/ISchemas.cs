@@ -57,6 +57,21 @@ public interface ISchemas
     /// <param name="openApiDocument">
     ///     <see cref="OpenApiDocument" />
     /// </param>
-    /// <returns></returns>
+    /// <returns>List of the property names in the indicated schema</returns>
     List<string> GetPropertyNamesBySchema(string schemaName, OpenApiDocument openApiDocument);
+
+    /// <summary>
+    ///     Returns the property types of the indicated schema
+    ///     <remarks>
+    ///         Important to note that what OpenApi regime considers as schema, C# regime considers as type
+    ///     </remarks>
+    /// </summary>
+    /// <param name="schemaName">The schema name</param>
+    /// <param name="openApiDocument">
+    ///     <see cref="OpenApiDocument" />
+    /// </param>
+    /// <returns>Dictionary of property types where the key is the property name, the value is the property type</returns>
+    IDictionary<string, Dictionary<string, string>> GetPropertyTypesBySchema(
+        string schemaName,
+        OpenApiDocument openApiDocument);
 }

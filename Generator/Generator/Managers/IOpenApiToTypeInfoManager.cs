@@ -34,6 +34,16 @@ public interface IOpenApiToTypeInfoManager
     ///     <see cref="OpenApiDocument" />
     /// </param>
     void GetPropertyNamesByTypeAndAddToTypeInfo(List<TypeInfo> typeInfos, OpenApiDocument openApiDocument);
+
+    /// <summary>
+    ///     Takes the property types from the provided <see cref="OpenApiDocument" /> and adds them to the provided
+    ///     <see cref="TypeInfo" />s
+    /// </summary>
+    /// <param name="typeInfos">List of <see cref="TypeInfo" />s</param>
+    /// <param name="openApiDocument">
+    ///     <see cref="OpenApiDocument" />
+    /// </param>
+    void GetPropertyTypesByTypeAndAddTypeInfo(List<TypeInfo> typeInfos, OpenApiDocument openApiDocument);
 }
 
 public class OpenApiToTypeInfoManager : IOpenApiToTypeInfoManager
@@ -131,6 +141,42 @@ public class OpenApiToTypeInfoManager : IOpenApiToTypeInfoManager
             }
 
             typeInfo.PropertyInfos = propertyInfos;
+        }
+    }
+
+    /// <inheritdoc />
+    public void GetPropertyTypesByTypeAndAddTypeInfo(List<TypeInfo> typeInfos, OpenApiDocument openApiDocument)
+    {
+        if (!typeInfos.Any())
+        {
+            _logger.LogInformation("No available type infos");
+            return;
+        }
+
+        foreach (TypeInfo typeInfo in typeInfos)
+        {
+            if (string.IsNullOrEmpty(typeInfo.OriginalTypeNameToken)
+                || string.IsNullOrWhiteSpace(typeInfo.OriginalTypeNameToken))
+            {
+                _logger.LogInformation("Original type name token is null, empty or whitespace");
+                continue;
+            }
+
+            IDictionary<string, Dictionary<string, string>> propertyTypesBySchemas = _openApiDocumentManager.Components
+                .Schemas.GetPropertyTypesBySchema(typeInfo.OriginalTypeNameToken, openApiDocument);
+
+            if (!propertyTypesBySchemas.Any())
+            {
+                continue;
+            }
+
+            foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in propertyTypesBySchemas)
+            {
+                PropertyInfo propertyInfo = typeInfo.PropertyInfos
+                    .First(p => p.OriginalPropertyNameToken == keyValuePair.Key);
+                propertyInfo.OriginalPropertyTypeNameToken = keyValuePair.Value["type"];
+                propertyInfo.OriginalPropertyTypeFormat = keyValuePair.Value["format"];
+            }
         }
     }
 }

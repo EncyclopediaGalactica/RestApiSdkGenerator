@@ -2,6 +2,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Managers
 
 using Microsoft.OpenApi.Models;
 
+/// <inheritdoc />
 public class Schemas : ISchemas
 {
     /// <inheritdoc />
@@ -60,5 +61,39 @@ public class Schemas : ISchemas
         }
 
         return schemas.First(p => p.Key == schemaName).Value.Properties.Keys.ToList();
+    }
+
+    /// <inheritdoc />
+    public IDictionary<string, Dictionary<string, string>> GetPropertyTypesBySchema(
+        string schemaName,
+        OpenApiDocument openApiDocument)
+    {
+        if (string.IsNullOrEmpty(schemaName) || string.IsNullOrWhiteSpace(schemaName))
+        {
+            throw new ArgumentException(nameof(schemaName));
+        }
+
+        IDictionary<string, OpenApiSchema> schemas = GetSchemas(openApiDocument);
+        OpenApiSchema schema = schemas.First(p => p.Key == schemaName).Value;
+
+        Dictionary<string, Dictionary<string, string>> propertyNamesAndTheirType = new();
+
+        foreach (KeyValuePair<string, OpenApiSchema> property in schema.Properties)
+        {
+            Dictionary<string, string> propertyInfo = new();
+            propertyInfo.Add("type", property.Value.Type);
+            if (string.IsNullOrEmpty(property.Value.Format) || string.IsNullOrWhiteSpace(property.Value.Format))
+            {
+                propertyInfo.Add("format", string.Empty);
+            }
+            else
+            {
+                propertyInfo.Add("format", property.Value.Format);
+            }
+
+            propertyNamesAndTheirType.Add(property.Key, propertyInfo);
+        }
+
+        return propertyNamesAndTheirType;
     }
 }

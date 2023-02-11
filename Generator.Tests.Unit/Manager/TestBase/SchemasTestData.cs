@@ -14,6 +14,10 @@ public interface ISchemasTestData
         GetRequiredPropertiesBySchemaTestData();
 
     (OpenApiDocument openApi, Dictionary<string, List<string>> schemaNames) GetPropertyNamesBySchemaTestData();
+
+    (OpenApiDocument openApi, Dictionary<string,
+            Dictionary<string, Dictionary<string, string>>> schemaWithPropertyNamesAndTypes)
+        GetPropertyTypesBySchemaTestData();
 }
 
 [ExcludeFromCodeCoverage]
@@ -117,5 +121,142 @@ public class SchemasTestData : ISchemasTestData
             { "threePropertiesWithAllRequired", new List<string> { "id", "name", "desc" } },
         };
         return (openApi, schemaNames);
+    }
+
+    public (OpenApiDocument openApi,
+        Dictionary<string, Dictionary<string, Dictionary<string, string>>> schemaWithPropertyNamesAndTypes)
+        GetPropertyTypesBySchemaTestData()
+    {
+        using FileStream yamlString = new FileStream(
+            $"{Directory.GetCurrentDirectory()}/Manager/TestBase/propertytypenames_by_schema.yaml",
+            FileMode.Open);
+        OpenApiDocument openApi = new OpenApiStreamReader().Read(
+            yamlString,
+            out OpenApiDiagnostic? openApiDiagnostic);
+
+        if (openApi is null)
+        {
+            throw new Exception("OpenApi document is null");
+        }
+
+        Dictionary<string, Dictionary<string, Dictionary<string, string>>> expectedData = new()
+        {
+            {
+                "oneProperty", new Dictionary<string, Dictionary<string, string>>()
+                {
+                    {
+                        "id", new Dictionary<string, string>
+                        {
+                            { "type", "integer" },
+                            { "format", "int64" }
+                        }
+                    }
+                }
+            },
+            {
+                "onePropertyWithAllRequired", new Dictionary<string, Dictionary<string, string>>()
+                {
+                    {
+                        "id", new Dictionary<string, string>
+                        {
+                            { "type", "integer" },
+                            { "format", "int64" }
+                        }
+                    }
+                }
+            },
+            {
+                "twoProperties", new Dictionary<string, Dictionary<string, string>>()
+                {
+                    {
+                        "id", new Dictionary<string, string>
+                        {
+                            { "type", "integer" },
+                            { "format", "int64" }
+                        }
+                    },
+                    {
+                        "name", new Dictionary<string, string>
+                        {
+                            { "type", "string" },
+                            { "format", "" }
+                        }
+                    },
+                }
+            },
+            {
+                "twoPropertiesWithAllRequired", new Dictionary<string, Dictionary<string, string>>()
+                {
+                    {
+                        "id", new Dictionary<string, string>
+                        {
+                            { "type", "integer" },
+                            { "format", "int64" }
+                        }
+                    },
+                    {
+                        "name", new Dictionary<string, string>
+                        {
+                            { "type", "string" },
+                            { "format", "" }
+                        }
+                    },
+                }
+            },
+            {
+                "threeProperties", new Dictionary<string, Dictionary<string, string>>()
+                {
+                    {
+                        "id", new Dictionary<string, string>
+                        {
+                            { "type", "integer" },
+                            { "format", "int64" }
+                        }
+                    },
+                    {
+                        "name", new Dictionary<string, string>
+                        {
+                            { "type", "string" },
+                            { "format", "" }
+                        }
+                    },
+                    {
+                        "desc", new Dictionary<string, string>
+                        {
+                            { "type", "string" },
+                            { "format", "" }
+                        }
+                    },
+                }
+            },
+            {
+                "threePropertiesWithAllRequired", new Dictionary<string, Dictionary<string, string>>()
+                {
+                    {
+                        "id", new Dictionary<string, string>
+                        {
+                            { "type", "integer" },
+                            { "format", "int64" }
+                        }
+                    },
+                    {
+                        "name", new Dictionary<string, string>
+                        {
+                            { "type", "string" },
+                            { "format", "" }
+                        }
+                    },
+                    {
+                        "desc", new Dictionary<string, string>
+                        {
+                            { "type", "string" },
+                            { "format", "" }
+                        }
+                    },
+                }
+            },
+        };
+
+        return (openApi, expectedData);
     }
 }

@@ -275,6 +275,9 @@
       <None Update="Manager\TestBase\propertynames_by_schema.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Manager\TestBase\propertytypenames_by_schema.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
