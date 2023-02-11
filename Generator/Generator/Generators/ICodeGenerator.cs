@@ -41,21 +41,21 @@ public interface ICodeGenerator
     ICodeGenerator SetOpenApiYamlSchema(OpenApiDocument openApiDocument);
 
     /// <summary>
-    ///     Builder method for providing instance of <see cref="IFileManager" />.
+    ///     Builder method for providing instance of <see cref="IFileManager" /> for the code generator
     /// </summary>
     /// <param name="fileManager">Instance of <see cref="IFileManager" /></param>
     /// <returns>Instance of <see cref="ICodeGenerator" /></returns>
     ICodeGenerator SetFileManager(IFileManager fileManager);
 
     /// <summary>
-    ///     Builder method for providing instance of <see cref="IPathManager" />
+    ///     Builder method for providing instance of <see cref="IPathManager" /> for the code generator
     /// </summary>
     /// <param name="pathManager">instance of <see cref="IPathManager" /></param>
     /// <returns>Instance of <see cref="ICodeGenerator" /></returns>
     ICodeGenerator SetPathManager(IPathManager pathManager);
 
     /// <summary>
-    ///     Builder method for providing instance of <see cref="ITemplateManager" />
+    ///     Builder method for providing instance of <see cref="ITemplateManager" /> for the code generator
     /// </summary>
     /// <param name="templateManager">instance of <see cref="ITemplateManager" /></param>
     /// <returns>Instance of <see cref="ICodeGenerator" /></returns>
@@ -71,7 +71,7 @@ public interface ICodeGenerator
     ICodeGenerator Generate();
 
     /// <summary>
-    ///     Builder method for providing instance of <see cref="IStringManager" />
+    ///     Builder method for providing instance of <see cref="IStringManager" /> for the code generator
     /// </summary>
     /// <param name="stringManager">Instance of <see cref="IStringManager" /></param>
     /// <returns>Instance of <see cref="ICodeGenerator" /></returns>
@@ -83,5 +83,17 @@ public interface ICodeGenerator
     /// <returns>Instance of <see cref="ICodeGenerator" /></returns>
     ICodeGenerator Build();
 
+    /// <summary>
+    ///     Builder method for providing instance of <see cref="IOpenApiToTypeInfoManager" /> for the code generator
+    /// </summary>
+    /// <param name="openApiToTypeInfoManager">Instance of <see cref="IOpenApiToTypeInfoManager" /></param>
+    /// <returns>Instance of <see cref="ICodeGenerator" /></returns>
     ICodeGenerator SetOpenApiToFileInfoManager(IOpenApiToTypeInfoManager openApiToTypeInfoManager);
+
+    /// <summary>
+    ///     Builder method for providing instance of <see cref="IConfigurationToTypeInfoManager" /> for the code generator
+    /// </summary>
+    /// <param name="configurationToTypeInfoManager"></param>
+    /// <returns>Instance of <see cref="ICodeGenerator" /></returns>
+    ICodeGenerator SetConfigurationToTypeInfoManager(IConfigurationToTypeInfoManager configurationToTypeInfoManager);
 }

@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 
 public class CodeGenerator
 {
+    private readonly IConfigurationToTypeInfoManager _configurationToTypeInfoManager;
+
     // private readonly string _dtoTestTemplatePath = "Templates/dto_tests.handlebars";
     private readonly IFileManager _fileManager;
     private readonly CodeGeneratorConfiguration _generatorConfiguration;
@@ -38,6 +40,7 @@ public class CodeGenerator
         _templateManager = new TemplateManagerImpl();
         _stringManager = new StringManagerImpl();
         _openApiToTypeInfoManager = new OpenApiToTypeInfoManager();
+        _configurationToTypeInfoManager = new ConfigurationToTypeInfoManager();
         CreateGenerator(generatorConfiguration);
         SpecificCodeGenerator!.Generate();
         // Generate();
@@ -63,6 +66,7 @@ public class CodeGenerator
                     .SetTemplateManager(_templateManager)
                     .SetStringManager(_stringManager)
                     .SetOpenApiToFileInfoManager(_openApiToTypeInfoManager)
+                    .SetConfigurationToTypeInfoManager(_configurationToTypeInfoManager)
                     .Build();
                 break;
         }

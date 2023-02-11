@@ -34,6 +34,10 @@
             "description": "The name of the Data Transfer Object's project.",
             "type": "string"
         },
+        "dto_project_additional_path":{
+          "description": "The additional path within the Dto project where the Dto files will be generated",
+            "type": "string"
+        },
         "skip_dto_preprocess": {
           "description": "Controls whether DTO objects related data will be preprocessed. Useful in testing."  
         },

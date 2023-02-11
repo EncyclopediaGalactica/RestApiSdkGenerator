@@ -11,18 +11,15 @@ public abstract class AbstractGenerator : ICodeGenerator
     private readonly Logger<AbstractGenerator> _logger = new Logger<AbstractGenerator>(LoggerFactory.Create(
         c => c.AddConsole()));
 
+    protected IConfigurationToTypeInfoManager ConfigurationToTypeInfoManager;
     protected IFileManager FileManager;
-
     protected CodeGeneratorConfiguration GeneratorConfiguration;
     protected IOpenApiToTypeInfoManager OpenApiToTypeInfoManager;
-
     protected OpenApiDocument OpenApiYamlSchema;
-
     protected IPathManager PathManager;
-
     protected IStringManager StringManager;
-
     protected ITemplateManager TemplateManager;
+
     public abstract string DtoTemplatePath { get; }
 
     public List<TypeInfo> DtoTypeInfos { get; } = new List<TypeInfo>();
@@ -83,6 +80,13 @@ public abstract class AbstractGenerator : ICodeGenerator
         return this;
     }
 
+    public ICodeGenerator SetConfigurationToTypeInfoManager(IConfigurationToTypeInfoManager manager)
+    {
+        ArgumentNullException.ThrowIfNull(manager);
+        ConfigurationToTypeInfoManager = manager;
+        return this;
+    }
+
     public abstract void PreProcessDtos();
 
     protected bool ShouldIRunDtoGeneration()
@@ -117,6 +121,7 @@ public abstract class AbstractGenerator : ICodeGenerator
             || PathManager is null
             || StringManager is null
             || OpenApiToTypeInfoManager is null
+            || ConfigurationToTypeInfoManager is null
             || GeneratorConfiguration is null
             || OpenApiYamlSchema is null)
         {
@@ -209,23 +214,7 @@ public abstract class AbstractGenerator : ICodeGenerator
 
     protected void GetOriginalDtoProjectAdditionalPathFromConfiguration(List<TypeInfo> fileInfos)
     {
-        if (string.IsNullOrEmpty(GeneratorConfiguration.DtoProjectAdditionalPath)
-            || string.IsNullOrWhiteSpace(GeneratorConfiguration.DtoProjectAdditionalPath))
-        {
-            _logger.LogInformation("No dto project additional path is provided");
-            return;
-        }
-
-        if (!fileInfos.Any())
-        {
-            _logger.LogInformation("No available DtoFileInfo");
-            return;
-        }
-
-        foreach (TypeInfo fileInfo in fileInfos)
-        {
-            fileInfo.OriginalDtoProjectAdditionalPathToken = GeneratorConfiguration.DtoProjectAdditionalPath;
-        }
+        ConfigurationToTypeInfoManager.AddDtoAdditionalPathToTypeInfo(fileInfos, GeneratorConfiguration);
     }
 
     protected void GetOriginalTypeNameTokenFromOpenApiSchema(List<TypeInfo> typeInfos)
@@ -247,45 +236,4 @@ public abstract class AbstractGenerator : ICodeGenerator
     {
         OpenApiToTypeInfoManager.GetPropertyTypesByTypeAndAddTypeInfo(typeInfos, OpenApiYamlSchema);
     }
-
-    // protected void GetOriginalPropertyMetadataFromOpenApiSchema(List<TypeInfo> fileInfos)
-    // {
-    //     if (!fileInfos.Any())
-    //     {
-    //         _logger.LogInformation("No file info metadata available");
-    //         return;
-    //     }
-    //
-    //     if (!OpenApiYamlSchema.Components.Schemas.Any())
-    //     {
-    //         _logger.LogInformation("No schemas are available in the YAML file");
-    //         return;
-    //     }
-    //
-    //     foreach (TypeInfo fileInfo in fileInfos)
-    //     {
-    //         KeyValuePair<string, OpenApiSchema> openApiSchemaKeyValuePair = OpenApiYamlSchema.Components.Schemas
-    //             .First(p => p.Key == fileInfo.OriginalTypeNameToken);
-    //
-    //         if (!openApiSchemaKeyValuePair.Value.Properties.Any())
-    //         {
-    //             _logger.LogInformation("Schema name - {SchemaName} - does not have any property",
-    //                 fileInfo.OriginalTypeNameToken);
-    //             continue;
-    //         }
-    //
-    //         fileInfo.RequiredProperties = openApiSchemaKeyValuePair.Value.Required.ToList();
-    //         fileInfo.RequiredProperties = fileInfo.RequiredProperties.ConvertAll(d => d.ToLower());
-    //
-    //         foreach (KeyValuePair<string, OpenApiSchema> property in openApiSchemaKeyValuePair.Value.Properties)
-    //         {
-    //             fileInfo.PropertyInfos.Add(new PropertyInfo
-    //             {
-    //                 OriginalPropertyNameToken = property.Key,
-    //                 OriginalPropertyTypeNameToken = property.Value.Type,
-    //                 OriginalPropertyTypeFormat = property.Value.Format
-    //             });
-    //         }
-    //     }
-    // }
 }
