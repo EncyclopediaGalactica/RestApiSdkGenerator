@@ -39,7 +39,7 @@ public class CodeGeneratorConfiguration
     ///     </remarks>
     /// </summary>
     [JsonProperty("dto_project_base_path")]
-    public string DtoProjectBasePath { get; set; }
+    public string? DtoProjectBasePath { get; set; }
 
     /// <summary>
     ///     Sets or gets the DtoProjectAdditionalPath property

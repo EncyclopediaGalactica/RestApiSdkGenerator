@@ -193,28 +193,14 @@ public abstract class AbstractGenerator : ICodeGenerator
 
     protected void GetOriginalDtoProjectBasePathFromConfiguration(List<TypeInfo> fileInfos)
     {
-        if (string.IsNullOrEmpty(GeneratorConfiguration.DtoProjectBasePath)
-            || string.IsNullOrWhiteSpace(GeneratorConfiguration.DtoProjectBasePath))
-        {
-            _logger.LogInformation("No dto project base path is provided");
-            return;
-        }
-
-        if (!fileInfos.Any())
-        {
-            _logger.LogInformation("No available DtoFileInfo");
-            return;
-        }
-
-        foreach (TypeInfo fileInfo in fileInfos)
-        {
-            fileInfo.OriginalDtoProjectBasePathToken = GeneratorConfiguration.DtoProjectBasePath;
-        }
+        ConfigurationToTypeInfoManager.GetOriginalDtoProjectBasePathAndAddToTypeInfos(
+            fileInfos,
+            GeneratorConfiguration);
     }
 
     protected void GetOriginalDtoProjectAdditionalPathFromConfiguration(List<TypeInfo> fileInfos)
     {
-        ConfigurationToTypeInfoManager.AddDtoAdditionalPathToTypeInfo(fileInfos, GeneratorConfiguration);
+        ConfigurationToTypeInfoManager.GetOriginalDtoAdditionalPathAndAddToTypeInfo(fileInfos, GeneratorConfiguration);
     }
 
     protected void GetOriginalTypeNameTokenFromOpenApiSchema(List<TypeInfo> typeInfos)

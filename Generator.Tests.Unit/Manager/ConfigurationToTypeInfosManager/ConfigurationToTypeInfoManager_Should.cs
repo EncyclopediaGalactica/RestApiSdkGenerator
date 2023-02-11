@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using Generator.Managers;
 
 [ExcludeFromCodeCoverage]
-public partial class ConfigurationToTypeInfoManager_Should : TestBase
+public partial class ConfigurationToTypeInfoManager_Should
 {
-    protected readonly IConfigurationToTypeInfoManager Sut = new ConfigurationToTypeInfoManager();
+    private readonly IConfigurationToTypeInfoManager _sut = new ConfigurationToTypeInfoManager();
 }
