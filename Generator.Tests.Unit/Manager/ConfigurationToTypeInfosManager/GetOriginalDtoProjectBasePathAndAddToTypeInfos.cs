@@ -87,7 +87,7 @@ public partial class ConfigurationToTypeInfoManager_Should
         };
 
         // Act
-        _sut.GetOriginalDtoProjectBasePathAndAddToTypeInfos(typeInfos, configuration);
+        _sut.GetOriginalDtoProjectBasePathFromConfigurationAndAddToTypeInfos(typeInfos, configuration);
 
         // Assert
         typeInfos.Should().BeEquivalentTo(expected);
@@ -99,7 +99,8 @@ public partial class ConfigurationToTypeInfoManager_Should
         // Arrange && Act
         Action action = () =>
         {
-            _sut.GetOriginalDtoProjectBasePathAndAddToTypeInfos(null!, new CodeGeneratorConfiguration());
+            _sut.GetOriginalDtoProjectBasePathFromConfigurationAndAddToTypeInfos(null!,
+                new CodeGeneratorConfiguration());
         };
 
         // Assert
@@ -119,7 +120,7 @@ public partial class ConfigurationToTypeInfoManager_Should
         };
 
         // Act
-        _sut.GetOriginalDtoProjectBasePathAndAddToTypeInfos(input, configuration);
+        _sut.GetOriginalDtoProjectBasePathFromConfigurationAndAddToTypeInfos(input, configuration);
 
         // Assert
         input.Should().BeEquivalentTo(expected);

@@ -88,7 +88,7 @@ public partial class ConfigurationToTypeInfoManager_Should
         List<TypeInfo> expected = new List<TypeInfo>();
 
         // Act
-        _sut.GetOriginalDtoAdditionalPathAndAddToTypeInfo(typeInfos, configuration);
+        _sut.GetOriginalDtoAdditionalPathFromConfigurationAndAddToTypeInfo(typeInfos, configuration);
 
         // Assert
         typeInfos.Should().BeEquivalentTo(expected);
@@ -100,7 +100,8 @@ public partial class ConfigurationToTypeInfoManager_Should
         // Arrange && Act
         Action action = () =>
         {
-            _sut.GetOriginalDtoAdditionalPathAndAddToTypeInfo(null!, new CodeGeneratorConfiguration());
+            _sut.GetOriginalDtoAdditionalPathFromConfigurationAndAddToTypeInfo(null!,
+                new CodeGeneratorConfiguration());
         };
 
         // Assert
@@ -115,7 +116,7 @@ public partial class ConfigurationToTypeInfoManager_Should
         List<TypeInfo> expected = new List<TypeInfo>();
 
         // Act
-        _sut.GetOriginalDtoAdditionalPathAndAddToTypeInfo(typeInfos,
+        _sut.GetOriginalDtoAdditionalPathFromConfigurationAndAddToTypeInfo(typeInfos,
             new CodeGeneratorConfiguration { DtoProjectAdditionalPath = "something" });
 
         // Assert
@@ -133,7 +134,7 @@ public partial class ConfigurationToTypeInfoManager_Should
         };
 
         // Act
-        _sut.GetOriginalDtoAdditionalPathAndAddToTypeInfo(orig, configuration);
+        _sut.GetOriginalDtoAdditionalPathFromConfigurationAndAddToTypeInfo(orig, configuration);
 
         // Assert
         orig.Should().BeEquivalentTo(expected);

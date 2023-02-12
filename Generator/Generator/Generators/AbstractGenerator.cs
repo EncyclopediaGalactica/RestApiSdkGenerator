@@ -132,75 +132,37 @@ public abstract class AbstractGenerator : ICodeGenerator
 
     protected void GetOriginalBaseNamespaceTokenFromConfiguration(List<TypeInfo> fileInfos)
     {
-        if (string.IsNullOrEmpty(GeneratorConfiguration.SolutionBaseNamespace)
-            || string.IsNullOrWhiteSpace(GeneratorConfiguration.SolutionBaseNamespace))
-        {
-            _logger.LogInformation("No Dto project namespace is provided");
-        }
-
-        if (!fileInfos.Any())
-        {
-            _logger.LogInformation("No available DtoFileInfo");
-        }
-
-        foreach (TypeInfo fileInfo in fileInfos)
-        {
-            fileInfo.OriginalBaseNamespaceToken = GeneratorConfiguration.SolutionBaseNamespace;
-        }
+        ConfigurationToTypeInfoManager.GetOriginalBaseNamespaceTokenFromConfigurationAndAddToTypeInfos(
+            fileInfos,
+            GeneratorConfiguration);
     }
 
     protected void GetOriginalDtoNamespaceTokenFromConfiguration(List<TypeInfo> fileInfos)
     {
-        if (string.IsNullOrEmpty(GeneratorConfiguration.DtoProjectNameSpace)
-            || string.IsNullOrWhiteSpace(GeneratorConfiguration.DtoProjectNameSpace))
-        {
-            _logger.LogInformation("No Dto project namespace is provided");
-            return;
-        }
-
-        if (!fileInfos.Any())
-        {
-            _logger.LogInformation("No available DtoFileInfo");
-            return;
-        }
-
-        foreach (TypeInfo fileInfo in fileInfos)
-        {
-            fileInfo.OriginalDtoNamespaceToken = GeneratorConfiguration.DtoProjectNameSpace;
-        }
+        ConfigurationToTypeInfoManager.GetOriginalDtoProjectNamespaceTokenFromConfigurationAndAddToTypeInfos(
+            fileInfos,
+            GeneratorConfiguration);
     }
 
     protected void GetOriginalTargetPathFromConfiguration(List<TypeInfo> fileInfos)
     {
-        if (string.IsNullOrEmpty(GeneratorConfiguration.TargetDirectory)
-            || string.IsNullOrWhiteSpace(GeneratorConfiguration.TargetDirectory))
-        {
-            _logger.LogInformation("No target directory is provided");
-            return;
-        }
-
-        if (!fileInfos.Any())
-        {
-            _logger.LogInformation("No available DtoFileInfo");
-            return;
-        }
-
-        foreach (TypeInfo fileInfo in fileInfos)
-        {
-            fileInfo.OriginalTargetDirectoryToken = GeneratorConfiguration.TargetDirectory;
-        }
+        ConfigurationToTypeInfoManager.GetOriginalTargetPathBaseFromConfigurationAndAddToTypeInfos(
+            fileInfos,
+            GeneratorConfiguration);
     }
 
     protected void GetOriginalDtoProjectBasePathFromConfiguration(List<TypeInfo> fileInfos)
     {
-        ConfigurationToTypeInfoManager.GetOriginalDtoProjectBasePathAndAddToTypeInfos(
+        ConfigurationToTypeInfoManager.GetOriginalDtoProjectBasePathFromConfigurationAndAddToTypeInfos(
             fileInfos,
             GeneratorConfiguration);
     }
 
     protected void GetOriginalDtoProjectAdditionalPathFromConfiguration(List<TypeInfo> fileInfos)
     {
-        ConfigurationToTypeInfoManager.GetOriginalDtoAdditionalPathAndAddToTypeInfo(fileInfos, GeneratorConfiguration);
+        ConfigurationToTypeInfoManager.GetOriginalDtoAdditionalPathFromConfigurationAndAddToTypeInfo(
+            fileInfos,
+            GeneratorConfiguration);
     }
 
     protected void GetOriginalTypeNameTokenFromOpenApiSchema(List<TypeInfo> typeInfos)
