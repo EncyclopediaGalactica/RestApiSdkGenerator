@@ -18,6 +18,8 @@ public interface ISchemasTestData
     (OpenApiDocument openApi, Dictionary<string,
             Dictionary<string, Dictionary<string, string>>> schemaWithPropertyNamesAndTypes)
         GetPropertyTypesBySchemaTestData();
+
+    OpenApiDocument GetTestDataForMarkVariablesAsPropertyBasedOnOpenApiSchema();
 }
 
 [ExcludeFromCodeCoverage]
@@ -258,5 +260,16 @@ public class SchemasTestData : ISchemasTestData
         };
 
         return (openApi, expectedData);
+    }
+
+    public OpenApiDocument GetTestDataForMarkVariablesAsPropertyBasedOnOpenApiSchema()
+    {
+        using FileStream yamlString = new FileStream(
+            $"{Directory.GetCurrentDirectory()}/Manager/TestBase/mark_properties_3_schemas.yaml",
+            FileMode.Open);
+        OpenApiDocument openApi = new OpenApiStreamReader().Read(
+            yamlString,
+            out OpenApiDiagnostic? openApiDiagnostic);
+        return openApi;
     }
 }

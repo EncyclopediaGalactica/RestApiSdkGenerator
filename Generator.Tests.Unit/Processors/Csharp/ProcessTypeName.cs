@@ -1,13 +1,13 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp.DtoProcessor;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp;
 
 using FluentAssertions;
 using Generator.Models;
 using Xunit;
 
-public partial class DtoProcessor_Should
+public partial class CSharpProcessor_Should
 {
     [Fact]
-    public void ProcessDtoTypename()
+    public void ProcessTypename()
     {
         // Arrange
         List<TypeInfo> fileInfos = new List<TypeInfo>
@@ -20,28 +20,28 @@ public partial class DtoProcessor_Should
         string typeNamePostfix = "Dto";
 
         // Act
-        _sut.ProcessTypename(fileInfos, typeNamePostfix);
+        _sut.ProcessTypeName(fileInfos, typeNamePostfix);
 
         // Assert
         fileInfos[0].Typename.Should().Be("OriginalTypenameTokenDto");
     }
 
     [Fact]
-    public void MakeNoChange_ThrowNoError_When_EmptyFileInfoInput()
+    public void ProcessTypename_WhenEmptyTypeInfoInput()
     {
         // Arrange
         List<TypeInfo> fileInfos = new List<TypeInfo>();
         string typeNamePostfix = "Dto";
 
         // Act
-        Action action = () => { _sut.ProcessTypename(fileInfos, typeNamePostfix); };
+        Action action = () => { _sut.ProcessTypeName(fileInfos, typeNamePostfix); };
 
         // Assert
         action.Should().NotThrow();
     }
 
     [Fact]
-    public void ProcessDtoTypename_IfNoPostfixProvided()
+    public void ProcessTypename_WhenNoPostfixProvided()
     {
         // Arrange
         List<TypeInfo> fileInfos = new List<TypeInfo>
@@ -53,7 +53,7 @@ public partial class DtoProcessor_Should
         };
 
         // Act
-        _sut.ProcessTypename(fileInfos, null);
+        _sut.ProcessTypeName(fileInfos, null!);
 
         // Assert
         fileInfos[0].Typename.Should().Be("OriginalTypenameToken");

@@ -29,9 +29,9 @@ public class PropertyNamePreProcessing_Should : TestBase
             .Be(1);
 
         TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.Filename == "PetDto.cs");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "Id").Should().NotBeNull();
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "Name").Should().NotBeNull();
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "TagName").Should().NotBeNull();
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "IntegerTypeProperty").Should().NotBeNull();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "Id").Should().NotBeNull();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "Name").Should().NotBeNull();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "TagName").Should().NotBeNull();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "IntegerTypeProperty").Should().NotBeNull();
     }
 }

@@ -24,9 +24,7 @@ public class CodeGenerator
     private readonly ITemplateManager _templateManager;
     private List<string> _availableCodeGenerators = new List<string> { "csharp" };
 
-    private CodeGenerator(
-        OpenApiDocument openApiDocument,
-        CodeGeneratorConfiguration generatorConfiguration)
+    private CodeGenerator(OpenApiDocument openApiDocument, CodeGeneratorConfiguration generatorConfiguration)
     {
         ArgumentNullException.ThrowIfNull(openApiDocument);
         ArgumentNullException.ThrowIfNull(generatorConfiguration);

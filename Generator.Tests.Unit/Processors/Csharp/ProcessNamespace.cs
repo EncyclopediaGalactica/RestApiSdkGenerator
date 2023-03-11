@@ -1,10 +1,10 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp.DtoProcessor;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp;
 
 using FluentAssertions;
 using Generator.Models;
 using Xunit;
 
-public partial class DtoProcessor_Should
+public partial class CSharpProcessor_Should
 {
     [Theory]
     [InlineData("first", "second", "First.Second")]
@@ -33,7 +33,7 @@ public partial class DtoProcessor_Should
         };
 
         // Act
-        _sut.ProcessDtoNamespace(fileInfos);
+        _sut.ProcessNamespace(fileInfos);
 
         // Assert
         fileInfos[0].Namespace.Should().Be(expected);

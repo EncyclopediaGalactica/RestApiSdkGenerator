@@ -25,13 +25,13 @@ public partial class OpenApiToTypeInfoManager_Should
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "oneProperty",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 }
@@ -49,26 +49,26 @@ public partial class OpenApiToTypeInfoManager_Should
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "oneProperty",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "onePropertyWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 }
@@ -87,45 +87,45 @@ public partial class OpenApiToTypeInfoManager_Should
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "oneProperty",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "onePropertyWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoProperties",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         }
                     }
                 }
@@ -145,64 +145,64 @@ public partial class OpenApiToTypeInfoManager_Should
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "oneProperty",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "onePropertyWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoProperties",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoPropertiesWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         },
                     }
                 }
@@ -223,89 +223,89 @@ public partial class OpenApiToTypeInfoManager_Should
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "oneProperty",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "onePropertyWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoProperties",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoPropertiesWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         },
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "threeProperties",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "desc",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "desc",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         },
                     }
                 }
@@ -327,114 +327,114 @@ public partial class OpenApiToTypeInfoManager_Should
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "oneProperty",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "onePropertyWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoProperties",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoPropertiesWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         },
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "threeProperties",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "desc",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "desc",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         },
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "threePropertiesWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "id",
-                            OriginalPropertyTypeNameToken = "integer",
-                            OriginalPropertyTypeFormat = "int64"
+                            OriginalVariableNameToken = "id",
+                            OriginalVariableTypeNameToken = "integer",
+                            OriginalVariableTypeFormat = "int64"
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "name",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "name",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         },
-                        new PropertyInfo
+                        new VariableInfo
                         {
-                            OriginalPropertyNameToken = "desc",
-                            OriginalPropertyTypeNameToken = "string",
-                            OriginalPropertyTypeFormat = ""
+                            OriginalVariableNameToken = "desc",
+                            OriginalVariableTypeNameToken = "string",
+                            OriginalVariableTypeFormat = ""
                         },
                     }
                 }

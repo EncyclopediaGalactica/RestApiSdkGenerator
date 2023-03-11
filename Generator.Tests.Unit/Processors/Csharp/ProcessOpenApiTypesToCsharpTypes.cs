@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp.DtoProcessor;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp;
 
 using FluentAssertions;
 using Generator;
@@ -6,7 +6,7 @@ using Generator.Generators;
 using Generator.Models;
 using Xunit;
 
-public partial class DtoProcessor_Should
+public partial class CSharpProcessor_Should
 {
     [Theory]
     [InlineData("integer", "int32", "int")]
@@ -36,12 +36,12 @@ public partial class DtoProcessor_Should
         {
             new TypeInfo
             {
-                PropertyInfos = new List<PropertyInfo>
+                VariableInfos = new List<VariableInfo>
                 {
-                    new PropertyInfo
+                    new VariableInfo
                     {
-                        OriginalPropertyTypeNameToken = typeNameToken,
-                        OriginalPropertyTypeFormat = format
+                        OriginalVariableTypeNameToken = typeNameToken,
+                        OriginalVariableTypeFormat = format
                     }
                 }
             }
@@ -52,7 +52,7 @@ public partial class DtoProcessor_Should
         _sut.ProcessOpenApiTypesToCsharpTypes(fileInfos, cSharpGenerator.OpenApiCsharpTypeMap);
 
         // Assert
-        fileInfos[0].PropertyInfos.ToList()[0].PropertyTypeName.Should().Be(expected);
+        fileInfos[0].VariableInfos.ToList()[0].VariableTypeName.Should().Be(expected);
     }
 
     [Theory]
@@ -62,7 +62,7 @@ public partial class DtoProcessor_Should
     [InlineData("number", null)]
     [InlineData("number", "")]
     [InlineData("number", " ")]
-    public void Throw_ProcessOpenApiTypesToCsharpTypes(
+    public void ProcessOpenApiTypesToCsharpTypes_Throw(
         string typeNameToken,
         string format)
     {
@@ -71,12 +71,12 @@ public partial class DtoProcessor_Should
         {
             new TypeInfo
             {
-                PropertyInfos = new List<PropertyInfo>
+                VariableInfos = new List<VariableInfo>
                 {
-                    new PropertyInfo
+                    new VariableInfo
                     {
-                        OriginalPropertyTypeNameToken = typeNameToken,
-                        OriginalPropertyTypeFormat = format
+                        OriginalVariableTypeNameToken = typeNameToken,
+                        OriginalVariableTypeFormat = format
                     }
                 }
             }

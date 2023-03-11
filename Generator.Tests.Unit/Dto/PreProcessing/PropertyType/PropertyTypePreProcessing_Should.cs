@@ -29,9 +29,9 @@ public class PropertyTypePreProcessing_Should : TestBase
             .Be(1);
 
         TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.Filename == "PetDto.cs");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "IntegerType").PropertyTypeName.Should().Be("int");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "LongType").PropertyTypeName.Should().Be("long");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "FloatType").PropertyTypeName.Should().Be("float");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "DoubleType").PropertyTypeName.Should().Be("double");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "IntegerType").VariableTypeName.Should().Be("int");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "LongType").VariableTypeName.Should().Be("long");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "FloatType").VariableTypeName.Should().Be("float");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "DoubleType").VariableTypeName.Should().Be("double");
     }
 }

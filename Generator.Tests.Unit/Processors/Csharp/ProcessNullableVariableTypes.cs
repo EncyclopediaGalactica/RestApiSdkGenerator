@@ -1,10 +1,10 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp.DtoProcessor;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp;
 
 using FluentAssertions;
 using Generator.Models;
 using Xunit;
 
-public partial class DtoProcessor_Should
+public partial class CSharpProcessor_Should
 {
     [Theory]
     [InlineData("typename", true, true)]
@@ -15,18 +15,18 @@ public partial class DtoProcessor_Should
     [InlineData(null, true, false)]
     [InlineData("", true, false)]
     [InlineData(" ", true, false)]
-    public void ProcessNullablePropertyTypes(string typeName, bool isNullable, bool expected)
+    public void ProcessNullableVariableTypes(string typeName, bool isNullable, bool expected)
     {
         // Arrange
         List<TypeInfo> fileInfos = new()
         {
             new TypeInfo
             {
-                PropertyInfos = new List<PropertyInfo>
+                VariableInfos = new List<VariableInfo>
                 {
                     new()
                     {
-                        OriginalPropertyNameToken = typeName,
+                        OriginalVariableNameToken = typeName,
                     }
                 },
             }
@@ -38,9 +38,9 @@ public partial class DtoProcessor_Should
         }
 
         // Act
-        _sut.ProcessNullablePropertyTypes(fileInfos);
+        _sut.ProcessNullableVariableTypes(fileInfos);
 
         // Assert
-        fileInfos[0].PropertyInfos.ToList()[0].IsNullable.Should().Be(expected);
+        fileInfos[0].VariableInfos.ToList()[0].IsNullable.Should().Be(expected);
     }
 }

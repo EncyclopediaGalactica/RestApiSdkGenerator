@@ -1,10 +1,10 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp.DtoProcessor;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp;
 
 using FluentAssertions;
 using Generator.Models;
 using Xunit;
 
-public partial class DtoProcessor_Should
+public partial class CSharpProcessor_Should
 {
     [Theory]
     [InlineData("filenameToken", "Dto", ".cs", "FilenameTokenDto.cs")]
@@ -14,7 +14,7 @@ public partial class DtoProcessor_Should
     [InlineData("filenameToken", "Dto", ".Cs", "FilenameTokenDto.cs")]
     [InlineData("filenameToken", "Dto", ".CS", "FilenameTokenDto.cs")]
     [InlineData("filenameToken", "Dto", "CS", "FilenameTokenDto.cs")]
-    public void ProcessFilename(
+    public void ProcessFileName(
         string typenameToken,
         string filenamePostfix,
         string fileType,
@@ -32,14 +32,14 @@ public partial class DtoProcessor_Should
         string filetype = fileType;
 
         // Act
-        _sut.ProcessFilename(fileInfos, typenamePostfix, filetype);
+        _sut.ProcessFileName(fileInfos, typenamePostfix, filetype);
 
         // Assert
         fileInfos[0].Filename.Should().Be(expected);
     }
 
     [Fact]
-    public void NoOperationExecuted_When_FileInfosListIsEmpty()
+    public void ProcessFileName_WhenFileInfosListIsEmpty()
     {
         // Arrange
         List<TypeInfo> fileInfos = new List<TypeInfo>();
@@ -47,7 +47,7 @@ public partial class DtoProcessor_Should
         string filetype = ".cs";
 
         // Act
-        Action action = () => { _sut.ProcessFilename(fileInfos, typenamePostfix, filetype); };
+        Action action = () => { _sut.ProcessFileName(fileInfos, typenamePostfix, filetype); };
 
         // Assert
         action.Should().NotThrow();
@@ -57,7 +57,7 @@ public partial class DtoProcessor_Should
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
-    public void Throw_WhenFilenamePostfix_IsNotProvided(string filetype)
+    public void ProcessFileName_ThrowWhenFilenamePostfix_IsNotProvided(string filetype)
     {
         // Arrange
         List<TypeInfo> fileInfos = new List<TypeInfo>
@@ -70,7 +70,7 @@ public partial class DtoProcessor_Should
         string typenamePostfix = "Dto";
 
         // Act
-        Action action = () => { _sut.ProcessFilename(fileInfos, typenamePostfix, filetype!); };
+        Action action = () => { _sut.ProcessFileName(fileInfos, typenamePostfix, filetype!); };
 
         // Assert
         action.Should().Throw<ArgumentException>();

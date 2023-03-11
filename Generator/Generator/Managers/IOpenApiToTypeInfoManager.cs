@@ -42,4 +42,16 @@ public interface IOpenApiToTypeInfoManager
     ///     <see cref="OpenApiDocument" />
     /// </param>
     void GetPropertyTypesByTypeAndAddTypeInfo(List<TypeInfo> typeInfos, OpenApiDocument openApiDocument);
+
+    /// <summary>
+    ///     Marks variables as property in variable infos object based on OpenApi schema.
+    ///     <remarks>
+    ///         The schema variables described in the OpenApi schema are will be always properties
+    ///     </remarks>
+    /// </summary>
+    /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
+    /// <param name="openApiYamlSchema">
+    ///     <see cref="OpenApiDocument" />
+    /// </param>
+    void MarkVariablesAsPropertyBasedOnOpenApiSchema(List<TypeInfo> typeInfos, OpenApiDocument openApiYamlSchema);
 }

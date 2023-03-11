@@ -90,16 +90,16 @@ public class OpenApiToTypeInfoManager : IOpenApiToTypeInfoManager
                 continue;
             }
 
-            List<PropertyInfo> propertyInfos = new List<PropertyInfo>();
+            List<VariableInfo> propertyInfos = new List<VariableInfo>();
             foreach (string property in propertyNamesBySchema)
             {
-                propertyInfos.Add(new PropertyInfo
+                propertyInfos.Add(new VariableInfo
                 {
-                    OriginalPropertyNameToken = property
+                    OriginalVariableNameToken = property
                 });
             }
 
-            typeInfo.PropertyInfos = propertyInfos;
+            typeInfo.VariableInfos = propertyInfos;
         }
     }
 
@@ -131,10 +131,54 @@ public class OpenApiToTypeInfoManager : IOpenApiToTypeInfoManager
 
             foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in propertyTypesBySchemas)
             {
-                PropertyInfo propertyInfo = typeInfo.PropertyInfos
-                    .First(p => p.OriginalPropertyNameToken == keyValuePair.Key);
-                propertyInfo.OriginalPropertyTypeNameToken = keyValuePair.Value["type"];
-                propertyInfo.OriginalPropertyTypeFormat = keyValuePair.Value["format"];
+                VariableInfo variableInfo = typeInfo.VariableInfos
+                    .First(p => p.OriginalVariableNameToken == keyValuePair.Key);
+                variableInfo.OriginalVariableTypeNameToken = keyValuePair.Value["type"];
+                variableInfo.OriginalVariableTypeFormat = keyValuePair.Value["format"];
+            }
+        }
+    }
+
+    public void MarkVariablesAsPropertyBasedOnOpenApiSchema(
+        List<TypeInfo> typeInfos,
+        OpenApiDocument openApiYamlSchema)
+    {
+        if (!typeInfos.Any())
+        {
+            _logger.LogInformation("TypeInfos list is empty");
+            return;
+        }
+
+        foreach (TypeInfo typeInfo in typeInfos)
+        {
+            if (!typeInfo.VariableInfos.Any())
+            {
+                _logger.LogInformation("{Type} does not have variables", typeInfo.OriginalTypeNameToken);
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(typeInfo.OriginalTypeNameToken)
+                && string.IsNullOrWhiteSpace(typeInfo.OriginalTypeNameToken))
+            {
+                continue;
+            }
+
+            List<string> variableNames = _openApiDocumentManager.Components.Schemas
+                .GetPropertyNamesBySchema(typeInfo.OriginalTypeNameToken, openApiYamlSchema);
+            List<string> lowerCasedVariableNames = variableNames.Select(p => p.ToLower()).ToList();
+
+            foreach (VariableInfo variableInfo in typeInfo.VariableInfos)
+            {
+                if (string.IsNullOrEmpty(variableInfo.OriginalVariableNameToken)
+                    || string.IsNullOrWhiteSpace(variableInfo.OriginalVariableNameToken))
+                {
+                    continue;
+                }
+
+                if (lowerCasedVariableNames.Contains(variableInfo.OriginalVariableNameToken.ToLower()))
+                {
+                    variableInfo.IsProperty = true;
+                }
             }
         }
     }

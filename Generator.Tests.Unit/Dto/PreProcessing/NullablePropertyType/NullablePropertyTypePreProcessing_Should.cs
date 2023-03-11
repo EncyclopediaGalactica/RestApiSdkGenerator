@@ -30,41 +30,41 @@ public class NullablePropertyTypePreProcessing_Should : TestBase
 
         TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.Filename == "PetDto.cs");
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringType").PropertyTypeName.Should().Be("string");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringType").IsNullable.Should().BeFalse();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "StringType").VariableTypeName.Should().Be("string");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "StringType").IsNullable.Should().BeFalse();
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringTypeNullable")
-            .PropertyTypeName.Should().Be("string");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "StringTypeNullable").IsNullable.Should().BeTrue();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "StringTypeNullable")
+            .VariableTypeName.Should().Be("string");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "StringTypeNullable").IsNullable.Should().BeTrue();
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "IntegerType").PropertyTypeName.Should().Be("int");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "IntegerType").IsNullable.Should().BeFalse();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "IntegerType").VariableTypeName.Should().Be("int");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "IntegerType").IsNullable.Should().BeFalse();
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "IntegerTypeNullable")
-            .PropertyTypeName.Should().Be("int");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "IntegerTypeNullable").IsNullable.Should().BeTrue();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "IntegerTypeNullable")
+            .VariableTypeName.Should().Be("int");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "IntegerTypeNullable").IsNullable.Should().BeTrue();
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "LongType").PropertyTypeName.Should().Be("long");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "LongType").IsNullable.Should().BeFalse();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "LongType").VariableTypeName.Should().Be("long");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "LongType").IsNullable.Should().BeFalse();
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "LongTypeNullable")
-            .PropertyTypeName.Should().Be("long");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "LongTypeNullable").IsNullable.Should().BeTrue();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "LongTypeNullable")
+            .VariableTypeName.Should().Be("long");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "LongTypeNullable").IsNullable.Should().BeTrue();
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "FloatType")
-            .PropertyTypeName.Should().Be("float");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "FloatType").IsNullable.Should().BeFalse();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "FloatType")
+            .VariableTypeName.Should().Be("float");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "FloatType").IsNullable.Should().BeFalse();
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "FloatTypeNullable")
-            .PropertyTypeName.Should().Be("float");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "FloatTypeNullable").IsNullable.Should().BeTrue();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "FloatTypeNullable")
+            .VariableTypeName.Should().Be("float");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "FloatTypeNullable").IsNullable.Should().BeTrue();
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "DoubleType")
-            .PropertyTypeName.Should().Be("double");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "DoubleType").IsNullable.Should().BeFalse();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "DoubleType")
+            .VariableTypeName.Should().Be("double");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "DoubleType").IsNullable.Should().BeFalse();
 
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "DoubleTypeNullable")
-            .PropertyTypeName.Should().Be("double");
-        aSingleDto.PropertyInfos.First(p => p.PropertyName == "DoubleTypeNullable").IsNullable.Should().BeTrue();
+        aSingleDto.VariableInfos.First(p => p.VariableName == "DoubleTypeNullable")
+            .VariableTypeName.Should().Be("double");
+        aSingleDto.VariableInfos.First(p => p.VariableName == "DoubleTypeNullable").IsNullable.Should().BeTrue();
     }
 }

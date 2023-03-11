@@ -114,7 +114,7 @@ public class TypeInfo
     /// <summary>
     ///     Gets or sets the property info
     /// </summary>
-    public ICollection<PropertyInfo> PropertyInfos { get; set; } = new List<PropertyInfo>();
+    public ICollection<VariableInfo> VariableInfos { get; set; } = new List<VariableInfo>();
 
     /// <summary>
     ///     Gets or sets the target path with file name value

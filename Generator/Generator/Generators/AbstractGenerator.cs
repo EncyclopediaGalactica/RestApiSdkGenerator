@@ -184,4 +184,9 @@ public abstract class AbstractGenerator : ICodeGenerator
     {
         OpenApiToTypeInfoManager.GetPropertyTypesByTypeAndAddTypeInfo(typeInfos, OpenApiYamlSchema);
     }
+
+    protected void MarkVariablesAsPropertiesFromOpenApiSchema(List<TypeInfo> typeInfos)
+    {
+        OpenApiToTypeInfoManager.MarkVariablesAsPropertyBasedOnOpenApiSchema(typeInfos, OpenApiYamlSchema);
+    }
 }

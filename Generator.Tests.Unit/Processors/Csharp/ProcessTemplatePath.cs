@@ -1,10 +1,10 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp.DtoProcessor;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp;
 
 using FluentAssertions;
 using Generator.Models;
 using Xunit;
 
-public partial class DtoProcessor_Should
+public partial class CSharpProcessor_Should
 {
     [Theory]
     [InlineData("/one/two", "/one/two")]
@@ -21,7 +21,7 @@ public partial class DtoProcessor_Should
         };
 
         // Act
-        _sut.ProcessDtoTemplatePath(fileInfos, templatePath);
+        _sut.ProcessTemplatePath(fileInfos, templatePath);
 
         // Assert
         if (!string.IsNullOrEmpty(templatePath)

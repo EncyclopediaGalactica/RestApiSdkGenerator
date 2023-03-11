@@ -25,9 +25,9 @@ public partial class OpenApiToTypeInfoManager_Should
                 {
                     OriginalTypeNameToken = "oneProperty",
                     RequiredProperties = new List<string>(),
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" }
+                        new VariableInfo { OriginalVariableNameToken = "id" }
                     }
                 }
             }
@@ -44,17 +44,17 @@ public partial class OpenApiToTypeInfoManager_Should
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "oneProperty",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" }
+                        new VariableInfo { OriginalVariableNameToken = "id" }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "onePropertyWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" }
+                        new VariableInfo { OriginalVariableNameToken = "id" }
                     }
                 }
             }
@@ -72,26 +72,26 @@ public partial class OpenApiToTypeInfoManager_Should
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "oneProperty",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" }
+                        new VariableInfo { OriginalVariableNameToken = "id" }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "onePropertyWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" }
+                        new VariableInfo { OriginalVariableNameToken = "id" }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoProperties",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" },
-                        new PropertyInfo { OriginalPropertyNameToken = "name" },
+                        new VariableInfo { OriginalVariableNameToken = "id" },
+                        new VariableInfo { OriginalVariableNameToken = "name" },
                     }
                 },
             }
@@ -110,35 +110,35 @@ public partial class OpenApiToTypeInfoManager_Should
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "oneProperty",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" }
+                        new VariableInfo { OriginalVariableNameToken = "id" }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "onePropertyWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" }
+                        new VariableInfo { OriginalVariableNameToken = "id" }
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoProperties",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" },
-                        new PropertyInfo { OriginalPropertyNameToken = "name" },
+                        new VariableInfo { OriginalVariableNameToken = "id" },
+                        new VariableInfo { OriginalVariableNameToken = "name" },
                     }
                 },
                 new TypeInfo
                 {
                     OriginalTypeNameToken = "twoPropertiesWithAllRequired",
-                    PropertyInfos = new List<PropertyInfo>
+                    VariableInfos = new List<VariableInfo>
                     {
-                        new PropertyInfo { OriginalPropertyNameToken = "id" },
-                        new PropertyInfo { OriginalPropertyNameToken = "name" },
+                        new VariableInfo { OriginalVariableNameToken = "id" },
+                        new VariableInfo { OriginalVariableNameToken = "name" },
                     }
                 },
             }
