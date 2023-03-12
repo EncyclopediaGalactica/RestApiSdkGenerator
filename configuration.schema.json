@@ -59,7 +59,11 @@
     },
     "skip_dto_test_preprocess": {
       "description": "Controls whether Dto tests related data will be preprocessed. Useful in testing.",
-      "type": "string"
+      "type": "boolean"
+    },
+    "skip_dto_test_generating": {
+      "description": "Controls whether Dto tests will be generated. Useful in testing.",
+      "type": "boolean"
     }
   }
 }

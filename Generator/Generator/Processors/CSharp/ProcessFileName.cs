@@ -30,11 +30,11 @@ public partial class CSharpProcessor
         {
             string fileName = _stringManager.Concat(
                 _stringManager.MakeFirstCharUpperCase(fileInfo.OriginalTypeNameToken),
-                _stringManager.MakeFirstCharUpperCase(fileNamePostFix!),
+                _stringManager.MakeFirstCharUpperCase(fileNamePostFix),
                 _stringManager.CheckIfFirstCharIsDotOrAddIt(
-                    _stringManager.ToLowerCase(fileType!))
+                    _stringManager.ToLowerCase(fileType))
             );
-            fileInfo.Filename = fileName;
+            fileInfo.FileName = fileName;
         }
     }
 }

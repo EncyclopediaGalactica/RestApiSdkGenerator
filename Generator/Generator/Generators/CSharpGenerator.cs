@@ -8,6 +8,8 @@ public class CSharpGenerator : AbstractGenerator
 {
     private const string DtoTypeNamePostFix = "Dto";
     private const string DtoFileNamePostFix = "Dto";
+    private const string DtoTestTypeNamePostfix = "Dto_Should";
+    private const string DtoTestFileNamePostfix = "Dto_Should";
     private const string FileType = ".cs";
     private readonly Logger<CSharpGenerator> _logger = new(LoggerFactory.Create(c => c.AddConsole()));
 
@@ -92,6 +94,12 @@ public class CSharpGenerator : AbstractGenerator
         "while"
     };
 
+    /// <summary>
+    ///     A list where the types (c-sharp classes) are collected in order to prevent type collision
+    ///     during code generation
+    /// </summary>
+    private readonly List<string> _typesInGenerationScope = new List<string>();
+
     private readonly List<string> _valueTypes = new()
     {
         "int", "long", "boolean", "float", "double", "string"
@@ -99,7 +107,8 @@ public class CSharpGenerator : AbstractGenerator
 
     private ICSharpProcessor _cSharpProcessor;
 
-    private List<TypeInfoRender> _dtoFileInfosRender = new List<TypeInfoRender>();
+    private List<DtoTypeInfoRender> _dtoFileInfosRender = new List<DtoTypeInfoRender>();
+
     public override string DtoTemplatePath { get; } = "Templates/dto.handlebars";
 
     public Dictionary<string, string> OpenApiCsharpTypeMap { get; } = new()
@@ -135,7 +144,7 @@ public class CSharpGenerator : AbstractGenerator
 
         if (!ShouldIRunDtoTestGeneration())
         {
-            GenerateDtosTests();
+            GenerateDtoTests();
         }
 
         return this;
@@ -143,18 +152,21 @@ public class CSharpGenerator : AbstractGenerator
 
     private void PreProcessDtoTest()
     {
-        // GetOriginalTypeNameTokenFromOpenApiSchema(DtoTestTypeInfos);
-        // GetOriginalRequiredPropertiesByTypeFromOpenApiSchema(DtoTypeInfos);
-        // GetOriginalPropertyNamesByTypeFromOpenApiSchema(DtoTypeInfos);
-        // GetOriginalPropertyTypesByTypeFromOpenApiSchema(DtoTypeInfos);
-        //
-        // // GetOriginalPropertyMetadataFromOpenApiSchema(DtoTestTypeInfos);
-        // GetOriginalBaseNamespaceTokenFromConfiguration(DtoTestTypeInfos);
-        // GetOriginalDtoNamespaceTokenFromConfiguration(DtoTestTypeInfos);
-        //
-        // GetOriginalTargetPathFromConfiguration(DtoTestTypeInfos);
-        // GetOriginalDtoProjectBasePathFromConfiguration(DtoTestTypeInfos);
-        // GetOriginalDtoProjectAdditionalPathFromConfiguration(DtoTestTypeInfos);
+        GetOriginalTypeNameTokenFromOpenApiSchema(DtoTestTypeInfos);
+        GetOriginalRequiredPropertiesByTypeFromOpenApiSchema(DtoTestTypeInfos);
+        GetOriginalPropertyNamesByTypeFromOpenApiSchema(DtoTestTypeInfos);
+        GetOriginalPropertyTypesByTypeFromOpenApiSchema(DtoTestTypeInfos);
+        MarkVariablesAsPropertiesFromOpenApiSchema(DtoTestTypeInfos);
+
+        GetOriginalBaseNamespaceTokenFromConfiguration(DtoTestTypeInfos);
+        GetOriginalDtoNamespaceTokenFromConfiguration(DtoTestTypeInfos);
+
+        GetOriginalTargetPathFromConfiguration(DtoTestTypeInfos);
+        GetOriginalDtoProjectBasePathFromConfiguration(DtoTestTypeInfos);
+        GetOriginalDtoProjectAdditionalPathFromConfiguration(DtoTestTypeInfos);
+
+        PreProcessDtoTestMetadata();
+        // CopyDtoRenderDataToDtoRenderObject(DtoTypeInfos, _dtoFileInfosRender);
     }
 
     public override void PreProcessDtos()
@@ -165,7 +177,6 @@ public class CSharpGenerator : AbstractGenerator
         GetOriginalPropertyTypesByTypeFromOpenApiSchema(DtoTypeInfos);
         MarkVariablesAsPropertiesFromOpenApiSchema(DtoTypeInfos);
 
-        // GetOriginalPropertyMetadataFromOpenApiSchema(DtoTypeInfos);
         GetOriginalBaseNamespaceTokenFromConfiguration(DtoTypeInfos);
         GetOriginalDtoNamespaceTokenFromConfiguration(DtoTypeInfos);
 
@@ -174,15 +185,25 @@ public class CSharpGenerator : AbstractGenerator
         GetOriginalDtoProjectAdditionalPathFromConfiguration(DtoTypeInfos);
 
         PreProcessDtoMetadata();
-        CopyRenderDataToRenderObject();
+        CopyDtoRenderDataToDtoRenderObject(DtoTypeInfos, _dtoFileInfosRender);
     }
 
     private void GenerateDtos()
     {
-        Render();
+        RenderDtos();
     }
 
-    private void Render()
+    private void GenerateDtoTests()
+    {
+        RenderDtoTests();
+    }
+
+    private void RenderDtoTests()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void RenderDtos()
     {
         if (!_dtoFileInfosRender.Any() || !DtoTypeInfos.Any())
         {
@@ -193,29 +214,42 @@ public class CSharpGenerator : AbstractGenerator
         foreach (TypeInfo fileInfo in DtoTypeInfos)
         {
             string template = FileManager.ReadAllText(fileInfo.TemplateAbsolutePathWithFileName);
-            TypeInfoRender singleRender = _dtoFileInfosRender
+            DtoTypeInfoRender singleRender = _dtoFileInfosRender
                 .Where(p => p.Namespace == fileInfo.Namespace)
-                .First(p => p.TypeName == fileInfo.Typename);
+                .First(p => p.TypeName == fileInfo.TypeName);
             string compiledContent = TemplateManager.CompileTemplate(template, singleRender);
             FileManager.DeleteFile(fileInfo.TargetPathWithFileName);
             FileManager.WriteContentIntoFile(compiledContent, fileInfo.TargetPathWithFileName);
         }
     }
 
-    private void CopyRenderDataToRenderObject()
+    /// <summary>
+    ///     Copies all the data needed for Dto render to a separate render object
+    /// </summary>
+    /// <param name="dtoTypeInfos">List of <see cref="TypeInfo" /></param>
+    /// <param name="dtoRenderTypeInfos">List of <see cref="DtoTypeInfoRender" /></param>
+    private void CopyDtoRenderDataToDtoRenderObject(
+        List<TypeInfo> dtoTypeInfos,
+        List<DtoTypeInfoRender> dtoRenderTypeInfos)
     {
-        if (!DtoTypeInfos.Any())
+        if (!dtoTypeInfos.Any())
         {
             _logger.LogInformation("No available Dto file info");
             return;
         }
 
-        foreach (TypeInfo fileInfo in DtoTypeInfos)
+        if (!dtoRenderTypeInfos.Any())
+        {
+            _logger.LogInformation("No available Dto render info");
+            return;
+        }
+
+        foreach (TypeInfo typeInfo in dtoTypeInfos)
         {
             List<PropertyInfoRender> propertyInfos = new List<PropertyInfoRender>();
-            if (fileInfo.VariableInfos.Any())
+            if (typeInfo.VariableInfos.Any())
             {
-                foreach (VariableInfo propertyInfo in fileInfo.VariableInfos)
+                foreach (VariableInfo propertyInfo in typeInfo.VariableInfos)
                 {
                     propertyInfos.Add(new PropertyInfoRender
                     {
@@ -226,12 +260,12 @@ public class CSharpGenerator : AbstractGenerator
                 }
             }
 
-            _dtoFileInfosRender.Add(
-                new TypeInfoRender()
+            dtoRenderTypeInfos.Add(
+                new DtoTypeInfoRender()
                 {
                     PropertyInfos = propertyInfos,
-                    Namespace = fileInfo.Namespace,
-                    TypeName = fileInfo.Typename
+                    Namespace = typeInfo.Namespace,
+                    TypeName = typeInfo.TypeName
                 });
         }
     }
@@ -240,6 +274,8 @@ public class CSharpGenerator : AbstractGenerator
     {
         _cSharpProcessor.ReservedWordCheckForOriginalTypeNames(DtoTypeInfos, _reservedWords);
         _cSharpProcessor.ProcessTypeName(DtoTypeInfos, DtoTypeNamePostFix);
+        _cSharpProcessor.TypeCheckInGenerationScope(DtoTypeInfos, _typesInGenerationScope);
+        _cSharpProcessor.AddTypeNamesToGenerationScope(DtoTypeInfos, _typesInGenerationScope);
         _cSharpProcessor.ProcessFileName(DtoTypeInfos, DtoFileNamePostFix, FileType);
         _cSharpProcessor.ProcessTargetPath(DtoTypeInfos);
         _cSharpProcessor.ProcessPathWithFileName(DtoTypeInfos);
@@ -257,9 +293,13 @@ public class CSharpGenerator : AbstractGenerator
         _cSharpProcessor.ProcessOpenApiTypesToCsharpTypes(DtoTypeInfos, OpenApiCsharpTypeMap);
     }
 
-    private void GenerateDtosTests()
+    private void PreProcessDtoTestMetadata()
     {
-        throw new NotImplementedException();
+        _cSharpProcessor.ReservedWordCheckForOriginalTypeNames(DtoTestTypeInfos, _reservedWords);
+        _cSharpProcessor.ProcessTestTypeName(DtoTestTypeInfos, DtoTestTypeNamePostfix);
+        _cSharpProcessor.TypeCheckInGenerationScope(DtoTestTypeInfos, _typesInGenerationScope);
+        _cSharpProcessor.AddTypeNamesToGenerationScope(DtoTestTypeInfos, _typesInGenerationScope);
+        _cSharpProcessor.ProcessFileName(DtoTestTypeInfos, DtoTestFileNamePostfix, FileType);
     }
 
     public override ICodeGenerator Build()

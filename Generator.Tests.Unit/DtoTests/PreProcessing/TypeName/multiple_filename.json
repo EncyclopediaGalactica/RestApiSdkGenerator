@@ -1,11 +1,11 @@
 {
     "$schema": "https://raw.githubusercontent.com/EncyclopediaGalactica/RestApiSdkGenerator/main/configuration.schema.json",
-    "openapi_specification_path": "DtoTests/PreProcessing/Typename/single_filename.yaml",
+    "lang": "csharp",
+    "openapi_specification_path": "DtoTests/PreProcessing/Typename/multiple_filename.yaml",
     "target_directory": "DtoTests/PreProcessing/Typename",
     "solution_base_namespace": "DtoTest.PreProcessing.Typename",
+    "skip_dto_preprocess": false,
     "skip_dto_generating": false,
-    "skip_dto_tests_generating": false,
-    "skip_request_model_generating": true,
-    "skip_request_model_tests_generating": true,
-    "test_mode": true
+    "skip_dto_test_preprocess": false,
+    "skip_dto_test_generating": true
 }

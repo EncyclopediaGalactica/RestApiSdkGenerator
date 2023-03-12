@@ -25,7 +25,7 @@ public partial class CSharpProcessor_Should
             new TypeInfo
             {
                 AbsoluteTargetPath = targetPath,
-                Filename = fileName
+                FileName = fileName
             }
         };
 

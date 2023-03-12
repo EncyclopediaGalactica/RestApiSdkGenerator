@@ -35,7 +35,7 @@ public partial class CSharpProcessor_Should
         _sut.ProcessFileName(fileInfos, typenamePostfix, filetype);
 
         // Assert
-        fileInfos[0].Filename.Should().Be(expected);
+        fileInfos[0].FileName.Should().Be(expected);
     }
 
     [Fact]

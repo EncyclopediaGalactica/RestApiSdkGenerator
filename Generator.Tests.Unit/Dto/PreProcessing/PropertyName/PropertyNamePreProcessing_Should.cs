@@ -25,10 +25,10 @@ public class PropertyNamePreProcessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Count.Should().Be(1);
-        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.Filename == "PetDto.cs").ToList().Count.Should()
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.FileName == "PetDto.cs").ToList().Count.Should()
             .Be(1);
 
-        TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.Filename == "PetDto.cs");
+        TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.FileName == "PetDto.cs");
         aSingleDto.VariableInfos.First(p => p.VariableName == "Id").Should().NotBeNull();
         aSingleDto.VariableInfos.First(p => p.VariableName == "Name").Should().NotBeNull();
         aSingleDto.VariableInfos.First(p => p.VariableName == "TagName").Should().NotBeNull();

@@ -54,7 +54,7 @@ public class TypeInfo
     /// <summary>
     ///     Gets or sets the reference type name.
     /// </summary>
-    public string? Typename { get; set; }
+    public string? TypeName { get; set; }
 
     /// <summary>
     ///     Gets or sets the reference type name as variable name
@@ -72,7 +72,7 @@ public class TypeInfo
     /// <summary>
     ///     Gets or sets the filename
     /// </summary>
-    public string? Filename { get; set; }
+    public string? FileName { get; set; }
 
     /// <summary>
     ///     Gets or sets the namespace

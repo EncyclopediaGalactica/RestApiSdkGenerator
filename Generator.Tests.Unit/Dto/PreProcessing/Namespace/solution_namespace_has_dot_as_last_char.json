@@ -6,8 +6,6 @@
     "solution_base_namespace": "smallcap.",
     "skip_dto_preprocess": false,
     "skip_dto_generating": true,
-    "skip_dto_tests_generating": true,
-    "skip_request_model_generating": true,
-    "skip_request_model_tests_generating": true,
-    "test_mode": true
+    "skip_dto_test_preprocessing": true,
+    "skip_dto_test_generating": true
 }

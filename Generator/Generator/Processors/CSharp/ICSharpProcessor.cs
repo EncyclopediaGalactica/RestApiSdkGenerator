@@ -131,4 +131,29 @@ public interface ICSharpProcessor
     /// </summary>
     /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
     void ProcessPropertiesByType(List<TypeInfo> typeInfos);
+
+    /// <summary>
+    ///     Checks if generated reference types (generated c-shar classes) based-on OpenApi schema are already in use
+    /// </summary>
+    /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
+    /// <param name="typesInGenerationScope">List of type names already in use</param>
+    void TypeCheckInGenerationScope(List<TypeInfo> typeInfos, List<string> typesInGenerationScope);
+
+    /// <summary>
+    ///     Adds generated reference type names (generated c-sharp classes) based on OpenApi schema to the list of
+    ///     reference types used in generation scope
+    /// </summary>
+    /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
+    /// <param name="typesInGenerationScope">List of reference types</param>
+    void AddTypeNamesToGenerationScope(List<TypeInfo> typeInfos, List<string> typesInGenerationScope);
+
+    /// <summary>
+    ///     Creates c-sharp reference type names (c-sharp classes) from original type names from OpenApi schema
+    ///     <remarks>
+    ///         The expected result will be TypeName_Should
+    ///     </remarks>
+    /// </summary>
+    /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
+    /// <param name="testTypeNamePostfix">Postfix value</param>
+    void ProcessTestTypeName(List<TypeInfo> typeInfos, string testTypeNamePostfix);
 }

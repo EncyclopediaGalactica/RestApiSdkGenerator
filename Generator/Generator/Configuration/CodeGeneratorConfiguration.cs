@@ -88,24 +88,39 @@ public class CodeGeneratorConfiguration
     [JsonProperty("dto_test_project_namespace")]
     public string DtoTestProjectNameSpace { get; set; }
 
+    /// <summary>
+    ///     Gets or sets skip dto preprocess value
+    ///     <remarks>
+    ///         This value controls if DTO preprocess phase is skipped or not
+    ///     </remarks>
+    /// </summary>
     [JsonProperty("skip_dto_preprocess")]
     public bool SkipDtoPreProcess { get; set; }
 
+    /// <summary>
+    ///     Gets or sets skip dto generating value
+    ///     <remarks>
+    ///         This value controls if DTO generating phase will be skipped or not
+    ///     </remarks>
+    /// </summary>
     [JsonProperty("skip_dto_generating")]
     public bool SkipDtoGenerating { get; set; }
 
-    [JsonProperty("skip_dto_tests_generating")]
-    public bool SkipDtoTestsGenerating { get; set; }
-
-    [JsonProperty("skip_request_model_generating")]
-    public bool SkipRequestModelGenerating { get; set; }
-
-    [JsonProperty("skip_request_model_tests_generating")]
-    public bool SkipRequestModelTestsGenerating { get; set; }
-
-    [JsonProperty("test_mode")]
-    public bool TestMode { get; set; }
-
+    /// <summary>
+    ///     Gets or sets skip dto test preprocess value
+    ///     <remarks>
+    ///         This value controls if DTO test preprocess will be skipped or not
+    ///     </remarks>
+    /// </summary>
     [JsonProperty("skip_dto_test_preprocess")]
-    public bool SkipDtoTestPreProcessing { get; set; }
+    public bool SkipDtoTestPreProcess { get; set; }
+
+    /// <summary>
+    ///     Gets or sets skip dto test generating value
+    ///     <remarks>
+    ///         This value controls if Dto test generating phase will be skipped or not
+    ///     </remarks>
+    /// </summary>
+    [JsonProperty("skip_dto_test_generating")]
+    public bool SkipDtoTestGenerating { get; set; }
 }

@@ -23,7 +23,7 @@ public partial class CSharpProcessor_Should
         _sut.ProcessTypeName(fileInfos, typeNamePostfix);
 
         // Assert
-        fileInfos[0].Typename.Should().Be("OriginalTypenameTokenDto");
+        fileInfos[0].TypeName.Should().Be("OriginalTypenameTokenDto");
     }
 
     [Fact]
@@ -56,6 +56,6 @@ public partial class CSharpProcessor_Should
         _sut.ProcessTypeName(fileInfos, null!);
 
         // Assert
-        fileInfos[0].Typename.Should().Be("OriginalTypenameToken");
+        fileInfos[0].TypeName.Should().Be("OriginalTypenameToken");
     }
 }

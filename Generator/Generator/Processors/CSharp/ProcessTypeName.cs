@@ -25,7 +25,7 @@ public partial class CSharpProcessor
                 _stringManager.MakeFirstCharUpperCase(fileInfo.OriginalTypeNameToken),
                 typeNamePostfix
             );
-            fileInfo.Typename = typeName;
+            fileInfo.TypeName = typeName;
         }
     }
 }

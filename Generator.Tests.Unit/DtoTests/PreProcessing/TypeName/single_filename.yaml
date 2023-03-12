@@ -152,7 +152,7 @@ paths:
                 "$ref": '#/components/schemas/errorModel'
 components:
   schemas:
-    singleTypenameInDtoTestPreProcess:
+    singleTypeNameInDtoTestPreProcess:
       type: object
       required:
         - id

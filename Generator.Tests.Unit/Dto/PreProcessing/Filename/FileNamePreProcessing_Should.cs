@@ -24,10 +24,10 @@ public class FileNamePreProcessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos
-            .Where(p => p.Filename == "PetDto.cs").ToList().Count.Should().Be(1);
+            .Where(p => p.FileName == "PetDto.cs").ToList().Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos
-            .Where(p => p.Filename == "NewPetDto.cs").ToList().Count.Should().Be(1);
+            .Where(p => p.FileName == "NewPetDto.cs").ToList().Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos
-            .Where(p => p.Filename == "ErrorModelDto.cs").ToList().Count.Should().Be(1);
+            .Where(p => p.FileName == "ErrorModelDto.cs").ToList().Count.Should().Be(1);
     }
 }

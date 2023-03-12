@@ -23,7 +23,7 @@ public partial class CSharpProcessor
                 return;
             }
 
-            if (string.IsNullOrEmpty(fileInfo.Filename) || string.IsNullOrWhiteSpace(fileInfo.Filename))
+            if (string.IsNullOrEmpty(fileInfo.FileName) || string.IsNullOrWhiteSpace(fileInfo.FileName))
             {
                 _logger.LogInformation("Filename is not defined");
                 return;
@@ -31,7 +31,7 @@ public partial class CSharpProcessor
 
             fileInfo.TargetPathWithFileName = _pathManager.BuildPathString(
                 fileInfo.AbsoluteTargetPath,
-                fileInfo.Filename);
+                fileInfo.FileName);
         }
     }
 }

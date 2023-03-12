@@ -101,12 +101,12 @@ public abstract class AbstractGenerator : ICodeGenerator
 
     protected bool ShouldIRunDtoTestPreProcessing()
     {
-        return GeneratorConfiguration.SkipDtoTestPreProcessing;
+        return GeneratorConfiguration.SkipDtoTestPreProcess;
     }
 
     protected bool ShouldIRunDtoTestGeneration()
     {
-        return GeneratorConfiguration.SkipDtoTestsGenerating;
+        return GeneratorConfiguration.SkipDtoTestGenerating;
     }
 
     /// <summary>

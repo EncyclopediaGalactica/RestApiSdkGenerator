@@ -24,11 +24,11 @@ public class TargetDirectoryPreProcessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Count.Should().Be(1);
-        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.Filename == "TargetDirectoryDto.cs")
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.FileName == "TargetDirectoryDto.cs")
             .ToList().Count.Should().Be(1);
 
         TypeInfo aSingleDto = codeGenerator.SpecificCodeGenerator.DtoTypeInfos
-            .First(p => p.Filename == "TargetDirectoryDto.cs");
+            .First(p => p.FileName == "TargetDirectoryDto.cs");
         aSingleDto.AbsoluteTargetPath.Should().NotBeNull();
         aSingleDto.AbsoluteTargetPath.Should().Be(
             $"{Directory.GetCurrentDirectory()}/Dto/PreProcessing/TargetDirectory/");
