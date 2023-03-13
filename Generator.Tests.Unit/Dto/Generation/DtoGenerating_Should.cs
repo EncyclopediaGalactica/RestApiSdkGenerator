@@ -15,13 +15,13 @@ public class DtoGenerating_Should : TestBase
         // Arrange && Act
         Dictionary<string, string> filenames = new Dictionary<string, string>
         {
-            { "MultipleOne.cs", "MultipleOneDto.cs" },
-            { "MultipleTwo.cs", "MultipleTwoDto.cs" },
+            { "MultipleOneDto.cs", "MultipleOneDto.cs" },
+            { "MultipleTwoDto.cs", "MultipleTwoDto.cs" },
         };
         string currentPath = $"{_basePath}/Dto/Generation";
         string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator;
-        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
+        Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().NotThrow();

@@ -33,11 +33,18 @@ public interface ICSharpProcessor
     void ProcessFileName(List<TypeInfo> typeInfos, string fileNamePostFix, string fileType);
 
     /// <summary>
-    ///     Transforms the provided target path information in the <see cref="TypeInfo" /> objects to
-    ///     an absolute path. The transformation considers all provided parameters from configuration.
+    ///     Creates an absolute path for Dto generation.
+    ///     <remarks>
+    ///         The absolute path creation includes the following parameters if present:
+    ///         <list type="bullet">
+    ///             <item>base path</item>
+    ///             <item>dto path</item>
+    ///             <item>additional dto path</item>
+    ///         </list>
+    ///     </remarks>
     /// </summary>
     /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
-    void ProcessTargetPath(List<TypeInfo> typeInfos);
+    void ProcessDtoTargetPath(List<TypeInfo> typeInfos);
 
     /// <summary>
     ///     Creates the target path with file name value using the previously provided and processed

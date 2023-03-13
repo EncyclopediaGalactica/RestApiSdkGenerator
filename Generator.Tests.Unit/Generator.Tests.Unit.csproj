@@ -345,10 +345,10 @@
       <Compile Update="DtoTests\PreProcessing\PropertyName\PropertyNamePreProcessing_Should.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
-      <Compile Update="Dto\Generation\Reference\MultipleOne.cs">
+      <Compile Update="Dto\Generation\Reference\MultipleOneDto.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
-      <Compile Update="Dto\Generation\Reference\MultipleTwo.cs">
+      <Compile Update="Dto\Generation\Reference\MultipleTwoDto.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
     </ItemGroup>

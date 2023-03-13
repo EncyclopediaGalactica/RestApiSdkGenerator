@@ -31,6 +31,6 @@ public class TargetDirectoryPreProcessing_Should : TestBase
             .First(p => p.FileName == "TargetDirectoryDto.cs");
         aSingleDto.AbsoluteTargetPath.Should().NotBeNull();
         aSingleDto.AbsoluteTargetPath.Should().Be(
-            $"{Directory.GetCurrentDirectory()}/Dto/PreProcessing/TargetDirectory/");
+            $"{Directory.GetCurrentDirectory()}/Dto/PreProcessing/TargetDirectory");
     }
 }

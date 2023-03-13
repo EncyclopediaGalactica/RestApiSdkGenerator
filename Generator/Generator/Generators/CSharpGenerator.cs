@@ -238,12 +238,6 @@ public class CSharpGenerator : AbstractGenerator
             return;
         }
 
-        if (!dtoRenderTypeInfos.Any())
-        {
-            _logger.LogInformation("No available Dto render info");
-            return;
-        }
-
         foreach (TypeInfo typeInfo in dtoTypeInfos)
         {
             List<PropertyInfoRender> propertyInfos = new List<PropertyInfoRender>();
@@ -277,7 +271,7 @@ public class CSharpGenerator : AbstractGenerator
         _cSharpProcessor.TypeCheckInGenerationScope(DtoTypeInfos, _typesInGenerationScope);
         _cSharpProcessor.AddTypeNamesToGenerationScope(DtoTypeInfos, _typesInGenerationScope);
         _cSharpProcessor.ProcessFileName(DtoTypeInfos, DtoFileNamePostFix, FileType);
-        _cSharpProcessor.ProcessTargetPath(DtoTypeInfos);
+        _cSharpProcessor.ProcessDtoTargetPath(DtoTypeInfos);
         _cSharpProcessor.ProcessPathWithFileName(DtoTypeInfos);
         _cSharpProcessor.ProcessTemplatePath(DtoTypeInfos, DtoTemplatePath);
 

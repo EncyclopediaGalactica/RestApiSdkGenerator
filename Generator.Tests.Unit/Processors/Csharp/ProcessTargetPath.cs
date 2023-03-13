@@ -32,7 +32,7 @@ public partial class CSharpProcessor_Should
         }
 
         // Act
-        _sut.ProcessTargetPath(fileInfos);
+        _sut.ProcessDtoTargetPath(fileInfos);
 
         // Assert
         fileInfos[0].AbsoluteTargetPath.Should().Be(expected);
@@ -60,7 +60,7 @@ public partial class CSharpProcessor_Should
         };
 
         // Act
-        Action action = () => { _sut.ProcessTargetPath(fileInfos); };
+        Action action = () => { _sut.ProcessDtoTargetPath(fileInfos); };
 
         // Assert
         action.Should().Throw<ArgumentException>();
