@@ -12,8 +12,8 @@ stages:
   - stage: Variables
     jobs:
       - job:
-          workspace:
-            clean: all
+        workspace:
+          clean: all
         steps:
           - script: |
               echo $PATH
