@@ -58,6 +58,16 @@ public interface IConfigurationToTypeInfoManager
     void GetOriginalBaseNamespaceTokenFromConfigurationAndAddToTypeInfos(
         List<TypeInfo> typeInfos,
         CodeGeneratorConfiguration? generatorConfiguration);
+
+    /// <summary>
+    ///     Takes the <b>dto_test_project_base_path</b> from the provided generator configuration and adds to the
+    ///     type information objects used by the code generator.
+    /// </summary>
+    /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
+    /// <param name="generatorConfiguration">Instance of <see cref="CodeGeneratorConfiguration" /></param>
+    void GetOriginalDtoTestProjectBasePathFromConfigurationAndAddToTypeInfos(
+        List<TypeInfo> typeInfos,
+        CodeGeneratorConfiguration generatorConfiguration);
 }
 
 public class ConfigurationToTypeInfoManager : IConfigurationToTypeInfoManager
@@ -235,6 +245,40 @@ public class ConfigurationToTypeInfoManager : IConfigurationToTypeInfoManager
         foreach (TypeInfo fileInfo in typeInfos)
         {
             fileInfo.OriginalBaseNamespaceToken = generatorConfiguration.SolutionBaseNamespace;
+        }
+    }
+
+    public void GetOriginalDtoTestProjectBasePathFromConfigurationAndAddToTypeInfos(List<TypeInfo> typeInfos,
+        CodeGeneratorConfiguration? generatorConfiguration)
+    {
+        if (generatorConfiguration is null)
+        {
+            _logger.LogInformation("{GeneratorConfiguration} is null, skipping {Operation}",
+                nameof(generatorConfiguration),
+                nameof(GetOriginalDtoTestProjectBasePathFromConfigurationAndAddToTypeInfos));
+            return;
+        }
+
+        if (string.IsNullOrEmpty(generatorConfiguration.DtoTestProjectBasePath)
+            || string.IsNullOrWhiteSpace(generatorConfiguration.DtoTestProjectBasePath))
+        {
+            _logger.LogInformation("{Param} is empty, skipping {Operation}",
+                nameof(generatorConfiguration.DtoTestProjectBasePath),
+                nameof(GetOriginalDtoTestProjectBasePathFromConfigurationAndAddToTypeInfos));
+            return;
+        }
+
+        if (!typeInfos.Any())
+        {
+            _logger.LogInformation("{TypeInfos} list is empty, skipping {Operation}",
+                nameof(typeInfos),
+                nameof(GetOriginalDtoTestProjectBasePathFromConfigurationAndAddToTypeInfos));
+            return;
+        }
+
+        foreach (TypeInfo typeInfo in typeInfos)
+        {
+            typeInfo.OriginalDtoTestProjectBasePathToken = generatorConfiguration.DtoTestProjectBasePath;
         }
     }
 }

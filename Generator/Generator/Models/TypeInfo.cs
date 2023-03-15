@@ -130,4 +130,14 @@ public class TypeInfo
     ///     Gets or sets the list of required properties
     /// </summary>
     public List<string> RequiredProperties { get; set; } = new List<string>();
+
+    /// <summary>
+    ///     Gets or sets the original dto test project base path
+    /// </summary>
+    public string? OriginalDtoTestProjectBasePathToken { get; set; }
+
+    /// <summary>
+    ///     Gets or set the original dto test project additional path
+    /// </summary>
+    public string? OriginalDtoTestProjectAdditionalPathToken { get; set; }
 }

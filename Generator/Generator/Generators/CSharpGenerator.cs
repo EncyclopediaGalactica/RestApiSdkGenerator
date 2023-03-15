@@ -162,8 +162,8 @@ public class CSharpGenerator : AbstractGenerator
         GetOriginalDtoNamespaceTokenFromConfiguration(DtoTestTypeInfos);
 
         GetOriginalTargetPathFromConfiguration(DtoTestTypeInfos);
-        GetOriginalDtoProjectBasePathFromConfiguration(DtoTestTypeInfos);
-        GetOriginalDtoProjectAdditionalPathFromConfiguration(DtoTestTypeInfos);
+        GetOriginalDtoTestProjectBasePathFromConfiguration(DtoTestTypeInfos);
+        // GetOriginalDtoTestProjectAdditionalPathFromConfiguration(DtoTestTypeInfos);
 
         PreProcessDtoTestMetadata();
         // CopyDtoRenderDataToDtoRenderObject(DtoTypeInfos, _dtoFileInfosRender);
@@ -294,6 +294,7 @@ public class CSharpGenerator : AbstractGenerator
         _cSharpProcessor.TypeCheckInGenerationScope(DtoTestTypeInfos, _typesInGenerationScope);
         _cSharpProcessor.AddTypeNamesToGenerationScope(DtoTestTypeInfos, _typesInGenerationScope);
         _cSharpProcessor.ProcessFileName(DtoTestTypeInfos, DtoTestFileNamePostfix, FileType);
+        _cSharpProcessor.ProcessDtoTestsTargetPath(DtoTestTypeInfos);
     }
 
     public override ICodeGenerator Build()

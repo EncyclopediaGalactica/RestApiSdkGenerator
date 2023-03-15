@@ -64,8 +64,11 @@ public class CodeGeneratorConfiguration
     ///     Gets or sets the dto test project name
     /// </summary>
     [JsonProperty("dto_test_project_name")]
-    public string DtoTestProjectName { get; set; }
+    public string? DtoTestProjectName { get; set; }
 
+    /// <summary>
+    ///     Gets or sets the dto test project base path
+    /// </summary>
     [JsonProperty("dto_test_project_base_path")]
     public string? DtoTestProjectBasePath { get; set; }
 

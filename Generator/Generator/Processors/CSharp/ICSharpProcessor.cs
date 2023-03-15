@@ -163,4 +163,18 @@ public interface ICSharpProcessor
     /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
     /// <param name="testTypeNamePostfix">Postfix value</param>
     void ProcessTestTypeName(List<TypeInfo> typeInfos, string testTypeNamePostfix);
+
+    /// <summary>
+    ///     Creates the path for the Dto test files.
+    ///     <remarks>
+    ///         The following parameters are considered when the path is created:
+    ///         <list type="bullet">
+    ///             <item>provided base path</item>
+    ///             <item>provided test project base path</item>
+    ///             <item>provided test project additional path</item>
+    ///         </list>
+    ///     </remarks>
+    /// </summary>
+    /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
+    void ProcessDtoTestsTargetPath(List<TypeInfo> typeInfos);
 }

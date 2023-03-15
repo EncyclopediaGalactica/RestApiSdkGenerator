@@ -38,6 +38,10 @@
       "description": "Namespace of the Dto test project. It will be concatenated with solution base namespace",
       "type": "string"
     },
+    "dto_test_project_base_path": {
+      "description": "The base path for the Dto test project",
+      "type": "string"
+    },
     "dto_project_name": {
       "description": "The name of the Data Transfer Object's project.",
       "type": "string"
