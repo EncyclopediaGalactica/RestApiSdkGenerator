@@ -163,7 +163,7 @@ public class CSharpGenerator : AbstractGenerator
 
         GetOriginalTargetPathFromConfiguration(DtoTestTypeInfos);
         GetOriginalDtoTestProjectBasePathFromConfiguration(DtoTestTypeInfos);
-        // GetOriginalDtoTestProjectAdditionalPathFromConfiguration(DtoTestTypeInfos);
+        GetOriginalDtoTestProjectAdditionalPathFromConfiguration(DtoTestTypeInfos);
 
         PreProcessDtoTestMetadata();
         // CopyDtoRenderDataToDtoRenderObject(DtoTypeInfos, _dtoFileInfosRender);
