@@ -203,7 +203,7 @@
       <None Update="DtoTests\PreProcessing\PropertyType\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="DtoTests\PreProcessing\TargetDirectory\config.json">
+      <None Update="DtoTests\PreProcessing\TargetDirectory\basepath_config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="DtoTests\PreProcessing\TargetDirectory\openapi.yaml">
@@ -279,6 +279,12 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Manager\TestBase\mark_properties_3_schemas.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\TargetDirectory\basepath_and_dtotestproject_config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\TargetDirectory\basepath_and_dtotestproject_additionalpath_config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

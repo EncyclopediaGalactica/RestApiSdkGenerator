@@ -42,6 +42,10 @@
       "description": "The base path for the Dto test project",
       "type": "string"
     },
+    "dto_test_project_additional_path":{
+      "description": "Additional path within the Dto test project for more fine-grainer file placement",
+      "type": "string"
+    },
     "dto_project_name": {
       "description": "The name of the Data Transfer Object's project.",
       "type": "string"
