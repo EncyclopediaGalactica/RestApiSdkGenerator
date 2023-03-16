@@ -33,4 +33,6 @@ public class TargetDirectoryPreProcessing_Should : TestBase
         aSingleDto.AbsoluteTargetPath.Should().Be(
             $"{Directory.GetCurrentDirectory()}/Dto/PreProcessing/TargetDirectory");
     }
+
+    //TODO: add test cases covering multiple scenarios where project path and additional path added not added
 }

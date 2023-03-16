@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoTests.PreProcessing.TargetDirectory;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoTests.PreProcessing.TargetPathWithFileName;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -9,13 +9,13 @@ using Xunit;
 [Collection("PreProcessing")]
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class TargetDirectoryPreProcessing_Should : TestBase
+public class TargetPathWithFileNamePreProcessing_Should : TestBase
 {
     [Fact]
     public void PreProcess_WhenOnlyBasePath()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/TargetDirectory";
+        string currentPath = $"{_basePath}/DtoTests/PreProcessing/TargetPathWithFileName";
         string configFilePath = $"{currentPath}/basepath_config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -26,20 +26,20 @@ public class TargetDirectoryPreProcessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
-            .Find(p => p.TypeName == "TargetDirectoryInDtoTestsPreprocessingDto_Should")
+            .Find(p => p.TypeName == "TargetPathWithFileNameDto_Should")
             .Should().NotBeNull();
 
         TypeInfo? typeInfo = codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
-            .Find(p => p.TypeName == "TargetDirectoryInDtoTestsPreprocessingDto_Should");
-        typeInfo.AbsoluteTargetPath.Should()
-            .Be($"{_basePath}/DtoTests/PreProcessing/TargetDirectory");
+            .Find(p => p.TypeName == "TargetPathWithFileNameDto_Should");
+        typeInfo.TargetPathWithFileName.Should()
+            .Be($"{_basePath}/DtoTests/PreProcessing/TargetPathWithFileName/TargetPathWithFileNameDto_Should.cs");
     }
 
     [Fact]
     public void PreProcess_WhenBasePath_AndDtoTestProject()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/TargetDirectory";
+        string currentPath = $"{_basePath}/DtoTests/PreProcessing/TargetPathWithFileName";
         string configFilePath = $"{currentPath}/basepath_and_dtotestproject_config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -50,20 +50,21 @@ public class TargetDirectoryPreProcessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
-            .Find(p => p.TypeName == "TargetDirectoryInDtoTestsPreprocessingDto_Should")
+            .Find(p => p.TypeName == "TargetPathWithFileNameDto_Should")
             .Should().NotBeNull();
 
         TypeInfo? typeInfo = codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
-            .Find(p => p.TypeName == "TargetDirectoryInDtoTestsPreprocessingDto_Should");
-        typeInfo.AbsoluteTargetPath.Should()
-            .Be($"{_basePath}/DtoTests/PreProcessing/TargetDirectory/testprojectBasepath");
+            .Find(p => p.TypeName == "TargetPathWithFileNameDto_Should");
+        typeInfo.TargetPathWithFileName.Should()
+            .Be($"{_basePath}/DtoTests/PreProcessing/TargetPathWithFileName/testprojectBasepath/" +
+                $"TargetPathWithFileNameDto_Should.cs");
     }
 
     [Fact]
     public void PreProcess_WhenBasePath_AndDtoTestProject_AndAdditionalPath()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/TargetDirectory";
+        string currentPath = $"{_basePath}/DtoTests/PreProcessing/TargetPathWithFileName";
         string configFilePath = $"{currentPath}/basepath_and_dtotestproject_additionalpath_config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -74,12 +75,13 @@ public class TargetDirectoryPreProcessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
-            .Find(p => p.TypeName == "TargetDirectoryInDtoTestsPreprocessingDto_Should")
+            .Find(p => p.TypeName == "TargetPathWithFileNameDto_Should")
             .Should().NotBeNull();
 
         TypeInfo? typeInfo = codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
-            .Find(p => p.TypeName == "TargetDirectoryInDtoTestsPreprocessingDto_Should");
-        typeInfo.AbsoluteTargetPath.Should()
-            .Be($"{_basePath}/DtoTests/PreProcessing/TargetDirectory/testprojectBasepath/additionalPath");
+            .Find(p => p.TypeName == "TargetPathWithFileNameDto_Should");
+        typeInfo.TargetPathWithFileName.Should()
+            .Be($"{_basePath}/DtoTests/PreProcessing/TargetPathWithFileName/testprojectBasepath/additionalPath/" +
+                $"TargetPathWithFileNameDto_Should.cs");
     }
 }

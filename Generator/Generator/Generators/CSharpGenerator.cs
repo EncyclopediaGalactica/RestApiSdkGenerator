@@ -295,6 +295,7 @@ public class CSharpGenerator : AbstractGenerator
         _cSharpProcessor.AddTypeNamesToGenerationScope(DtoTestTypeInfos, _typesInGenerationScope);
         _cSharpProcessor.ProcessFileName(DtoTestTypeInfos, DtoTestFileNamePostfix, FileType);
         _cSharpProcessor.ProcessDtoTestsTargetPath(DtoTestTypeInfos);
+        _cSharpProcessor.ProcessPathWithFileName(DtoTestTypeInfos);
     }
 
     public override ICodeGenerator Build()
