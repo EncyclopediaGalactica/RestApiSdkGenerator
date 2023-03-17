@@ -299,6 +299,18 @@
       <None Update="DtoTests\PreProcessing\TargetPathWithFileName\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Dto\PreProcessing\TargetPathWithFileName\basepath_and_dtotestproject_additionalpath_config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\TargetPathWithFileName\basepath_and_dtotestproject_config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\TargetPathWithFileName\basepath_config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\TargetPathWithFileName\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
