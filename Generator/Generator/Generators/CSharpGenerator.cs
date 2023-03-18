@@ -110,6 +110,7 @@ public class CSharpGenerator : AbstractGenerator
     private List<DtoTypeInfoRender> _dtoFileInfosRender = new List<DtoTypeInfoRender>();
 
     public override string DtoTemplatePath { get; } = "Templates/dto.handlebars";
+    public override string DtoTestTemplatePath { get; } = "Templates/dto_tests.handlebars";
 
     public Dictionary<string, string> OpenApiCsharpTypeMap { get; } = new()
     {
@@ -296,6 +297,7 @@ public class CSharpGenerator : AbstractGenerator
         _cSharpProcessor.ProcessFileName(DtoTestTypeInfos, DtoTestFileNamePostfix, FileType);
         _cSharpProcessor.ProcessDtoTestsTargetPath(DtoTestTypeInfos);
         _cSharpProcessor.ProcessPathWithFileName(DtoTestTypeInfos);
+        _cSharpProcessor.ProcessTemplatePath(DtoTestTypeInfos, DtoTestTemplatePath);
     }
 
     public override ICodeGenerator Build()

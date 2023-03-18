@@ -21,6 +21,7 @@ public abstract class AbstractGenerator : ICodeGenerator
     protected ITemplateManager TemplateManager;
 
     public abstract string DtoTemplatePath { get; }
+    public abstract string DtoTestTemplatePath { get; }
 
     public List<TypeInfo> DtoTypeInfos { get; } = new List<TypeInfo>();
 
