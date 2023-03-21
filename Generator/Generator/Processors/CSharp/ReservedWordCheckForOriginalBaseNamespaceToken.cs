@@ -28,6 +28,28 @@ public partial class CSharpProcessor
                 continue;
             }
 
+            if (typeInfo.OriginalBaseNamespaceToken.Contains("."))
+            {
+                string[] chunks = typeInfo.OriginalBaseNamespaceToken.Split(".");
+                foreach (string chunk in chunks)
+                {
+                    if (string.IsNullOrEmpty(chunk) || string.IsNullOrWhiteSpace(chunk))
+                    {
+                        continue;
+                    }
+
+                    if (reservedWords.Contains(chunk.ToLower()))
+                    {
+                        _logger.LogError("The provided base namespace token, " +
+                                         "{OriginalBaseNamespaceToken} includes a reserved word",
+                            typeInfo.OriginalBaseNamespaceToken);
+                        throw new GeneratorException($"The provided base namespace token, " +
+                                                     $"{typeInfo.OriginalBaseNamespaceToken} includes a " +
+                                                     $"reserved word");
+                    }
+                }
+            }
+
             if (reservedWords.Contains(typeInfo.OriginalBaseNamespaceToken.ToLower()))
             {
                 _logger.LogError("The provided base namespace token, " +

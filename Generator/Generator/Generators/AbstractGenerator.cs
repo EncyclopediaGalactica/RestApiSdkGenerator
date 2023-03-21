@@ -145,6 +145,13 @@ public abstract class AbstractGenerator : ICodeGenerator
             GeneratorConfiguration);
     }
 
+    protected void GetOriginalDtoTestNamespaceTokenFromConfiguration(List<TypeInfo> fileInfos)
+    {
+        ConfigurationToTypeInfoManager.GetOriginalDtoTestProjectNamespaceTokenFromConfigurationAndAddToTypeInfos(
+            fileInfos,
+            GeneratorConfiguration);
+    }
+
     protected void GetOriginalTargetPathFromConfiguration(List<TypeInfo> fileInfos)
     {
         ConfigurationToTypeInfoManager.GetOriginalTargetPathBaseFromConfigurationAndAddToTypeInfos(

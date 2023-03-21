@@ -67,7 +67,7 @@ public interface ICSharpProcessor
     ///     </remarks>
     /// </summary>
     /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
-    void ProcessNamespace(List<TypeInfo> typeInfos);
+    void ProcessDtoNamespace(List<TypeInfo> typeInfos);
 
     /// <summary>
     ///     Checks if variables in a reference type (c-sharp class) have name which is a reserved word.
@@ -177,4 +177,28 @@ public interface ICSharpProcessor
     /// </summary>
     /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
     void ProcessDtoTestsTargetPath(List<TypeInfo> typeInfos);
+
+    /// <summary>
+    ///     Checks if the provided Dto test namespace token is:
+    ///     <list type="bullet">
+    ///         <item>reserved word</item>
+    ///         <item>contains a reserved words within dots</item>
+    ///     </list>
+    /// </summary>
+    /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
+    /// <param name="reservedWords">List of reserved words</param>
+    void ReservedWordCheckForOriginalDtoTestNamespaceToken(List<TypeInfo> typeInfos, List<string> reservedWords);
+
+    /// <summary>
+    ///     Creates the full namespace for Dto Test classes.
+    ///     <remarks>
+    ///         The namespace is created from:
+    ///         <list type="bullet">
+    ///             <item>base namespace token</item>
+    ///             <item>dto test namespace token</item>
+    ///         </list>
+    ///     </remarks>
+    /// </summary>
+    /// <param name="typeInfos"></param>
+    void ProcessDtoTestNamespace(List<TypeInfo> typeInfos);
 }

@@ -6,7 +6,7 @@ using Models;
 public partial class CSharpProcessor
 {
     /// <inheritdoc />
-    public void ProcessNamespace(List<TypeInfo> typeInfos)
+    public void ProcessDtoNamespace(List<TypeInfo> typeInfos)
     {
         if (!typeInfos.Any())
         {

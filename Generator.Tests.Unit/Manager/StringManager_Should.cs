@@ -96,7 +96,7 @@ public class StringManager_Should
     [InlineData(" ", null, "")]
     [InlineData(null, "", "")]
     [InlineData(null, " ", "")]
-    public void ConcatenateCSharpNamespaceTokens(string s1, string? s2, string expected)
+    public void ConcatenateCSharpNamespaceTokens(string? s1, string? s2, string expected)
     {
         // Arrange && Act
         string result = _sut.ConcatCsharpNamespaceTokens(s1, s2);
@@ -112,7 +112,7 @@ public class StringManager_Should
     [InlineData(null, "")]
     [InlineData("", "")]
     [InlineData(" ", "")]
-    public void MakeUppercaseTheCharAfterTheDot(string s, string expected)
+    public void MakeUppercaseTheCharAfterTheDot(string? s, string expected)
     {
         // Arrange && Act
         string? result = _sut.MakeUppercaseTheCharAfterTheDot(s);
@@ -128,7 +128,7 @@ public class StringManager_Should
     [InlineData(null, "")]
     [InlineData("", "")]
     [InlineData(" ", "")]
-    public void MakeTheStringLowerCase(string s, string expected)
+    public void MakeTheStringLowerCase(string? s, string expected)
     {
         // Arrange && Assert
         string result = _sut.ToLowerCase(s);
@@ -166,7 +166,7 @@ public class StringManager_Should
     [InlineData(null, "")]
     [InlineData("", "")]
     [InlineData(" ", "")]
-    public void CheckIfLastCharSlashAndRemoveIt(string s, string expected)
+    public void CheckIfLastCharSlashAndRemoveIt(string? s, string expected)
     {
         // Arrange && Act
         string? result = _sut.CheckIfLastCharSlashAndRemoveIt(s);

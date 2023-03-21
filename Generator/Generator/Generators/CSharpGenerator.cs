@@ -160,7 +160,7 @@ public class CSharpGenerator : AbstractGenerator
         MarkVariablesAsPropertiesFromOpenApiSchema(DtoTestTypeInfos);
 
         GetOriginalBaseNamespaceTokenFromConfiguration(DtoTestTypeInfos);
-        GetOriginalDtoNamespaceTokenFromConfiguration(DtoTestTypeInfos);
+        GetOriginalDtoTestNamespaceTokenFromConfiguration(DtoTestTypeInfos);
 
         GetOriginalTargetPathFromConfiguration(DtoTestTypeInfos);
         GetOriginalDtoTestProjectBasePathFromConfiguration(DtoTestTypeInfos);
@@ -278,7 +278,7 @@ public class CSharpGenerator : AbstractGenerator
 
         _cSharpProcessor.ReservedWordCheckForOriginalBaseNamespaceToken(DtoTypeInfos, _reservedWords);
         _cSharpProcessor.ReservedWordCheckForOriginalDtoNamespaceToken(DtoTypeInfos, _reservedWords);
-        _cSharpProcessor.ProcessNamespace(DtoTypeInfos);
+        _cSharpProcessor.ProcessDtoNamespace(DtoTypeInfos);
 
         _cSharpProcessor.ReservedWordsCheckForOriginalVariableNamesOfAType(DtoTypeInfos, _reservedWords);
         _cSharpProcessor.ProcessPropertiesByType(DtoTypeInfos);
@@ -298,6 +298,10 @@ public class CSharpGenerator : AbstractGenerator
         _cSharpProcessor.ProcessDtoTestsTargetPath(DtoTestTypeInfos);
         _cSharpProcessor.ProcessPathWithFileName(DtoTestTypeInfos);
         _cSharpProcessor.ProcessTemplatePath(DtoTestTypeInfos, DtoTestTemplatePath);
+
+        _cSharpProcessor.ReservedWordCheckForOriginalBaseNamespaceToken(DtoTestTypeInfos, _reservedWords);
+        _cSharpProcessor.ReservedWordCheckForOriginalDtoTestNamespaceToken(DtoTestTypeInfos, _reservedWords);
+        _cSharpProcessor.ProcessDtoTestNamespace(DtoTestTypeInfos);
     }
 
     public override ICodeGenerator Build()

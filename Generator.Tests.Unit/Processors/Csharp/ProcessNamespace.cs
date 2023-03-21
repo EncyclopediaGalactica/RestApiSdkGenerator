@@ -33,7 +33,7 @@ public partial class CSharpProcessor_Should
         };
 
         // Act
-        _sut.ProcessNamespace(fileInfos);
+        _sut.ProcessDtoNamespace(fileInfos);
 
         // Assert
         fileInfos[0].Namespace.Should().Be(expected);

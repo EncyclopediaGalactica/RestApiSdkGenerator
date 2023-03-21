@@ -45,7 +45,7 @@ public interface IStringManager
     /// <param name="s1">namespace 1</param>
     /// <param name="s2">namespace 2</param>
     /// <returns>Concatenated namespaces</returns>
-    string ConcatCsharpNamespaceTokens(string s1, string? s2);
+    string ConcatCsharpNamespaceTokens(string? s1, string? s2);
 
     /// <summary>
     ///     Makes all capital letter in the provided string uppercase

@@ -49,7 +49,7 @@ public class SolutionNamespace_Preprocessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.FileName == "PetDto.cs").ToList().Count.Should()
             .Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.FileName == "PetDto.cs")
-            .Namespace.Should().Be("EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Test.Namespace");
+            .Namespace.Should().Be("EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Test.Nmspace");
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class SolutionNamespace_Preprocessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.FileName == "PetDto.cs").ToList().Count.Should()
             .Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.FileName == "PetDto.cs")
-            .Namespace.Should().Be("Smallcap.Namespace");
+            .Namespace.Should().Be("Smallcap.Nmspace");
     }
 
     [Fact]

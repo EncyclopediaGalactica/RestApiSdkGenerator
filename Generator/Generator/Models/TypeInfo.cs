@@ -140,4 +140,9 @@ public class TypeInfo
     ///     Gets or set the original dto test project additional path
     /// </summary>
     public string? OriginalDtoTestProjectAdditionalPathToken { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the original dto test namespace token
+    /// </summary>
+    public string? OriginalDtoTestProjectNamespaceToken { get; set; }
 }

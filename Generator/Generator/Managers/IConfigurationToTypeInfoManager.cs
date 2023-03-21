@@ -78,6 +78,16 @@ public interface IConfigurationToTypeInfoManager
     void GetOriginalDtoTestProjectAdditionalPathFromConfigurationAndAddToTypeInfo(
         List<TypeInfo> typeInfos,
         CodeGeneratorConfiguration generatorConfiguration);
+
+    /// <summary>
+    ///     Takes the <b>dto_test_project_namespace</b> from the provided configuration and adds to the type information
+    ///     objects will be used by teh generator
+    /// </summary>
+    /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
+    /// <param name="generatorConfiguration">Instance of <see cref="CodeGeneratorConfiguration" /></param>
+    void GetOriginalDtoTestProjectNamespaceTokenFromConfigurationAndAddToTypeInfos(
+        List<TypeInfo> typeInfos,
+        CodeGeneratorConfiguration generatorConfiguration);
 }
 
 public class ConfigurationToTypeInfoManager : IConfigurationToTypeInfoManager
@@ -321,6 +331,39 @@ public class ConfigurationToTypeInfoManager : IConfigurationToTypeInfoManager
         foreach (TypeInfo fileInfo in typeInfos)
         {
             fileInfo.OriginalDtoTestProjectAdditionalPathToken = generatorConfiguration.DtoTestProjectAdditionalPath;
+        }
+    }
+
+    /// <inheritdoc />
+    public void GetOriginalDtoTestProjectNamespaceTokenFromConfigurationAndAddToTypeInfos(
+        List<TypeInfo> typeInfos,
+        CodeGeneratorConfiguration? generatorConfiguration)
+    {
+        if (generatorConfiguration is null)
+        {
+            _logger.LogInformation("{GeneratorConfigurationInstance} is null", nameof(generatorConfiguration));
+            return;
+        }
+
+        if (string.IsNullOrEmpty(generatorConfiguration.DtoTestProjectNameSpace)
+            || string.IsNullOrWhiteSpace(generatorConfiguration.DtoTestProjectNameSpace))
+        {
+            _logger.LogInformation("{DtoProjectAdditionalPath} is null, empty or whitespace, skipping",
+                nameof(generatorConfiguration.DtoTestProjectNameSpace));
+            return;
+        }
+
+        if (!typeInfos.Any())
+        {
+            _logger.LogInformation("{FileInfos} is empty, skipping {Operation}",
+                nameof(typeInfos),
+                nameof(GetOriginalDtoTestProjectNamespaceTokenFromConfigurationAndAddToTypeInfos));
+            return;
+        }
+
+        foreach (TypeInfo fileInfo in typeInfos)
+        {
+            fileInfo.OriginalDtoTestProjectNamespaceToken = generatorConfiguration.DtoTestProjectNameSpace;
         }
     }
 }

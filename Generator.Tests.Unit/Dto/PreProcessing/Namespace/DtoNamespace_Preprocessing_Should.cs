@@ -27,7 +27,7 @@ public class DtoNamespace_Preprocessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.FileName == "PetDto.cs").ToList().Count.Should()
             .Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.FileName == "PetDto.cs")
-            .Namespace.Should().Be("Proper.Solution.Namespace.Dto.Project.Namespace.Smallcap");
+            .Namespace.Should().Be("Proper.Solution.Nmspace.Dto.Project.Nmspace.Smallcap");
     }
 
     [Fact]
@@ -48,7 +48,7 @@ public class DtoNamespace_Preprocessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.FileName == "PetDto.cs").ToList().Count.Should()
             .Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.FileName == "PetDto.cs")
-            .Namespace.Should().Be("Proper.Solution.Namespace.Dtoprojectnamespacesmallcap");
+            .Namespace.Should().Be("Proper.Solution.Nmspace.Dtoprojectnamespacesmallcap");
     }
 
     [Fact]
@@ -69,6 +69,6 @@ public class DtoNamespace_Preprocessing_Should : TestBase
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.FileName == "PetDto.cs").ToList().Count.Should()
             .Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.First(p => p.FileName == "PetDto.cs")
-            .Namespace.Should().Be("Proper.Solution.Namespace.Dto.Namespace");
+            .Namespace.Should().Be("Proper.Solution.Nmspace.Dto.Nmspace");
     }
 }

@@ -323,6 +323,30 @@
       <None Update="Dto\PreProcessing\TemplatePath\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="DtoTests\PreProcessing\ReservedWords\base_namespace_is_reserved_word.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\ReservedWords\base_namespace_is_reserved_word.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\ReservedWords\base_namespace_includes_a_reserved_word.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\ReservedWords\base_namespace_includes_a_reserved_word.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\ReservedWords\base_namespace_is_reserved_word.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\ReservedWords\base_namespace_is_reserved_word.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\ReservedWords\base_namespace_includes_a_reserved_word.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\ReservedWords\base_namespace_includes_a_reserved_word.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
