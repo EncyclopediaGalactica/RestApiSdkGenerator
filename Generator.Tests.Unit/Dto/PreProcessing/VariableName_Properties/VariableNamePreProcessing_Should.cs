@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.VariableName;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.VariableName_Properties;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -14,7 +14,7 @@ public class VariableNamePreProcessing_Should : TestBase
     public void Process_PropertyNames()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/Dto/PreProcessing/VariableName";
+        string currentPath = $"{_basePath}/Dto/PreProcessing/VariableName_Properties";
         string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };

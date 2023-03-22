@@ -191,12 +191,6 @@
       <None Update="DtoTests\PreProcessing\NullablePropertyType\config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="DtoTests\PreProcessing\PropertyName\config.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="DtoTests\PreProcessing\PropertyName\openapi.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="DtoTests\PreProcessing\PropertyType\config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
@@ -389,6 +383,18 @@
       <None Update="DtoTests\PreProcessing\VariableNameReservedWordCheck\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Dto\PreProcessing\VariableName_Properties\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\VariableName_Properties\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\VariableName_Properties\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\VariableName_Properties\openapi.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -448,9 +454,6 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
       <Compile Update="Dto\Generation\PropertyType\Reference\PetDto.cs">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="DtoTests\PreProcessing\PropertyName\PropertyNamePreProcessing_Should.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
       <Compile Update="Dto\Generation\Reference\MultipleOneDto.cs">

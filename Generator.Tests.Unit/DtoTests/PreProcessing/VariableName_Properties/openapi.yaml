@@ -152,7 +152,7 @@ paths:
                 "$ref": '#/components/schemas/errorModel'
 components:
   schemas:
-    propertyNameInDtoTestsPreprocessing:
+    pet:
       type: object
       required:
         - id
