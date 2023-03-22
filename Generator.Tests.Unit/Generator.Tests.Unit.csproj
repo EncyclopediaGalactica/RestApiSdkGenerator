@@ -323,18 +323,6 @@
       <None Update="Dto\PreProcessing\TemplatePath\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="DtoTests\PreProcessing\ReservedWords\base_namespace_is_reserved_word.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="DtoTests\PreProcessing\ReservedWords\base_namespace_is_reserved_word.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="DtoTests\PreProcessing\ReservedWords\base_namespace_includes_a_reserved_word.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="DtoTests\PreProcessing\ReservedWords\base_namespace_includes_a_reserved_word.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="Dto\PreProcessing\ReservedWords\base_namespace_is_reserved_word.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
@@ -345,6 +333,42 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Dto\PreProcessing\ReservedWords\base_namespace_includes_a_reserved_word.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\NamespaceReservedWordsCheck\base_namespace_includes_a_reserved_word1.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\NamespaceReservedWordsCheck\base_namespace_includes_a_reserved_word.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\NamespaceReservedWordsCheck\base_namespace_is_reserved_word.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\NamespaceReservedWordsCheck\base_namespace_is_reserved_word.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\NamespaceReservedWordsCheck\base_namespace_includes_a_reserved_word2.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\PreProcessing\NamespaceReservedWordsCheck\base_namespace_includes_a_reserved_word3.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\NamespaceReservedWordsCheck\base_namespace_is_reserved_word.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\NamespaceReservedWordsCheck\base_namespace_is_reserved_word.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\NamespaceReservedWordsCheck\base_namespace_includes_a_reserved_word1.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\NamespaceReservedWordsCheck\base_namespace_includes_a_reserved_word.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\NamespaceReservedWordsCheck\base_namespace_includes_a_reserved_word2.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\PreProcessing\NamespaceReservedWordsCheck\base_namespace_includes_a_reserved_word3.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
