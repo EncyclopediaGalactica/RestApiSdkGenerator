@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.PropertyName;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.VariableName;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -8,13 +8,13 @@ using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class PropertyNamePreProcessing_Should : TestBase
+public class VariableNamePreProcessing_Should : TestBase
 {
     [Fact]
     public void Process_PropertyNames()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/Dto/PreProcessing/PropertyName";
+        string currentPath = $"{_basePath}/Dto/PreProcessing/VariableName";
         string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
