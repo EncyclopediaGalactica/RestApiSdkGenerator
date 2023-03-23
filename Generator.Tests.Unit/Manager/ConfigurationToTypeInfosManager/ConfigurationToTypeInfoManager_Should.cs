@@ -1,7 +1,7 @@
 namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Manager.ConfigurationToTypeInfosManager;
 
 using System.Diagnostics.CodeAnalysis;
-using Generator.Managers;
+using Generator.Managers.ConfigurationToTypeInfoManager;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
