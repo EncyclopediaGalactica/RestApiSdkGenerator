@@ -2,6 +2,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Process
 
 using System.Diagnostics.CodeAnalysis;
 using Generator.Managers;
+using Generator.Managers.FileManager;
 using Generator.Processors.CSharp;
 
 [ExcludeFromCodeCoverage]

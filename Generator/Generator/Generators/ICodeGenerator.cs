@@ -2,6 +2,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Generato
 
 using Configuration;
 using Managers;
+using Managers.FileManager;
 using Microsoft.OpenApi.Models;
 using Models;
 

@@ -1,6 +1,7 @@
 namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Processors.CSharp;
 
 using Managers;
+using Managers.FileManager;
 using Microsoft.Extensions.Logging;
 
 public partial class CSharpProcessor : ProcessorAbstract, ICSharpProcessor
