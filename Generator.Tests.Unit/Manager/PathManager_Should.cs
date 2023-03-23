@@ -2,7 +2,7 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Manager
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using Generator.Managers;
+using Generator.Managers.PathManager;
 using Xunit;
 
 [ExcludeFromCodeCoverage]

@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Managers;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Managers.PathManager;
 
 /// <summary>
 ///     Path manager interfaces

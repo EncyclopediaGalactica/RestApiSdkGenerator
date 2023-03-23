@@ -6,6 +6,7 @@ using Generators;
 using Managers;
 using Managers.ConfigurationToTypeInfoManager;
 using Managers.FileManager;
+using Managers.PathManager;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
