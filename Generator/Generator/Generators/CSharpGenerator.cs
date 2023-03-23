@@ -306,6 +306,8 @@ public class CSharpGenerator : AbstractGenerator
         _cSharpProcessor.ReservedWordsCheckForOriginalVariableNamesOfAType(DtoTestTypeInfos, _reservedWords);
         _cSharpProcessor.ProcessPropertiesByType(DtoTestTypeInfos);
         _cSharpProcessor.ReservedWordCheckForVariableNames(DtoTestTypeInfos, _reservedWords);
+
+        _cSharpProcessor.ProcessNullableVariableTypes(DtoTestTypeInfos);
     }
 
     public override ICodeGenerator Build()
