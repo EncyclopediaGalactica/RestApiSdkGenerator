@@ -23,7 +23,7 @@ public class TargetPathWithFileNamePreProcessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .Find(p => p.TypeName == "TargetPathWithFileNameDto")
@@ -31,7 +31,8 @@ public class TargetPathWithFileNamePreProcessing_Should : TestBase
 
         TypeInfo? typeInfo = codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .Find(p => p.TypeName == "TargetPathWithFileNameDto");
-        typeInfo.TargetPathWithFileName.Should()
+        typeInfo.Should().NotBeNull();
+        typeInfo!.TargetPathWithFileName.Should()
             .Be($"{_basePath}/Dto/PreProcessing/TargetPathWithFileName/TargetPathWithFileNameDto.cs");
     }
 
@@ -47,7 +48,7 @@ public class TargetPathWithFileNamePreProcessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .Find(p => p.TypeName == "TargetPathWithFileNameDto")
@@ -55,7 +56,8 @@ public class TargetPathWithFileNamePreProcessing_Should : TestBase
 
         TypeInfo? typeInfo = codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .Find(p => p.TypeName == "TargetPathWithFileNameDto");
-        typeInfo.TargetPathWithFileName.Should()
+        typeInfo.Should().NotBeNull();
+        typeInfo!.TargetPathWithFileName.Should()
             .Be($"{_basePath}/Dto/PreProcessing/TargetPathWithFileName/projectBasepath/" +
                 $"TargetPathWithFileNameDto.cs");
     }
@@ -72,7 +74,7 @@ public class TargetPathWithFileNamePreProcessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .Find(p => p.TypeName == "TargetPathWithFileNameDto")
@@ -80,7 +82,8 @@ public class TargetPathWithFileNamePreProcessing_Should : TestBase
 
         TypeInfo? typeInfo = codeGenerator.SpecificCodeGenerator.DtoTypeInfos
             .Find(p => p.TypeName == "TargetPathWithFileNameDto");
-        typeInfo.TargetPathWithFileName.Should()
+        typeInfo.Should().NotBeNull();
+        typeInfo!.TargetPathWithFileName.Should()
             .Be($"{_basePath}/Dto/PreProcessing/TargetPathWithFileName/projectBasepath/additionalPath/" +
                 $"TargetPathWithFileNameDto.cs");
     }

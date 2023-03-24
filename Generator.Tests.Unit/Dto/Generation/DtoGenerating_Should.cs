@@ -10,7 +10,7 @@ using Xunit;
 public class DtoGenerating_Should : TestBase
 {
     [Fact]
-    public async Task Generate_MultipleDtos()
+    public void Generate_MultipleDtos()
     {
         // Arrange && Act
         Dictionary<string, string> filenames = new Dictionary<string, string>
@@ -20,8 +20,7 @@ public class DtoGenerating_Should : TestBase
         };
         string currentPath = $"{_basePath}/Dto/Generation";
         string configFilePath = $"{currentPath}/config.json";
-        CodeGenerator? codeGenerator;
-        Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().NotThrow();

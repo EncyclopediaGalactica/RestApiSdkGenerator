@@ -22,7 +22,7 @@ public class TemplatePathWithFileNamePreProcessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Count.Should().Be(3);
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
             .Where(

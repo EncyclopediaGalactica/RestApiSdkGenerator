@@ -22,7 +22,7 @@ public class VariableNamePreProcessing_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
+        codeGenerator!.SpecificCodeGenerator.Should().NotBeNull();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.FileName == "PetDto.cs").ToList().Count.Should()

@@ -21,7 +21,7 @@ public class FilenamePreprocess_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
             .Where(p => p.FileName == "SingleFilenameDto_Should.cs").ToList().Count.Should().Be(1);
     }
@@ -38,7 +38,7 @@ public class FilenamePreprocess_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
             .Where(p => p.FileName == "FirstDto_Should.cs").ToList().Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos

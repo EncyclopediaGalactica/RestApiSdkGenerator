@@ -21,7 +21,7 @@ public class TargetDirectoryPreProcessing_Should : TestBase
 
         // Assert
         action.Should().NotThrow();
-        codeGenerator.SpecificCodeGenerator.Should().NotBeNull();
+        codeGenerator!.SpecificCodeGenerator.Should().NotBeNull();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Where(p => p.FileName == "TargetDirectoryDto.cs")

@@ -21,7 +21,7 @@ public class TypeNamePreprocess_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
             .Where(p => p.TypeName == "SingleTypeNameInDtoTestPreProcessDto_Should").ToList().Count.Should().Be(1);
     }
@@ -38,7 +38,7 @@ public class TypeNamePreprocess_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
             .Where(p => p.TypeName == "FirstTypenameInDtoTestPreProcessDto_Should").ToList().Count.Should().Be(1);
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos

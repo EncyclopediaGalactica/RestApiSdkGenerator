@@ -214,12 +214,38 @@ public class CSharpGenerator : AbstractGenerator
 
         foreach (TypeInfo fileInfo in DtoTypeInfos)
         {
+            if (string.IsNullOrEmpty(fileInfo.TemplateAbsolutePathWithFileName)
+                || string.IsNullOrWhiteSpace(fileInfo.TemplateAbsolutePathWithFileName))
+            {
+                _logger.LogInformation(
+                    "No template path were provided for {File}",
+                    fileInfo.FileName);
+                throw new GeneratorException(
+                    $"No template path were provided for {fileInfo.FileName}");
+            }
+
+            if (string.IsNullOrEmpty(fileInfo.TargetPathWithFileName)
+                || string.IsNullOrWhiteSpace(fileInfo.TargetPathWithFileName))
+            {
+                _logger.LogInformation(
+                    "No target path with file name was provided for content generation. {File}",
+                    fileInfo.FileName);
+                throw new GeneratorException(
+                    $"No target path with file name was provided for content generation. " +
+                    $"{fileInfo.FileName}");
+            }
+
             string template = FileManager.ReadAllText(fileInfo.TemplateAbsolutePathWithFileName);
             DtoTypeInfoRender singleRender = _dtoFileInfosRender
                 .Where(p => p.Namespace == fileInfo.Namespace)
                 .First(p => p.TypeName == fileInfo.TypeName);
             string compiledContent = TemplateManager.CompileTemplate(template, singleRender);
-            FileManager.DeleteFile(fileInfo.TargetPathWithFileName);
+
+            if (FileManager.CheckIfFileExist(fileInfo.TargetPathWithFileName))
+            {
+                FileManager.DeleteFile(fileInfo.TargetPathWithFileName);
+            }
+
             FileManager.WriteContentIntoFile(compiledContent, fileInfo.TargetPathWithFileName);
         }
     }

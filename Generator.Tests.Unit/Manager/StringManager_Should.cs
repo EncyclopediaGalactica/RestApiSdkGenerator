@@ -169,7 +169,7 @@ public class StringManager_Should
     public void CheckIfLastCharSlashAndRemoveIt(string? s, string expected)
     {
         // Arrange && Act
-        string? result = _sut.CheckIfLastCharSlashAndRemoveIt(s);
+        string result = _sut.CheckIfLastCharSlashAndRemoveIt(s);
 
         // Assert
         result.Should().Be(expected);

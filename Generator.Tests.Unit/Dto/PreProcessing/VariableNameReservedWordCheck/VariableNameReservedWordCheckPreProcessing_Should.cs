@@ -16,8 +16,7 @@ public class VariableNameReservedWordCheckPreProcessing_Should : TestBase
         // Arrange && Act
         string currentPath = $"{_basePath}/Dto/PreProcessing/VariableNameReservedWordCheck";
         string configFilePath = $"{currentPath}/config.json";
-        CodeGenerator? codeGenerator = null;
-        Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().Throw<GeneratorException>();

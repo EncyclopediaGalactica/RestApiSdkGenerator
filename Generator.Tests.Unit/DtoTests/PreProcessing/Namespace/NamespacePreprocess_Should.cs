@@ -21,7 +21,7 @@ public class NamespacePreprocess_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.First(p => p.FileName == "SingleFilenameDto_Should.cs")
             .Namespace.Should().Be("Solution.Nmspace.Single");
     }
@@ -38,7 +38,7 @@ public class NamespacePreprocess_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.First(p => p.FileName == "FirstDto_Should.cs")
             .Namespace.Should().Be("Solution.Nmspace.Multiple");
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.First(p => p.FileName == "SecondDto_Should.cs")
@@ -57,7 +57,7 @@ public class NamespacePreprocess_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
             .First(p => p.FileName == "SingleDto_Should.cs")
             .Namespace.Should().Be("Solution.Nmspace.Prov.Single.Dto.Tests");
@@ -75,7 +75,7 @@ public class NamespacePreprocess_Should : TestBase
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
+        codeGenerator!.SpecificCodeGenerator.DtoTestTypeInfos.Should().NotBeEmpty();
         codeGenerator.SpecificCodeGenerator.DtoTestTypeInfos
             .First(p => p.FileName == "FirstNamespaceProvidedDto_Should.cs")
             .Namespace.Should().Be("Sol.Nmspace.Dto.Tests");

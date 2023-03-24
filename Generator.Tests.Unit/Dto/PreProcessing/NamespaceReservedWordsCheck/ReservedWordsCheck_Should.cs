@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.ReservedWords;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Dto.PreProcessing.NamespaceReservedWordsCheck;
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -15,8 +15,7 @@ public class ReservedWordsCheck_Should : TestBase
         // Arrange && Act
         string currentPath = $"{_basePath}/Dto/PreProcessing/NamespaceReservedWordsCheck";
         string configFilePath = $"{currentPath}/base_namespace_is_reserved_word.json";
-        CodeGenerator? codeGenerator = null;
-        Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().Throw<GeneratorException>();
@@ -28,8 +27,7 @@ public class ReservedWordsCheck_Should : TestBase
         // Arrange && Act
         string currentPath = $"{_basePath}/Dto/PreProcessing/NamespaceReservedWordsCheck";
         string configFilePath = $"{currentPath}/base_namespace_includes_a_reserved_word1.json";
-        CodeGenerator? codeGenerator = null;
-        Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().Throw<GeneratorException>();
@@ -41,8 +39,7 @@ public class ReservedWordsCheck_Should : TestBase
         // Arrange && Act
         string currentPath = $"{_basePath}/Dto/PreProcessing/NamespaceReservedWordsCheck";
         string configFilePath = $"{currentPath}/base_namespace_includes_a_reserved_word2.json";
-        CodeGenerator? codeGenerator = null;
-        Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().Throw<GeneratorException>();
@@ -54,8 +51,7 @@ public class ReservedWordsCheck_Should : TestBase
         // Arrange && Act
         string currentPath = $"{_basePath}/Dto/PreProcessing/NamespaceReservedWordsCheck";
         string configFilePath = $"{currentPath}/base_namespace_includes_a_reserved_word3.json";
-        CodeGenerator? codeGenerator = null;
-        Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
+        Action action = () => { new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().Throw<GeneratorException>();
