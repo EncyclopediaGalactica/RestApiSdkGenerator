@@ -4,6 +4,7 @@ using Configuration;
 using Managers;
 using Managers.ConfigurationToTypeInfoManager;
 using Managers.FileManager;
+using Managers.OpenApiToTypeInfoManager;
 using Managers.PathManager;
 using Microsoft.OpenApi.Models;
 using Models;

@@ -1,7 +1,7 @@
 namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Manager.OpenapiToTypeInfoManager;
 
 using System.Diagnostics.CodeAnalysis;
-using Generator.Managers;
+using Generator.Managers.OpenApiToTypeInfoManager;
 using TestBase;
 
 [ExcludeFromCodeCoverage]
