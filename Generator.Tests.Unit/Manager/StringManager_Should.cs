@@ -2,14 +2,14 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Manager
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using Generator.Managers;
+using Generator.Managers.StringManager;
 using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class StringManager_Should
 {
-    private IStringManager _sut = new StringManagerImpl();
+    private IStringManager _sut = new Generator.Managers.StringManager.StringManagerImpl();
 
     [Theory]
     [InlineData("some", "thing", "something")]

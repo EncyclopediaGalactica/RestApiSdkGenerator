@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Managers;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Managers.StringManager;
 
 /// <summary>
 ///     String manager interface

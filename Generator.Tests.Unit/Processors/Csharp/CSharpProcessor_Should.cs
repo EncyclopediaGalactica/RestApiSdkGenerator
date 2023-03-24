@@ -1,7 +1,6 @@
 namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.Processors.Csharp;
 
 using System.Diagnostics.CodeAnalysis;
-using Generator.Managers;
 using Generator.Managers.FileManager;
 using Generator.Managers.PathManager;
 using Generator.Processors.CSharp;
@@ -15,7 +14,7 @@ public partial class CSharpProcessor_Should
     {
         _sut = new CSharpProcessor(
             new FileManagerImpl(),
-            new StringManagerImpl(),
+            new Generator.Managers.StringManager.StringManagerImpl(),
             new PathManagerImpl());
     }
 }

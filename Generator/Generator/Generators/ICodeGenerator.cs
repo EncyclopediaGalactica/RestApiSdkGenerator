@@ -1,11 +1,12 @@
 namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Generators;
 
 using Configuration;
-using Managers;
 using Managers.ConfigurationToTypeInfoManager;
 using Managers.FileManager;
 using Managers.OpenApiToTypeInfoManager;
 using Managers.PathManager;
+using Managers.StringManager;
+using Managers.TemplateManager;
 using Microsoft.OpenApi.Models;
 using Models;
 

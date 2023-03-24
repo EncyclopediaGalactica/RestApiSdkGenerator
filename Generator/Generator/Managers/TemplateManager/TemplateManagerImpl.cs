@@ -1,4 +1,4 @@
-namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Managers;
+namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Managers.TemplateManager;
 
 using HandlebarsDotNet;
 using HandlebarsDotNet.Helpers;
