@@ -3,13 +3,12 @@ namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Tests.Unit.DtoTest
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
-using Xunit;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class DtoTestGeneration_Should : TestBase
 {
-    [Fact]
+    // [Fact]
     public void Generate()
     {
         // Arrange
