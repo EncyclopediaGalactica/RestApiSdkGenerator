@@ -215,18 +215,6 @@
       <None Update="DtoTests\Generation\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="DtoTests\PreProcessing\TypenameAsVariableName\single_filename.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="DtoTests\PreProcessing\TypenameAsVariableName\single_filename.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="DtoTests\PreProcessing\TypenameAsVariableName\multiple_filename.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="DtoTests\PreProcessing\TypenameAsVariableName\multiple_filename.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="Dto\PreProcessing\Filename\config.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
