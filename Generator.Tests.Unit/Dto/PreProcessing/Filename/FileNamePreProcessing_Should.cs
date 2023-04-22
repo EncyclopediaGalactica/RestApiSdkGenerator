@@ -4,26 +4,35 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
 using Xunit;
+using Xunit.Abstractions;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class FileNamePreProcessing_Should : TestBase
 {
+    public FileNamePreProcessing_Should(ITestOutputHelper outputHelper) : base(outputHelper)
+    {
+    }
+
     [Fact]
     public void PreProcess_FileName()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/Dto/PreProcessing/Filename";
-        string configFilePath = $"{currentPath}/filename_preprocessing_should.json";
+        string currentPath = $"{BasePath}/Dto/PreProcessing/Filename";
+        string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
 
         // Assert
         action.Should().NotThrow();
         codeGenerator.Should().NotBeNull();
-        codeGenerator.DtoFileInfos.Should().NotBeEmpty();
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "PetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "NewPetDto").ToList().Count.Should().Be(1);
-        codeGenerator.DtoFileInfos.Where(p => p.FileName == "ErrorModelDto").ToList().Count.Should().Be(1);
+        codeGenerator!.SpecificCodeGenerator.Should().NotBeNull();
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos.Should().NotBeEmpty();
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos
+            .Where(p => p.FileName == "PetDto.cs").ToList().Count.Should().Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos
+            .Where(p => p.FileName == "NewPetDto.cs").ToList().Count.Should().Be(1);
+        codeGenerator.SpecificCodeGenerator.DtoTypeInfos
+            .Where(p => p.FileName == "ErrorModelDto.cs").ToList().Count.Should().Be(1);
     }
 }

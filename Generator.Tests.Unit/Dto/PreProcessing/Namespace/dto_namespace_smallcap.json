@@ -1,12 +1,12 @@
 {
     "$schema": "https://raw.githubusercontent.com/EncyclopediaGalactica/RestApiSdkGenerator/main/configuration.schema.json",
+    "lang": "csharp",
     "openapi_specification_path": "Dto/PreProcessing/Namespace/namespace_preprocessing_should.yaml",
     "target_directory": "Dto/PreProcessing/Namespace",
-    "solution_base_namespace": "Proper.Solution.Namespace",
-    "dto_project_namespace": "dto.project.namespace.smallcap",
+    "solution_base_namespace": "Proper.Solution.Nmspace",
+    "dto_project_namespace": "dto.project.nmspace.smallcap",
+    "skip_dto_preprocess": false,
     "skip_dto_generating": true,
-    "skip_dto_tests_generating": true,
-    "skip_request_model_generating": true,
-    "skip_request_model_tests_generating": true,
-    "test_mode": true
+    "skip_dto_test_preprocessing": true,
+    "skip_dto_test_generating": true
 }

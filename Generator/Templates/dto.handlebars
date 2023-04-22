@@ -1,15 +1,18 @@
 namespace {{this.Namespace}};
 
 /// <summary>
-///     The {{this.FileName}} object.
+///     The {{this.TypeName}} object.
+///     <remarks>
+///         Time of generation: {{this.TimeOfGeneration}}
+///     </remarks>
 /// </summary>
-public class {{this.FileName}}
+public class {{this.TypeName}}
 {
-{{#each this.PropertyInfos}}
+{{#each this.VariableInfos}}
     /// <summary>
-    ///     Gets or set the {{PropertyName}} property's value
+    ///     Gets or set the {{VariableName}} property's value
     /// </summary>
-    public {{PropertyTypeName}}{{#IsNullable}}?{{/IsNullable}} {{PropertyName}} { get; set; }
+    public {{VariableTypeName}}{{#IsNullable}}?{{/IsNullable}} {{VariableName}} { get; set; }
     {{#unless @last}}
 
     {{/unless}}

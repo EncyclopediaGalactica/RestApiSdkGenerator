@@ -12,6 +12,8 @@ stages:
   - stage: Variables
     jobs:
       - job:
+        workspace:
+          clean: all
         steps:
           - script: |
               echo $PATH
@@ -20,6 +22,9 @@ stages:
   - stage: Feature_branch
     condition: ne(variables['System.PullRequest.SourceBranch'], '')
     jobs:
+      - job:
+        workspace:
+          clean: all
       - job: restore_solution
         displayName: Restore Solution
         steps:
