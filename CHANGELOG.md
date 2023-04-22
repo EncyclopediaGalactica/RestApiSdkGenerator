@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/compare/0.1.2...0.2.0) (2023-04-22)
+
+
+### Features
+
+* Generating tests for Dtos ([#11](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/issues/11)) ([bb749f5](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/commit/bb749f54cd796587bd8e8fd10d393db6e6fe6bf1))
+
 ## [0.1.2](https://github.com/EncyclopediaGalactica/RestApiSdkGenerator/compare/0.1.1...0.1.2) (2023-01-11)
 
 
