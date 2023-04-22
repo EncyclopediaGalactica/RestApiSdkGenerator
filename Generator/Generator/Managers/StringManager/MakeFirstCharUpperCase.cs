@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 public partial class StringManagerImpl
 {
     /// <inheritdoc />
-    public string MakeFirstCharUpperCase(string s)
+    public string MakeFirstCharUpperCase(string? s)
     {
         if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
         {

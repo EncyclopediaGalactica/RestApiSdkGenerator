@@ -5,16 +5,21 @@ using FluentAssertions;
 using Generator;
 using Generator.Models;
 using Xunit;
+using Xunit.Abstractions;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class NullableVariableTypePreProcessing_Should : TestBase
 {
+    public NullableVariableTypePreProcessing_Should(ITestOutputHelper outputHelper) : base(outputHelper)
+    {
+    }
+
     [Fact]
     public void PreProcess_NullablePropertyTypes()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/NullableVariableType";
+        string currentPath = $"{BasePath}/DtoTests/PreProcessing/NullableVariableType";
         string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };

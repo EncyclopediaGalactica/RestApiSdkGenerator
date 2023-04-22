@@ -3,10 +3,11 @@
   "lang": "csharp",
   "openapi_specification_path": "DtoTests/Generation/openapi.yaml",
   "target_directory": "DtoTests/Generation",
-  "solution_base_namespace": "DtoTests.Generation",
+  "solution_base_namespace": "test.generation",
+  "dto_project_namespace": "dto.project",
+  "dto_test_project_namespace": "dto.project",
+  "skip_dto_preprocess": false,
   "skip_dto_generating": false,
-  "skip_dto_tests_generating": false,
-  "skip_request_model_generating": true,
-  "skip_request_model_tests_generating": true,
-  "test_mode": true
+  "skip_dto_test_preprocessing": false,
+  "skip_dto_test_generating": false
 }

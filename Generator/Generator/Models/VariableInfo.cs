@@ -61,4 +61,34 @@ public class VariableInfo
     ///     </remarks>
     /// </summary>
     public bool IsProperty { get; set; }
+
+    /// <summary>
+    ///     Gets or set IsString value
+    /// </summary>
+    public bool IsString { get; set; }
+
+    /// <summary>
+    ///     Gets or set IsInt value
+    /// </summary>
+    public bool IsInt { get; set; }
+
+    /// <summary>
+    ///     Gets or sets IsLong value
+    /// </summary>
+    public bool IsLong { get; set; }
+
+    /// <summary>
+    ///     Gets or sets IsFloat value
+    /// </summary>
+    public bool IsFloat { get; set; }
+
+    /// <summary>
+    ///     Gets or sets IsDouble value
+    /// </summary>
+    public bool IsDouble { get; set; }
+
+    /// <summary>
+    ///     Gets or set IsBool value
+    /// </summary>
+    public bool IsBool { get; set; }
 }

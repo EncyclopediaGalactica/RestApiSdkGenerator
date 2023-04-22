@@ -395,6 +395,24 @@
       <None Update="DtoTests\PreProcessing\VariableType\openapi.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Dto\Generation\Reference\MultipleOneDto.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dto\Generation\Reference\MultipleTwoDto.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\Generation\Reference\DogDto_Should.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\Generation\Reference\DogDto.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\Generation\Reference\PersonDto_Should.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DtoTests\Generation\Reference\PersonDto.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -456,10 +474,22 @@
       <Compile Update="Dto\Generation\PropertyType\Reference\PetDto.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
-      <Compile Update="Dto\Generation\Reference\MultipleOneDto.cs">
+      <Compile Update="Dto\Generation\Reference\MultipleOneDto.genref">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
-      <Compile Update="Dto\Generation\Reference\MultipleTwoDto.cs">
+      <Compile Update="Dto\Generation\Reference\MultipleTwoDto.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="DtoTests\Generation\Reference\DogDto.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="DtoTests\Generation\Reference\PersonDto_Should.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="DtoTests\Generation\Reference\PersonDto.genref">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="DtoTests\Generation\Reference\DogDto_Should.genref">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Compile>
     </ItemGroup>

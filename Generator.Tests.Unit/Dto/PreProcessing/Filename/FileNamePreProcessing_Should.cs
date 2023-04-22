@@ -4,16 +4,21 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
 using Xunit;
+using Xunit.Abstractions;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class FileNamePreProcessing_Should : TestBase
 {
+    public FileNamePreProcessing_Should(ITestOutputHelper outputHelper) : base(outputHelper)
+    {
+    }
+
     [Fact]
     public void PreProcess_FileName()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/Dto/PreProcessing/Filename";
+        string currentPath = $"{BasePath}/Dto/PreProcessing/Filename";
         string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };

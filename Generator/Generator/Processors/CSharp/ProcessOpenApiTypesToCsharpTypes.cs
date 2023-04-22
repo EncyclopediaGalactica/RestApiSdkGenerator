@@ -17,13 +17,47 @@ public partial class CSharpProcessor
 
         foreach (TypeInfo fileInfo in typeInfos)
         {
-            foreach (VariableInfo propertyInfo in fileInfo.VariableInfos)
+            foreach (VariableInfo variableInfo in fileInfo.VariableInfos)
             {
-                propertyInfo.VariableTypeName = DecideCsharpType(
-                    propertyInfo.OriginalVariableTypeNameToken,
-                    propertyInfo.OriginalVariableTypeFormat,
+                variableInfo.VariableTypeName = DecideCsharpType(
+                    variableInfo.OriginalVariableTypeNameToken,
+                    variableInfo.OriginalVariableTypeFormat,
                     openApiCsharpTypeMap);
+                SetUpIsTypeSwitches(variableInfo);
             }
+        }
+    }
+
+    private void SetUpIsTypeSwitches(VariableInfo variableInfo)
+    {
+        if (variableInfo.VariableTypeName == "string")
+        {
+            variableInfo.IsString = true;
+        }
+
+        if (variableInfo.VariableTypeName == "int")
+        {
+            variableInfo.IsInt = true;
+        }
+
+        if (variableInfo.VariableTypeName == "long")
+        {
+            variableInfo.IsLong = true;
+        }
+
+        if (variableInfo.VariableTypeName == "float")
+        {
+            variableInfo.IsFloat = true;
+        }
+
+        if (variableInfo.VariableTypeName == "double")
+        {
+            variableInfo.IsDouble = true;
+        }
+
+        if (variableInfo.VariableTypeName == "bool")
+        {
+            variableInfo.IsBool = true;
         }
     }
 

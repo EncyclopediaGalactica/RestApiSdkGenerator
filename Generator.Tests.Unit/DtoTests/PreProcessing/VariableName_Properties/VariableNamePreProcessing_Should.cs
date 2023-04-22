@@ -5,16 +5,21 @@ using FluentAssertions;
 using Generator;
 using Generator.Models;
 using Xunit;
+using Xunit.Abstractions;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class VariableNamePreProcessing_Should : TestBase
 {
+    public VariableNamePreProcessing_Should(ITestOutputHelper outputHelper) : base(outputHelper)
+    {
+    }
+
     [Fact]
     public void Process_PropertyNames()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/VariableName_Properties";
+        string currentPath = $"{BasePath}/DtoTests/PreProcessing/VariableName_Properties";
         string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };

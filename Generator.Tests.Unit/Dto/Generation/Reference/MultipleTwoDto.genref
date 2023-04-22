@@ -1,9 +1,12 @@
 namespace Test.Generation.Dto.Project;
 
 /// <summary>
-///     The MultipleOneDto object.
+///     The MultipleTwoDto object.
+///     <remarks>
+///         Time of generation: 04/22/2023 14:16:05 #TEST_IGNORE
+///     </remarks>
 /// </summary>
-public class MultipleOneDto
+public class MultipleTwoDto
 {
     /// <summary>
     ///     Gets or set the Id property's value

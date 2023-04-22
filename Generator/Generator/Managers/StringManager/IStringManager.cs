@@ -33,7 +33,7 @@ public interface IStringManager
     /// </summary>
     /// <param name="s">string</param>
     /// <returns>the new string</returns>
-    string MakeFirstCharUpperCase(string s);
+    string MakeFirstCharUpperCase(string? s);
 
     /// <summary>
     ///     Concatenates two string as they were C# namespaces.

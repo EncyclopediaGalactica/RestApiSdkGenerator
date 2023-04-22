@@ -11,6 +11,9 @@ public class CSharpGenerator : AbstractGenerator
     private const string DtoTestTypeNamePostfix = "Dto_Should";
     private const string DtoTestFileNamePostfix = "Dto_Should";
     private const string FileType = ".cs";
+
+    private readonly List<TypeInfoRender> _dtoFileInfosRender = new List<TypeInfoRender>();
+    private readonly List<TypeInfoRender> _dtoTestFileInfosRender = new List<TypeInfoRender>();
     private readonly Logger<CSharpGenerator> _logger = new(LoggerFactory.Create(c => c.AddConsole()));
 
     private readonly List<string> _reservedWords = new List<string>
@@ -105,9 +108,7 @@ public class CSharpGenerator : AbstractGenerator
         "int", "long", "boolean", "float", "double", "string"
     };
 
-    private ICSharpProcessor _cSharpProcessor;
-
-    private List<DtoTypeInfoRender> _dtoFileInfosRender = new List<DtoTypeInfoRender>();
+    private ICSharpProcessor? _cSharpProcessor;
 
     public override string DtoTemplatePath { get; } = "Templates/dto.handlebars";
     public override string DtoTestTemplatePath { get; } = "Templates/dto_tests.handlebars";
@@ -167,7 +168,7 @@ public class CSharpGenerator : AbstractGenerator
         GetOriginalDtoTestProjectAdditionalPathFromConfiguration(DtoTestTypeInfos);
 
         PreProcessDtoTestMetadata();
-        // CopyDtoRenderDataToDtoRenderObject(DtoTypeInfos, _dtoFileInfosRender);
+        CopyDtoRenderDataToDtoRenderObject(DtoTestTypeInfos, _dtoTestFileInfosRender);
     }
 
     public override void PreProcessDtos()
@@ -201,7 +202,48 @@ public class CSharpGenerator : AbstractGenerator
 
     private void RenderDtoTests()
     {
-        throw new NotImplementedException();
+        if (!_dtoTestFileInfosRender.Any() || !DtoTestTypeInfos.Any())
+        {
+            _logger.LogInformation("No render or preprocessed objects are available");
+            return;
+        }
+
+        foreach (TypeInfo testFileInfo in DtoTestTypeInfos)
+        {
+            if (string.IsNullOrEmpty(testFileInfo.TemplateAbsolutePathWithFileName)
+                || string.IsNullOrWhiteSpace(testFileInfo.TemplateAbsolutePathWithFileName))
+            {
+                _logger.LogInformation(
+                    "No template path were provided for {File}",
+                    testFileInfo.FileName);
+                throw new GeneratorException(
+                    $"No template path were provided for {testFileInfo.FileName}");
+            }
+
+            if (string.IsNullOrEmpty(testFileInfo.TargetPathWithFileName)
+                || string.IsNullOrWhiteSpace(testFileInfo.TargetPathWithFileName))
+            {
+                _logger.LogInformation(
+                    "No target path with file name was provided for content generation. {File}",
+                    testFileInfo.FileName);
+                throw new GeneratorException(
+                    $"No target path with file name was provided for content generation. " +
+                    $"{testFileInfo.FileName}");
+            }
+
+            string template = FileManager.ReadAllText(testFileInfo.TemplateAbsolutePathWithFileName);
+            TypeInfoRender singleRender = _dtoTestFileInfosRender
+                .Where(p => p.Namespace == testFileInfo.Namespace)
+                .First(p => p.TypeName == testFileInfo.TypeName);
+            string compiledContent = TemplateManager.CompileTemplate(template, singleRender);
+
+            if (FileManager.CheckIfFileExist(testFileInfo.TargetPathWithFileName))
+            {
+                FileManager.DeleteFile(testFileInfo.TargetPathWithFileName);
+            }
+
+            FileManager.WriteContentIntoFile(compiledContent, testFileInfo.TargetPathWithFileName);
+        }
     }
 
     private void RenderDtos()
@@ -236,7 +278,7 @@ public class CSharpGenerator : AbstractGenerator
             }
 
             string template = FileManager.ReadAllText(fileInfo.TemplateAbsolutePathWithFileName);
-            DtoTypeInfoRender singleRender = _dtoFileInfosRender
+            TypeInfoRender singleRender = _dtoFileInfosRender
                 .Where(p => p.Namespace == fileInfo.Namespace)
                 .First(p => p.TypeName == fileInfo.TypeName);
             string compiledContent = TemplateManager.CompileTemplate(template, singleRender);
@@ -254,10 +296,10 @@ public class CSharpGenerator : AbstractGenerator
     ///     Copies all the data needed for Dto render to a separate render object
     /// </summary>
     /// <param name="dtoTypeInfos">List of <see cref="TypeInfo" /></param>
-    /// <param name="dtoRenderTypeInfos">List of <see cref="DtoTypeInfoRender" /></param>
+    /// <param name="dtoRenderTypeInfos">List of <see cref="TypeInfoRender" /></param>
     private void CopyDtoRenderDataToDtoRenderObject(
         List<TypeInfo> dtoTypeInfos,
-        List<DtoTypeInfoRender> dtoRenderTypeInfos)
+        List<TypeInfoRender> dtoRenderTypeInfos)
     {
         if (!dtoTypeInfos.Any())
         {
@@ -267,26 +309,35 @@ public class CSharpGenerator : AbstractGenerator
 
         foreach (TypeInfo typeInfo in dtoTypeInfos)
         {
-            List<PropertyInfoRender> propertyInfos = new List<PropertyInfoRender>();
+            List<VariableInfoRender> variableInfoRenders = new List<VariableInfoRender>();
             if (typeInfo.VariableInfos.Any())
             {
-                foreach (VariableInfo propertyInfo in typeInfo.VariableInfos)
+                foreach (VariableInfo variableInfo in typeInfo.VariableInfos)
                 {
-                    propertyInfos.Add(new PropertyInfoRender
+                    variableInfoRenders.Add(new VariableInfoRender
                     {
-                        PropertyName = propertyInfo.VariableName,
-                        PropertyTypeName = propertyInfo.VariableTypeName,
-                        IsNullable = propertyInfo.IsNullable
+                        VariableName = variableInfo.VariableName,
+                        VariableTypeName = variableInfo.VariableTypeName,
+                        IsNullable = variableInfo.IsNullable,
+                        IsBool = variableInfo.IsBool,
+                        IsLong = variableInfo.IsLong,
+                        IsDouble = variableInfo.IsDouble,
+                        IsFloat = variableInfo.IsFloat,
+                        IsInt = variableInfo.IsInt,
+                        IsString = variableInfo.IsString
                     });
                 }
             }
 
             dtoRenderTypeInfos.Add(
-                new DtoTypeInfoRender()
+                new TypeInfoRender()
                 {
-                    PropertyInfos = propertyInfos,
+                    VariableInfos = variableInfoRenders,
                     Namespace = typeInfo.Namespace,
-                    TypeName = typeInfo.TypeName
+                    TypeName = typeInfo.TypeName,
+                    TypeNameUnderTest = typeInfo.TypeNameUnderTest,
+                    TimeOfGeneration = TimeOfGeneration,
+                    Imports = typeInfo.Imports
                 });
         }
     }
@@ -318,6 +369,7 @@ public class CSharpGenerator : AbstractGenerator
     {
         _cSharpProcessor.ReservedWordCheckForOriginalTypeNames(DtoTestTypeInfos, _reservedWords);
         _cSharpProcessor.ProcessTestTypeName(DtoTestTypeInfos, DtoTestTypeNamePostfix);
+        _cSharpProcessor.ProcessTypeNameUnderTest(DtoTestTypeInfos, DtoTypeNamePostFix);
         _cSharpProcessor.TypeCheckInGenerationScope(DtoTestTypeInfos, _typesInGenerationScope);
         _cSharpProcessor.AddTypeNamesToGenerationScope(DtoTestTypeInfos, _typesInGenerationScope);
         _cSharpProcessor.ProcessFileName(DtoTestTypeInfos, DtoTestFileNamePostfix, FileType);
@@ -334,6 +386,7 @@ public class CSharpGenerator : AbstractGenerator
         _cSharpProcessor.ReservedWordCheckForVariableNames(DtoTestTypeInfos, _reservedWords);
 
         _cSharpProcessor.ProcessNullableVariableTypes(DtoTestTypeInfos);
+        _cSharpProcessor.AddImportsToTestTypes(DtoTestTypeInfos, DtoTypeInfos);
         _cSharpProcessor.ProcessOpenApiTypesToCsharpTypes(DtoTestTypeInfos, OpenApiCsharpTypeMap);
     }
 

@@ -1,5 +1,6 @@
 namespace EncyclopediaGalactica.RestApiSdkGenerator.Generator.Generator.Generators;
 
+using System.Globalization;
 using Configuration;
 using Managers.ConfigurationToTypeInfoManager;
 using Managers.FileManager;
@@ -24,6 +25,7 @@ public abstract class AbstractGenerator : ICodeGenerator
     protected IPathManager PathManager;
     protected IStringManager StringManager;
     protected ITemplateManager TemplateManager;
+    protected string TimeOfGeneration = DateTime.Now.ToString(CultureInfo.InvariantCulture);
 
     public abstract string DtoTemplatePath { get; }
     public abstract string DtoTestTemplatePath { get; }

@@ -25,10 +25,10 @@ public class TemplateManagerImpl : ITemplateManager
     }
 
     /// <inheritdoc />
-    public string CompileTemplate(string template, DtoTypeInfoRender dtoTypeInfoRender)
+    public string CompileTemplate(string template, TypeInfoRender typeInfoRender)
     {
         HandlebarsTemplate<object, object>? compiledTemplate = _handlebarsContext.Compile(template);
-        string compiledResult = compiledTemplate(dtoTypeInfoRender);
+        string compiledResult = compiledTemplate(typeInfoRender);
 
         if (string.IsNullOrWhiteSpace(compiledResult) || string.IsNullOrEmpty(compiledResult))
         {

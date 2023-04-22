@@ -46,7 +46,7 @@ public class TypeInfo
     /// <summary>
     ///     Gets or sets the original type name token.
     ///     <remarks>
-    ///         It comes from the yaml file without any changes.
+    ///         It comes from the yaml file's Components > Schemas > Types:name without any modification
     ///     </remarks>
     /// </summary>
     public string? OriginalTypeNameToken { get; set; }
@@ -145,4 +145,17 @@ public class TypeInfo
     ///     Gets or sets the original dto test namespace token
     /// </summary>
     public string? OriginalDtoTestProjectNamespaceToken { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the type name under test value
+    ///     <remarks>
+    ///         This property is used during Dto test generation
+    ///     </remarks>
+    /// </summary>
+    public string? TypeNameUnderTest { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the Imports value
+    /// </summary>
+    public List<string> Imports { get; set; } = new List<string>();
 }

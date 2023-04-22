@@ -162,7 +162,7 @@ public interface ICSharpProcessor
     /// </summary>
     /// <param name="typeInfos">List of <see cref="TypeInfo" /></param>
     /// <param name="testTypeNamePostfix">Postfix value</param>
-    void ProcessTestTypeName(List<TypeInfo> typeInfos, string testTypeNamePostfix);
+    void ProcessTestTypeName(List<TypeInfo> typeInfos, string? testTypeNamePostfix = default);
 
     /// <summary>
     ///     Creates the path for the Dto test files.
@@ -201,4 +201,22 @@ public interface ICSharpProcessor
     /// </summary>
     /// <param name="typeInfos"></param>
     void ProcessDtoTestNamespace(List<TypeInfo> typeInfos);
+
+    /// <summary>
+    ///     Sets up the name of the tested type
+    ///     <remarks>
+    ///         It takes also the Dto TypeName postfix in order to have the same type name in the tests as the Dto got in the
+    ///         Dto generation phase
+    ///     </remarks>
+    /// </summary>
+    /// <param name="dtoTestTypeInfos">List of <see cref="TypeInfo" />s</param>
+    /// <param name="dtoTypeNamePostfix">The name postfix value used in Dto file generation</param>
+    void ProcessTypeNameUnderTest(List<TypeInfo> dtoTestTypeInfos, string dtoTypeNamePostfix);
+
+    /// <summary>
+    ///     Adds the Dto dependencies
+    /// </summary>
+    /// <param name="dtoTestTypeInfos">List of Dto Test <see cref="TypeInfo" />s</param>
+    /// <param name="dtoTypeInfos">List of Dto <see cref="TypeInfo" />s</param>
+    void AddImportsToTestTypes(List<TypeInfo> dtoTestTypeInfos, List<TypeInfo> dtoTypeInfos);
 }

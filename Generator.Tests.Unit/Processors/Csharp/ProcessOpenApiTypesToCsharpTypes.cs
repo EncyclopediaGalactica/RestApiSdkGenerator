@@ -53,6 +53,71 @@ public partial class CSharpProcessor_Should
 
         // Assert
         fileInfos[0].VariableInfos.ToList()[0].VariableTypeName.Should().Be(expected);
+        if (expected == "string")
+        {
+            fileInfos[0].VariableInfos.ToList()[0].IsString.Should().BeTrue();
+
+            fileInfos[0].VariableInfos.ToList()[0].IsInt.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsLong.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsFloat.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsDouble.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsBool.Should().BeFalse();
+        }
+
+        if (expected == "int")
+        {
+            fileInfos[0].VariableInfos.ToList()[0].IsInt.Should().BeTrue();
+
+            fileInfos[0].VariableInfos.ToList()[0].IsString.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsLong.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsFloat.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsDouble.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsBool.Should().BeFalse();
+        }
+
+        if (expected == "long")
+        {
+            fileInfos[0].VariableInfos.ToList()[0].IsLong.Should().BeTrue();
+
+            fileInfos[0].VariableInfos.ToList()[0].IsString.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsInt.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsFloat.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsDouble.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsBool.Should().BeFalse();
+        }
+
+        if (expected == "float")
+        {
+            fileInfos[0].VariableInfos.ToList()[0].IsFloat.Should().BeTrue();
+
+            fileInfos[0].VariableInfos.ToList()[0].IsString.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsInt.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsLong.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsDouble.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsBool.Should().BeFalse();
+        }
+
+        if (expected == "double")
+        {
+            fileInfos[0].VariableInfos.ToList()[0].IsDouble.Should().BeTrue();
+
+            fileInfos[0].VariableInfos.ToList()[0].IsString.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsInt.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsLong.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsFloat.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsBool.Should().BeFalse();
+        }
+
+        if (expected == "bool")
+        {
+            fileInfos[0].VariableInfos.ToList()[0].IsBool.Should().BeTrue();
+
+            fileInfos[0].VariableInfos.ToList()[0].IsString.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsInt.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsLong.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsFloat.Should().BeFalse();
+            fileInfos[0].VariableInfos.ToList()[0].IsDouble.Should().BeFalse();
+        }
     }
 
     [Theory]

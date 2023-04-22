@@ -8,7 +8,7 @@ public interface ITemplateManager
     ///     Compiles Handlebar template using the provided data structure.
     /// </summary>
     /// <param name="template">the Handlebar template content</param>
-    /// <param name="dtoTypeInfoRender">file information</param>
+    /// <param name="typeInfoRender">file information</param>
     /// <returns>the compiled template</returns>
-    string CompileTemplate(string template, DtoTypeInfoRender dtoTypeInfoRender);
+    string CompileTemplate(string template, TypeInfoRender typeInfoRender);
 }

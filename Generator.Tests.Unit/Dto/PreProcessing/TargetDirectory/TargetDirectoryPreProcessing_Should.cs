@@ -5,16 +5,22 @@ using FluentAssertions;
 using Generator;
 using Generator.Models;
 using Xunit;
+using Xunit.Abstractions;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class TargetDirectoryPreProcessing_Should : TestBase
 {
+    //TODO: add test cases covering multiple scenarios where project path and additional path added not added
+    public TargetDirectoryPreProcessing_Should(ITestOutputHelper outputHelper) : base(outputHelper)
+    {
+    }
+
     [Fact]
     public void PreProcess_TargetDirectory_Value()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/Dto/PreProcessing/TargetDirectory";
+        string currentPath = $"{BasePath}/Dto/PreProcessing/TargetDirectory";
         string configFilePath = $"{currentPath}/config.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -33,6 +39,4 @@ public class TargetDirectoryPreProcessing_Should : TestBase
         aSingleDto.AbsoluteTargetPath.Should().Be(
             $"{Directory.GetCurrentDirectory()}/Dto/PreProcessing/TargetDirectory");
     }
-
-    //TODO: add test cases covering multiple scenarios where project path and additional path added not added
 }

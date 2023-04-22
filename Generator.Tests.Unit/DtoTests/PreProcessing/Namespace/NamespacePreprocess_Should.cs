@@ -4,16 +4,21 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Generator;
 using Xunit;
+using Xunit.Abstractions;
 
 [ExcludeFromCodeCoverage]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class NamespacePreprocess_Should : TestBase
 {
+    public NamespacePreprocess_Should(ITestOutputHelper outputHelper) : base(outputHelper)
+    {
+    }
+
     [Fact]
     public void PreProcess_DtoTestNamespaceIsNotProvided_SingleFile()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/Namespace";
+        string currentPath = $"{BasePath}/DtoTests/PreProcessing/Namespace";
         string configFilePath = $"{currentPath}/dto_test_namespace_is_not_provided_single.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -30,7 +35,7 @@ public class NamespacePreprocess_Should : TestBase
     public void PreProcess_DtoTestNamespaceIsNotProvided_MultipleFile()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/Namespace";
+        string currentPath = $"{BasePath}/DtoTests/PreProcessing/Namespace";
         string configFilePath = $"{currentPath}/dto_test_namespace_is_not_provided_multiple.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -49,7 +54,7 @@ public class NamespacePreprocess_Should : TestBase
     public void PreProcess_DtoTestNamespaceIsProvided_SingleFile()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/Namespace";
+        string currentPath = $"{BasePath}/DtoTests/PreProcessing/Namespace";
         string configFilePath = $"{currentPath}/dto_test_namespace_is_provided_single.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
@@ -67,7 +72,7 @@ public class NamespacePreprocess_Should : TestBase
     public void PreProcess_DtoTestNamespaceIsProvided_MultipleFile()
     {
         // Arrange && Act
-        string currentPath = $"{_basePath}/DtoTests/PreProcessing/Namespace";
+        string currentPath = $"{BasePath}/DtoTests/PreProcessing/Namespace";
         string configFilePath = $"{currentPath}/dto_test_namespace_is_provided_multiple.json";
         CodeGenerator? codeGenerator = null;
         Action action = () => { codeGenerator = new CodeGenerator.Builder().SetPath(configFilePath).Generate(); };
